@@ -1,0 +1,83 @@
+{
+  "name": "EtaiDev - מערכת לימוד פייתון",
+  "short_name": "EtaiDev Python",
+  "description": "מערכת לימוד פייתון מתקדמת עם תרגילים ומבחנים - פותח על ידי EtaiDev",
+  "version": "2.0.0",
+  "manifest_version": 3,
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#667eea",
+  "theme_color": "#764ba2",
+  "orientation": "portrait-primary",
+  "lang": "he",
+  "dir": "rtl",
+  "scope": "./",
+  "categories": ["education", "productivity", "utilities"],
+  "screenshots": [
+    {
+      "src": "./EtaiDevLogo.png",
+      "sizes": "any",
+      "type": "image/png",
+      "platform": "wide",
+      "label": "EtaiDev Python Learning System"
+    }
+  ],
+  "icons": [
+    {
+      "src": "./EtaiDevLogo.png",
+      "sizes": "16x16 32x32 48x48 64x64 72x72 96x96 128x128 144x144 152x152 192x192 256x256 384x384 512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "תרגילים",
+      "short_name": "תרגילים",
+      "description": "גישה מהירה לתרגילי התכנות",
+      "url": "./index.html#practice",
+      "icons": [
+        {
+          "src": "./EtaiDevLogo.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "מבחנים",
+      "short_name": "מבחנים",
+      "description": "גישה מהירה למבחני ההערכה",
+      "url": "./index.html#tests",
+      "icons": [
+        {
+          "src": "./EtaiDevLogo.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "חומר לימוד",
+      "short_name": "לימוד",
+      "description": "גישה מהירה לחומרי הלימוד",
+      "url": "./index.html#lessons",
+      "icons": [
+        {
+          "src": "./EtaiDevLogo.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "author": {
+    "name": "EtaiDev",
+    "url": "https://etaidev.co.il"
+  },
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "launch_handler": {
+    "client_mode": ["navigate-existing", "auto"]
+  }
+}
