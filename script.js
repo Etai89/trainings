@@ -8,8 +8,71 @@ let quizTimer = null;
 let testTimer = null;
 let testTimeLeft = 0;
 
+// UTF-8 Encoding Verification and Setup
+function ensureUTF8Support() {
+    // Set document attributes for Hebrew
+    document.documentElement.setAttribute('lang', 'he');
+    document.documentElement.setAttribute('dir', 'rtl');
+    
+    // Check and log charset
+    if (document.characterSet) {
+        if (document.characterSet !== 'UTF-8') {
+            console.warn('Warning: Document charset is not UTF-8:', document.characterSet);
+            console.log('Expected UTF-8 for proper Hebrew text display');
+        } else {
+            console.log('✓ UTF-8 encoding confirmed');
+        }
+    }
+    
+    // Test Hebrew character rendering
+    const testDiv = document.createElement('div');
+    testDiv.innerHTML = 'בדיקת תצוגת עברית';
+    testDiv.style.cssText = 'position:absolute;left:-9999px;font-family:Heebo,Arial;';
+    document.body.appendChild(testDiv);
+    
+    setTimeout(() => {
+        const computedStyle = window.getComputedStyle(testDiv);
+        console.log('Hebrew test element font-family:', computedStyle.fontFamily);
+        document.body.removeChild(testDiv);
+    }, 100);
+    
+    // Set body font properties for Hebrew
+    document.body.style.fontFamily = "'Heebo', 'Noto Sans Hebrew', Arial, sans-serif";
+    document.body.style.fontFeatureSettings = '"kern" 1, "liga" 1, "calt" 1';
+    document.body.style.textRendering = 'optimizeLegibility';
+    document.body.style.webkitFontSmoothing = 'antialiased';
+    document.body.style.mozOsxFontSmoothing = 'grayscale';
+}
+
+// Initialize UTF-8 support immediately
+ensureUTF8Support();
+
+// Ensure UTF-8 encoding support (legacy)
+document.documentElement.setAttribute('lang', 'he');
+document.documentElement.setAttribute('dir', 'rtl');
+
+// Force UTF-8 encoding for content (legacy)
+if (document.characterSet && document.characterSet !== 'UTF-8') {
+    console.warn('Document charset is not UTF-8:', document.characterSet);
+}
+
 // Navigation
 $(document).ready(function() {
+    // Verify UTF-8 and Hebrew display immediately
+    ensureUTF8Support();
+    
+    // Test Hebrew rendering in console
+    console.log('Hebrew test: שלום עולם - מבדק תצוגת עברית');
+    console.log('Quiz Hebrew test: שאלות ותשובות במבחן');
+    
+    // Ensure proper text rendering
+    $('body').css({
+        'font-feature-settings': '"kern" 1, "liga" 1',
+        'text-rendering': 'optimizeLegibility',
+        '-webkit-font-smoothing': 'antialiased',
+        '-moz-osx-font-smoothing': 'grayscale'
+    });
+    
     // Initialize burger menu
     initializeBurgerMenu();
     
@@ -236,6 +299,10 @@ function startPractice(topic) {
 }
 
 function startPracticeQuiz(topic, practiceInfo) {
+    // Ensure UTF-8 support for quiz Hebrew text
+    ensureUTF8Support();
+    console.log('Starting quiz with UTF-8 support for:', practiceInfo?.title || topic);
+    
     if (!practiceInfo) {
         alert('נושא תרגול לא נמצא');
         return;
@@ -308,6 +375,9 @@ function createQuizContainer() {
 }
 
 function showQuizQuestion() {
+    // Ensure UTF-8 encoding for Hebrew text in questions
+    ensureUTF8Support();
+    
     if (currentQuestionIndex >= currentQuizData.length) {
         showQuizResults();
         return;
@@ -316,18 +386,18 @@ function showQuizQuestion() {
     const question = currentQuizData[currentQuestionIndex];
     
     const quizHtml = `
-        <div class="quiz-container">
-            <div class="quiz-header">
-                <h3>שאלה ${currentQuestionIndex + 1} מתוך ${currentQuizData.length}</h3>
+        <div class="quiz-container" dir="rtl" lang="he">
+            <div class="quiz-header" dir="rtl">
+                <h3 dir="rtl">שאלה ${currentQuestionIndex + 1} מתוך ${currentQuizData.length}</h3>
                 <div class="progress-bar">
                     <div class="progress" style="width: ${((currentQuestionIndex + 1) / currentQuizData.length) * 100}%"></div>
                 </div>
             </div>
-            <div class="question">
-                <h4>${question.question}</h4>
-                <div class="options">
+            <div class="question" dir="rtl">
+                <h4 dir="rtl">${question.question}</h4>
+                <div class="options" dir="rtl">
                     ${question.options.map((option, index) => 
-                        `<button class="option-btn" onclick="selectAnswer(${index})">${option}</button>`
+                        `<button class="option-btn" dir="rtl" onclick="selectAnswer(${index})">${option}</button>`
                     ).join('')}
                 </div>
             </div>
@@ -338,9 +408,9 @@ function showQuizQuestion() {
     if ($('#quizModal').length === 0) {
         $('body').append(`
             <div id="quizModal" class="modal">
-                <div class="modal-content">
+                <div class="modal-content" dir="rtl" lang="he">
                     <span class="close" onclick="closeQuiz()">&times;</span>
-                    <div id="quiz-content"></div>
+                    <div id="quiz-content" dir="rtl"></div>
                 </div>
             </div>
         `);
@@ -380,10 +450,10 @@ function selectAnswer(answerIndex) {
     
     // Show explanation
     const explanationHtml = `
-        <div class="explanation ${isCorrect ? 'correct' : 'incorrect'}">
-            <p><strong>${isCorrect ? 'נכון!' : 'לא נכון.'}</strong></p>
-            <p>${question.explanation}</p>
-            <button class="btn-primary" onclick="nextQuestion()" style="margin-top: 1rem;">
+        <div class="explanation ${isCorrect ? 'correct' : 'incorrect'}" dir="rtl" lang="he">
+            <p dir="rtl"><strong>${isCorrect ? 'נכון!' : 'לא נכון.'}</strong></p>
+            <p dir="rtl">${question.explanation}</p>
+            <button class="btn-primary" dir="rtl" onclick="nextQuestion()" style="margin-top: 1rem;">
                 ${currentQuestionIndex < currentQuizData.length - 1 ? 'שאלה הבאה' : 'סיום בחינה'}
             </button>
         </div>
@@ -399,6 +469,9 @@ function nextQuestion() {
 }
 
 function showQuizResults() {
+    // Ensure UTF-8 encoding for Hebrew text in results
+    ensureUTF8Support();
+    
     const correctAnswers = userAnswers.filter((answer, index) => 
         answer === currentQuizData[index].correct
     ).length;
@@ -419,16 +492,16 @@ function showQuizResults() {
     }
     
     const resultsHtml = `
-        <div class="quiz-results ${color}">
-            <h3>תוצאות הבחינה</h3>
-            <div class="score">
+        <div class="quiz-results ${color}" dir="rtl" lang="he">
+            <h3 dir="rtl">תוצאות הבחינה</h3>
+            <div class="score" dir="rtl">
                 <span class="score-number">${correctAnswers}/${currentQuizData.length}</span>
                 <span class="score-percentage">${percentage}%</span>
             </div>
-            <p>${message}</p>
-            <div class="results-actions">
-                <button class="btn-secondary" onclick="closeQuiz()">סגור</button>
-                <button class="btn-primary" onclick="retryQuiz()">נסה שוב</button>
+            <p dir="rtl">${message}</p>
+            <div class="results-actions" dir="rtl">
+                <button class="btn-secondary" dir="rtl" onclick="closeQuiz()">סגור</button>
+                <button class="btn-primary" dir="rtl" onclick="retryQuiz()">נסה שוב</button>
             </div>
         </div>
     `;
@@ -3685,3 +3758,72 @@ result = safe_int("abc")   # None + הודעה
         showModal(conceptData[conceptId].title, conceptData[conceptId].content);
     }
 }
+
+// Hebrew Text Display Verification for Quizzes
+function verifyHebrewDisplayInQuiz() {
+    console.log('🔍 Verifying Hebrew text display in quiz system...');
+    
+    // Test Hebrew characters
+    const hebrewTestText = 'בדיקת תצוגת עברית - שאלות ותשובות במבחן';
+    const arabicTestText = 'اختبار النص العربي';
+    
+    console.log('Hebrew test:', hebrewTestText);
+    console.log('Character encoding test:', hebrewTestText.charCodeAt(0)); // Should be > 1400 for Hebrew
+    
+    // Check if document has proper encoding
+    const encoding = document.characterSet || document.charset;
+    if (encoding === 'UTF-8') {
+        console.log('✅ Document encoding is UTF-8');
+    } else {
+        console.warn('⚠️ Document encoding is not UTF-8:', encoding);
+    }
+    
+    // Check if Hebrew fonts are loaded
+    const testElement = document.createElement('div');
+    testElement.innerHTML = hebrewTestText;
+    testElement.style.cssText = `
+        position: absolute;
+        left: -9999px;
+        font-family: 'Heebo', 'Noto Sans Hebrew', Arial, sans-serif;
+        font-size: 16px;
+        direction: rtl;
+    `;
+    document.body.appendChild(testElement);
+    
+    setTimeout(() => {
+        const computedStyle = window.getComputedStyle(testElement);
+        const fontFamily = computedStyle.fontFamily;
+        
+        if (fontFamily.includes('Heebo') || fontFamily.includes('Noto Sans Hebrew')) {
+            console.log('✅ Hebrew fonts are properly loaded:', fontFamily);
+        } else {
+            console.warn('⚠️ Hebrew fonts may not be loaded properly:', fontFamily);
+        }
+        
+        document.body.removeChild(testElement);
+    }, 500);
+    
+    // Test quiz-specific elements if they exist
+    setTimeout(() => {
+        const quizElements = document.querySelectorAll('.quiz-container, .option-btn, .question h4');
+        if (quizElements.length > 0) {
+            console.log('✅ Quiz elements found, checking Hebrew support...');
+            quizElements.forEach((element, index) => {
+                const style = window.getComputedStyle(element);
+                if (style.direction === 'rtl' && style.fontFamily.includes('Heebo')) {
+                    console.log(`✅ Quiz element ${index + 1} has proper Hebrew support`);
+                } else {
+                    console.warn(`⚠️ Quiz element ${index + 1} may have Hebrew display issues`);
+                }
+            });
+        }
+    }, 1000);
+}
+
+// Run Hebrew verification when page loads
+$(document).ready(function() {
+    setTimeout(verifyHebrewDisplayInQuiz, 2000);
+});
+
+// Export verification function for manual testing
+window.verifyHebrewDisplayInQuiz = verifyHebrewDisplayInQuiz;

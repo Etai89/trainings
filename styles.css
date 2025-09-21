@@ -20,10 +20,23 @@ body {
     direction: rtl;
 }
 
-/* Hebrew text - RTL */
+/* Hebrew text - RTL with proper encoding */
 h1, h2, h3, h4, h5, h6, p, .tip, .explanation, .question-text, .option-text, .quiz-results {
     direction: rtl;
     text-align: right;
+    unicode-bidi: embed;
+    font-feature-settings: "kern" 1, "liga" 1;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ensure proper Hebrew rendering in all text elements */
+.concept-detail, .modal-content, .quiz-container, .content-section {
+    font-feature-settings: "kern" 1, "liga" 1;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 /* Code sections - LTR */
@@ -1441,6 +1454,18 @@ footer {
     border-radius: 20px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
     max-width: 800px;
+    direction: rtl;
+    text-align: right;
+    font-family: 'Heebo', 'Noto Sans Hebrew', 'Segoe UI', sans-serif;
+    unicode-bidi: embed;
+}
+
+/* Ensure Hebrew text renders properly in quiz */
+#quiz-container * {
+    font-feature-settings: "kern" 1, "liga" 1;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .quiz-header {
@@ -1450,11 +1475,14 @@ footer {
     margin-bottom: 2rem;
     flex-wrap: wrap;
     gap: 1rem;
+    direction: rtl;
 }
 
 .quiz-header h2 {
     color: #667eea;
     font-size: 1.8rem;
+    direction: rtl;
+    text-align: right;
 }
 
 .back-btn {
@@ -1515,6 +1543,10 @@ footer {
     border-radius: 15px;
     margin-bottom: 2rem;
     border-right: 4px solid #667eea;
+    direction: rtl;
+    text-align: right;
+    font-family: 'Heebo', 'Noto Sans Hebrew', 'Segoe UI', sans-serif;
+    unicode-bidi: embed;
 }
 
 .question-text h3 {
@@ -1523,6 +1555,12 @@ footer {
     font-size: 1.2rem;
     line-height: 1.6;
     white-space: pre-wrap;
+    direction: rtl;
+    text-align: right;
+    font-feature-settings: "kern" 1, "liga" 1;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 /* Answer Options */
@@ -1531,6 +1569,7 @@ footer {
     flex-direction: column;
     gap: 1rem;
     margin-bottom: 2rem;
+    direction: rtl;
 }
 
 .answer-option {
@@ -1542,6 +1581,10 @@ footer {
     border-radius: 12px;
     cursor: pointer;
     transition: all 0.3s ease;
+    direction: rtl;
+    text-align: right;
+    font-family: 'Heebo', 'Noto Sans Hebrew', 'Segoe UI', sans-serif;
+    unicode-bidi: embed;
 }
 
 .answer-option:hover {
@@ -1580,6 +1623,14 @@ footer {
     flex: 1;
     font-size: 1rem;
     line-height: 1.4;
+    direction: rtl;
+    text-align: right;
+    font-family: 'Heebo', 'Noto Sans Hebrew', 'Segoe UI', sans-serif;
+    unicode-bidi: embed;
+    font-feature-settings: "kern" 1, "liga" 1;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 /* Quiz Controls */
@@ -1961,6 +2012,13 @@ body.menu-open {
 .quiz-results {
     text-align: center;
     padding: 2rem;
+    direction: rtl;
+    font-family: 'Heebo', 'Noto Sans Hebrew', 'Segoe UI', sans-serif;
+    unicode-bidi: embed;
+    font-feature-settings: "kern" 1, "liga" 1;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .quiz-results.hidden {
@@ -2688,5 +2746,208 @@ body.menu-open {
     .concept-detail::-webkit-scrollbar-thumb {
         background: rgba(102, 126, 234, 0.6);
         border-radius: 3px;
+    }
+}
+
+/* Enhanced Hebrew Quiz Support - UTF-8 Optimized */
+.quiz-container, .quiz-container * {
+    direction: rtl !important;
+    font-family: 'Heebo', 'Noto Sans Hebrew', Arial, sans-serif !important;
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+    text-rendering: optimizeLegibility !important;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+    font-display: swap;
+}
+
+.quiz-header h3, .question h4 {
+    direction: rtl !important;
+    text-align: right !important;
+    font-family: 'Heebo', 'Noto Sans Hebrew', Arial, sans-serif !important;
+    line-height: 1.6 !important;
+    word-spacing: 0.1em;
+    letter-spacing: 0.02em;
+}
+
+.option-btn {
+    direction: rtl !important;
+    text-align: right !important;
+    font-family: 'Heebo', 'Noto Sans Hebrew', Arial, sans-serif !important;
+    padding: 15px 20px !important;
+    margin: 10px 0 !important;
+    border: 2px solid #e2e8f0 !important;
+    background: white !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    display: block !important;
+    width: 100% !important;
+    line-height: 1.5 !important;
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    box-sizing: border-box;
+    unicode-bidi: bidi-override;
+}
+
+.option-btn:hover {
+    border-color: #667eea !important;
+    background: #f8f9ff !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+}
+
+.option-btn.selected {
+    border-color: #667eea !important;
+    background: #ebf4ff !important;
+    font-weight: 500;
+}
+
+.option-btn.correct {
+    border-color: #48bb78 !important;
+    background: #f0fff4 !important;
+    color: #2f855a !important;
+}
+
+.option-btn.incorrect {
+    border-color: #e53e3e !important;
+    background: #fff5f5 !important;
+    color: #c53030 !important;
+}
+
+.quiz-results {
+    direction: rtl !important;
+    text-align: center !important;
+    font-family: 'Heebo', 'Noto Sans Hebrew', Arial, sans-serif !important;
+}
+
+.quiz-results h3, .quiz-results p {
+    direction: rtl !important;
+    font-family: 'Heebo', 'Noto Sans Hebrew', Arial, sans-serif !important;
+    line-height: 1.6 !important;
+    margin: 15px 0 !important;
+}
+
+.explanation {
+    direction: rtl !important;
+    font-family: 'Heebo', 'Noto Sans Hebrew', Arial, sans-serif !important;
+    background: #f8f9fa !important;
+    padding: 20px !important;
+    border-radius: 8px !important;
+    margin-top: 20px !important;
+    border-right: 4px solid #007bff !important;
+    text-align: right !important;
+}
+
+.explanation p {
+    direction: rtl !important;
+    text-align: right !important;
+    font-family: 'Heebo', 'Noto Sans Hebrew', Arial, sans-serif !important;
+    line-height: 1.7 !important;
+    margin: 10px 0 !important;
+    word-spacing: 0.1em;
+}
+
+.explanation.correct {
+    border-right-color: #28a745 !important;
+    background: #d4edda !important;
+}
+
+.explanation.incorrect {
+    border-right-color: #dc3545 !important;
+    background: #f8d7da !important;
+}
+
+.results-actions {
+    direction: rtl !important;
+    text-align: center !important;
+    margin-top: 20px !important;
+}
+
+.results-actions button {
+    direction: rtl !important;
+    font-family: 'Heebo', 'Noto Sans Hebrew', Arial, sans-serif !important;
+    margin: 0 10px !important;
+    padding: 12px 24px !important;
+    border: none !important;
+    border-radius: 6px !important;
+    cursor: pointer !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+    min-width: 120px;
+}
+
+.btn-primary {
+    background: #667eea !important;
+    color: white !important;
+}
+
+.btn-primary:hover {
+    background: #5a67d8 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.btn-secondary {
+    background: #e2e8f0 !important;
+    color: #4a5568 !important;
+}
+
+.btn-secondary:hover {
+    background: #cbd5e0 !important;
+    transform: translateY(-2px);
+}
+
+/* Modal Content Hebrew Optimization */
+#quizModal .modal-content {
+    direction: rtl !important;
+    font-family: 'Heebo', 'Noto Sans Hebrew', Arial, sans-serif !important;
+}
+
+#quiz-content {
+    direction: rtl !important;
+    font-family: 'Heebo', 'Noto Sans Hebrew', Arial, sans-serif !important;
+}
+
+/* Progress Bar RTL */
+.progress-bar {
+    direction: ltr !important; /* Progress bars work better LTR */
+}
+
+.progress {
+    direction: ltr !important;
+    background: #48bb78 !important;
+    height: 100% !important;
+    transition: width 0.3s ease !important;
+    border-radius: 4px;
+}
+
+/* Mobile Quiz Optimization */
+@media (max-width: 768px) {
+    .option-btn {
+        padding: 12px 16px !important;
+        font-size: 15px !important;
+        margin: 8px 0 !important;
+    }
+    
+    .quiz-header h3 {
+        font-size: 18px !important;
+    }
+    
+    .question h4 {
+        font-size: 16px !important;
+        line-height: 1.5 !important;
+    }
+    
+    .explanation {
+        padding: 15px !important;
+        margin-top: 15px !important;
+    }
+    
+    .results-actions button {
+        padding: 10px 20px !important;
+        font-size: 15px !important;
+        margin: 5px !important;
+        min-width: 100px;
     }
 }
