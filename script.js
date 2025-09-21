@@ -10,11 +10,17 @@ let testTimeLeft = 0;
 
 // Navigation
 $(document).ready(function() {
+    // Initialize burger menu
+    initializeBurgerMenu();
+    
     // Initialize navigation
     $('.main-nav a').click(function(e) {
         e.preventDefault();
         const section = $(this).data('section');
         showSection(section);
+        
+        // Close mobile menu after clicking
+        closeMobileMenu();
     });
     
     // Show home section by default
@@ -1611,4 +1617,57 @@ function startTest(testId) {
     console.log('Starting timer and showing first question');
     startTestTimer();
     showQuizQuestion();
+}
+
+// Burger Menu Functions
+function initializeBurgerMenu() {
+    // Burger menu toggle
+    $('#burger-menu').click(function() {
+        toggleMobileMenu();
+    });
+    
+    // Close menu when clicking outside
+    $(document).click(function(e) {
+        if (!$(e.target).closest('.main-nav').length) {
+            closeMobileMenu();
+        }
+    });
+    
+    // Close menu on window resize if desktop
+    $(window).resize(function() {
+        if ($(window).width() > 768) {
+            closeMobileMenu();
+        }
+    });
+    
+    // Close menu on escape key
+    $(document).keydown(function(e) {
+        if (e.key === 'Escape') {
+            closeMobileMenu();
+        }
+    });
+}
+
+function toggleMobileMenu() {
+    const burgerMenu = $('#burger-menu');
+    const navMenu = $('#nav-menu');
+    
+    burgerMenu.toggleClass('active');
+    navMenu.toggleClass('show');
+    
+    // Toggle body scroll lock when menu is open
+    if (navMenu.hasClass('show')) {
+        $('body').addClass('menu-open');
+    } else {
+        $('body').removeClass('menu-open');
+    }
+}
+
+function closeMobileMenu() {
+    const burgerMenu = $('#burger-menu');
+    const navMenu = $('#nav-menu');
+    
+    burgerMenu.removeClass('active');
+    navMenu.removeClass('show');
+    $('body').removeClass('menu-open');
 }
