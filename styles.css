@@ -422,6 +422,71 @@ main {
     color: white;
 }
 
+/* Interactive cards */
+.interactive-card {
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.interactive-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+    transform: rotate(45deg);
+    transition: all 0.6s ease;
+    opacity: 0;
+}
+
+.interactive-card:hover::before {
+    opacity: 1;
+    animation: shine 1.5s ease-in-out;
+}
+
+@keyframes shine {
+    0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+.click-indicator {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    font-weight: normal;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
+
+.concept-summary {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    opacity: 0.9;
+    font-style: italic;
+    padding: 0.8rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    border-left: 3px solid rgba(255, 255, 255, 0.5);
+}
+
+.section-intro {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 2rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 15px;
+    border: 2px solid rgba(102, 126, 234, 0.2);
+}
+
 .lesson-card:hover, .concept-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
@@ -1653,22 +1718,110 @@ body.menu-open {
     -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
 }
 
-/* Better scrollbar styling */
-.modal-content::-webkit-scrollbar {
-    width: 8px;
+/* Concept Detail Modal Styles */
+.concept-detail {
+    direction: rtl;
+    text-align: right;
+    line-height: 1.8;
 }
 
-.modal-content::-webkit-scrollbar-track {
+.concept-detail h3 {
+    color: #667eea;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    border-bottom: 3px solid #667eea;
+    padding-bottom: 0.5rem;
+}
+
+.concept-detail h4 {
+    color: #4a5568;
+    font-size: 1.3rem;
+    margin: 2rem 0 1rem 0;
+    padding: 0.8rem;
+    background: linear-gradient(135deg, #f7fafc, #edf2f7);
+    border-radius: 10px;
+    border-right: 4px solid #667eea;
+}
+
+.concept-detail p {
+    color: #555;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: rgba(102, 126, 234, 0.05);
+    border-radius: 10px;
+    font-size: 1.1rem;
+}
+
+.concept-detail ul {
+    margin: 1rem 0;
+    padding-right: 1.5rem;
+}
+
+.concept-detail li {
+    margin-bottom: 0.8rem;
+    color: #444;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.concept-detail li strong {
+    color: #667eea;
+    font-weight: 600;
+}
+
+.concept-detail .code-example {
+    margin: 1.5rem 0;
+    background: #2d3748;
+    border-radius: 12px;
+    padding: 1.5rem;
+    border: 2px solid #4a5568;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.concept-detail .code-example pre {
+    margin: 0;
+    color: #e2e8f0;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.concept-detail .code-example code {
+    color: #68d391;
+}
+
+/* Code highlighting */
+.concept-detail .code-example pre code {
+    background: none;
+    padding: 0;
+    border-radius: 0;
+    display: block;
+}
+
+/* Enhanced modal for concept details */
+.modal-content.concept-modal {
+    max-width: 900px;
+    max-height: 90vh;
+}
+
+/* Better scrollbar for modal content */
+.concept-detail::-webkit-scrollbar {
+    width: 10px;
+}
+
+.concept-detail::-webkit-scrollbar-track {
     background: #f1f1f1;
-    border-radius: 4px;
+    border-radius: 5px;
 }
 
-.modal-content::-webkit-scrollbar-thumb {
+.concept-detail::-webkit-scrollbar-thumb {
     background: #667eea;
-    border-radius: 4px;
+    border-radius: 5px;
 }
 
-.modal-content::-webkit-scrollbar-thumb:hover {
+.concept-detail::-webkit-scrollbar-thumb:hover {
     background: #5a67d8;
 }
 

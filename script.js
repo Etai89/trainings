@@ -1671,3 +1671,2017 @@ function closeMobileMenu() {
     navMenu.removeClass('show');
     $('body').removeClass('menu-open');
 }
+
+// Concept Details Functions
+function showConceptDetails(conceptId) {
+    const conceptData = {
+        'python-intro': {
+            title: '🐍 הכרת שפת פייתון',
+            content: `
+                <div class="concept-detail">
+                    <h3>מה זה פייתון?</h3>
+                    <p>פייתון היא שפת תכנות פשוטה, חזקה ויעילה שפותחה על ידי גידו ואן רוסום ב-1991. השפה נועדה להיות קלה ללמידה וקריאה.</p>
+                    
+                    <h4>🌟 יתרונות השפה:</h4>
+                    <ul>
+                        <li><strong>קלה ללמידה:</strong> תחביר פשוט וברור</li>
+                        <li><strong>רב-תכליתית:</strong> מתאימה לפיתוח אתרים, בינה מלאכותית, מדע נתונים ועוד</li>
+                        <li><strong>קהילה גדולה:</strong> מיליוני מפתחים ברחבי העולם</li>
+                        <li><strong>ספריות רבות:</strong> אלפי ספריות זמינות בחינם</li>
+                    </ul>
+
+                    <h4>💻 דוגמה ראשונה:</h4>
+                    <div class="code-example">
+                        <pre><code># זוהי התוכנית הראשונה שלנו
+print("שלום עולם!")
+print("אני לומד פייתון")
+
+# מחשבת הכפלה פשוטה
+a = 5
+b = 3
+result = a * b
+print(f"{a} כפול {b} שווה {result}")</code></pre>
+                    </div>
+
+                    <h4>🎯 שימושים נפוצים:</h4>
+                    <ul>
+                        <li>פיתוח אתרים (Django, Flask)</li>
+                        <li>בינה מלאכותית ולמידת מכונה</li>
+                        <li>ניתוח נתונים ומדע נתונים</li>
+                        <li>אוטומציה וסקריפטים</li>
+                        <li>פיתוח משחקים</li>
+                    </ul>
+                </div>
+            `
+        },
+        'variables': {
+            title: '🔤 משתנים',
+            content: `
+                <div class="concept-detail">
+                    <h3>מה זה משתנה?</h3>
+                    <p>משתנה הוא "קופסה" שמאחסנת מידע במחשב. כל משתנה יש לו שם וערך, והערך יכול להשתנות במהלך הריצה של התוכנית.</p>
+                    
+                    <h4>📝 כללי מתן שמות:</h4>
+                    <ul>
+                        <li>שם המשתנה חייב להתחיל באות או ב-_</li>
+                        <li>יכול להכיל אותיות, מספרים ו-_</li>
+                        <li>לא יכול להכיל רווחים או תווים מיוחדים</li>
+                        <li>רגיש לאותיות גדולות/קטנות</li>
+                        <li>לא יכול להיות מילה שמורה (if, for, class, וכו')</li>
+                    </ul>
+
+                    <div class="code-example">
+                        <pre><code># דוגמאות נכונות
+name = "יוסי"
+age = 25
+student_grade = 95
+_private_var = "חשוב"
+
+# דוגמאות שגויות
+# 2name = "שגוי"  # מתחיל במספר
+# my-var = 5     # מכיל מקף
+# if = 10        # מילה שמורה</code></pre>
+                    </div>
+
+                    <h4>🔄 שינוי ערכי משתנים:</h4>
+                    <div class="code-example">
+                        <pre><code># יצירת משתנה
+score = 80
+
+# שינוי הערך
+score = 85
+score = score + 10  # 95
+
+# דרך קצרה
+score += 5  # 100
+score -= 20 # 80
+score *= 2  # 160</code></pre>
+                    </div>
+
+                    <h4>💡 טיפים לשמות טובים:</h4>
+                    <ul>
+                        <li>השתמש בשמות ברורים ומתארים: <code>student_name</code> במקום <code>x</code></li>
+                        <li>השתמש ב-snake_case: <code>my_variable</code></li>
+                        <li>הימנע מקיצורים לא ברורים</li>
+                        <li>השתמש בשמות באנגלית או עברית עקבית</li>
+                    </ul>
+                </div>
+            `
+        },
+        'input-output': {
+            title: '📥 קלט ופלט',
+            content: `
+                <div class="concept-detail">
+                    <h3>תקשורת עם המשתמש</h3>
+                    <p>כל תוכנית צריכה לתקשר עם המשתמש - לקבל מידע ולהציג תוצאות. זה נעשה באמצעות פונקציות קלט ופלט.</p>
+                    
+                    <h4>🖨️ פונקציית print() - הדפסה למסך:</h4>
+                    <div class="code-example">
+                        <pre><code># הדפסה בסיסית
+print("שלום עולם!")
+
+# הדפסת משתנים
+name = "דני"
+age = 20
+print("השם שלי", name)
+print("אני בן", age)
+
+# הדפסה מעוצבת עם f-strings
+print(f"שמי {name} ואני בן {age}")
+
+# הדפסה ברצף
+print("ראשון", "שני", "שלישי", sep=" | ")
+# תוצאה: ראשון | שני | שלישי</code></pre>
+                    </div>
+
+                    <h4>⌨️ פונקציית input() - קלט מהמשתמש:</h4>
+                    <div class="code-example">
+                        <pre><code># קלט בסיסי
+name = input("מה השם שלך? ")
+print(f"שלום {name}")
+
+# קלט מספרי
+age_str = input("כמה אתה בן? ")
+age = int(age_str)  # המרה למספר
+print(f"בעוד 10 שנים תהיה בן {age + 10}")
+
+# דרך קצרה
+age = int(input("כמה אתה בן? "))
+
+# קלט מספר עשרוני
+height = float(input("מה הגובה שלך (במטר)? "))
+print(f"הגובה שלך הוא {height} מטר")</code></pre>
+                    </div>
+
+                    <h4>⚠️ טיפול בשגיאות קלט:</h4>
+                    <div class="code-example">
+                        <pre><code># מה קורה אם המשתמש מכניס טקסט במקום מספר?
+try:
+    age = int(input("כמה אתה בן? "))
+    print(f"אתה בן {age}")
+except ValueError:
+    print("אנא הכנס מספר תקין!")</code></pre>
+                    </div>
+
+                    <h4>🎨 עיצוב פלט מתקדם:</h4>
+                    <div class="code-example">
+                        <pre><code># f-strings עם עיצוב
+price = 19.99
+print(f"המחיר הוא: {price:.2f} שקל")  # 19.99
+
+# יישור טקסט
+print(f"{'שם':<10} | {'ציון':>5}")
+print(f"{'יוסי':<10} | {95:>5}")
+print(f"{'דני':<10} | {87:>5}")
+
+# הדפסה ללא מעבר שורה
+print("טוען", end="")
+print("...", end="")
+print("הושלם!")</code></pre>
+                    </div>
+                </div>
+            `
+        },
+        'comments': {
+            title: '💬 הערות וביאורים',
+            content: `
+                <div class="concept-detail">
+                    <h3>למה צריך הערות?</h3>
+                    <p>הערות הן טקסט שהמתכנת כותב כדי להסביר מה הקוד עושה. המחשב מתעלם מהן, אבל הן חשובות מאוד לאנשים שקוראים את הקוד.</p>
+                    
+                    <h4>📝 סוגי הערות:</h4>
+                    <div class="code-example">
+                        <pre><code># זוהי הערה בשורה אחת
+print("שלום!")  # הערה בסוף השורה
+
+# ניתן לכתוב הערות ארוכות
+# על פני מספר שורות
+# כמו זה
+
+"""
+זוהי הערה רב-שורתית
+שיכולה להכיל הרבה טקסט
+ולהסביר דברים מורכבים
+"""</code></pre>
+                    </div>
+
+                    <h4>✅ מתי להשתמש בהערות:</h4>
+                    <ul>
+                        <li><strong>הסבר המטרה:</strong> מה התוכנית אמורה לעשות</li>
+                        <li><strong>חלקים מורכבים:</strong> אלגוריתם מסובך או נוסחה</li>
+                        <li><strong>מידע על הקוד:</strong> מי כתב, מתי, למה</li>
+                        <li><strong>TODO:</strong> דברים שצריך לתקן או להוסיף</li>
+                    </ul>
+
+                    <div class="code-example">
+                        <pre><code># תוכנית חישוב שטח עיגול
+# מחבר: יוסי כהן, תאריך: 01/12/2023
+
+import math  # ספרייה למקדמים מתמטיים
+
+# קבלת הרדיוס מהמשתמש
+radius = float(input("הכנס רדיוס העיגול: "))
+
+# חישוב השטח לפי הנוסחה: π * r²
+area = math.pi * radius ** 2
+
+# הצגת התוצאה עם עיגול לשתי ספרות
+print(f"שטח העיגול הוא: {area:.2f}")</code></pre>
+                    </div>
+
+                    <h4>❌ הערות רעות (להימנע):</h4>
+                    <div class="code-example">
+                        <pre><code># רע: הערה מיותרת
+x = x + 1  # הוספת 1 ל-x
+
+# רע: הערה לא מעודכנת
+# מחשב את הסכום של 3 מספרים
+result = a + b  # אבל בפועל רק 2!
+
+# טוב: הערה שמסבירת למה
+x = x + 1  # מעבר לפריט הבא ברשימה</code></pre>
+                    </div>
+
+                    <h4>💡 טיפים להערות טובות:</h4>
+                    <ul>
+                        <li>כתוב בשפה ברורה ופשוטה</li>
+                        <li>הסבר "למה" ולא "מה"</li>
+                        <li>עדכן הערות כשמשנים קוד</li>
+                        <li>אל תגזים - קוד טוב מסביר את עצמו</li>
+                    </ul>
+                </div>
+            `
+        },
+        'errors': {
+            title: '🚫 טיפול בשגיאות',
+            content: `
+                <div class="concept-detail">
+                    <h3>סוגי שגיאות בתכנות</h3>
+                    <p>שגיאות הן חלק טבעי מהתכנות. חשוב ללמוד לזהות אותן ולתקן אותן.</p>
+                    
+                    <h4>🔴 שגיאות תחבירים (Syntax Errors):</h4>
+                    <p>שגיאות בכתיבת הקוד שמונעות מהתוכנית לרוץ</p>
+                    <div class="code-example">
+                        <pre><code># שגוי - חסרות גרשיים
+print(שלום עולם)
+
+# נכון
+print("שלום עולם")
+
+# שגוי - חסר :
+if age > 18
+    print("בגיר")
+
+# נכון
+if age > 18:
+    print("בגיר")</code></pre>
+                    </div>
+
+                    <h4>🟠 שגיאות זמן ריצה (Runtime Errors):</h4>
+                    <p>שגיאות שקורות כשהתוכנית רצה</p>
+                    <div class="code-example">
+                        <pre><code># חלוקה באפס
+result = 10 / 0  # ZeroDivisionError
+
+# משתנה לא קיים
+print(name)  # NameError: name is not defined
+
+# המרת טקסט למספר
+age = int("abc")  # ValueError</code></pre>
+                    </div>
+
+                    <h4>🛡️ טיפול בשגיאות עם try-except:</h4>
+                    <div class="code-example">
+                        <pre><code># טיפול בסיסי
+try:
+    age = int(input("כמה אתה בן? "))
+    print(f"אתה בן {age}")
+except ValueError:
+    print("אנא הכנס מספר תקין!")
+
+# טיפול במספר סוגי שגיאות
+try:
+    num1 = int(input("מספר ראשון: "))
+    num2 = int(input("מספר שני: "))
+    result = num1 / num2
+    print(f"התוצאה: {result}")
+except ValueError:
+    print("אנא הכנס מספרים תקינים!")
+except ZeroDivisionError:
+    print("אי אפשר לחלק באפס!")</code></pre>
+                    </div>
+
+                    <h4>🔍 איתור ותיקון שגיאות:</h4>
+                    <ul>
+                        <li><strong>קרא את הודעת השגיאה:</strong> היא מספרת לך מה השגיאה ובאיזה שורה</li>
+                        <li><strong>בדוק תחביר:</strong> סוגריים, גרשיים, נקודותיים</li>
+                        <li><strong>בדוק כתיב:</strong> שמות משתנים ופונקציות</li>
+                        <li><strong>השתמש ב-print():</strong> כדי לבדוק ערכי משתנים</li>
+                    </ul>
+
+                    <h4>💡 טיפים למניעת שגיאות:</h4>
+                    <div class="code-example">
+                        <pre><code># בדיקה לפני פעולה
+if num2 != 0:
+    result = num1 / num2
+else:
+    print("לא ניתן לחלק באפס")
+
+# בדיקת קלט
+user_input = input("הכנס מספר: ")
+if user_input.isdigit():
+    num = int(user_input)
+else:
+    print("זה לא מספר!")</code></pre>
+                    </div>
+                </div>
+            `
+        },
+        'best-practices': {
+            title: '⭐ עקרונות תכנות נכון',
+            content: `
+                <div class="concept-detail">
+                    <h3>כיצד לכתוב קוד טוב</h3>
+                    <p>קוד טוב הוא קוד שקל לקרוא, להבין ולתחזק. הנה העקרונות החשובים ביותר.</p>
+                    
+                    <h4>📖 קריאות (Readability):</h4>
+                    <div class="code-example">
+                        <pre><code># רע - קשה להבין
+x=int(input())
+if x>=18:print("ok")
+else:print("no")
+
+# טוב - ברור ומסודר
+age = int(input("כמה אתה בן? "))
+if age >= 18:
+    print("בגיר")
+else:
+    print("קטין")</code></pre>
+                    </div>
+
+                    <h4>🏗️ מבנה נכון:</h4>
+                    <ul>
+                        <li><strong>הזחות עקביות:</strong> 4 רווחים לכל רמה</li>
+                        <li><strong>שורות ריקות:</strong> הפרדה בין חלקי קוד</li>
+                        <li><strong>אורך שורה:</strong> עד 80 תווים</li>
+                        <li><strong>סדר לוגי:</strong> import, קבועים, פונקציות, קוד ראשי</li>
+                    </ul>
+
+                    <div class="code-example">
+                        <pre><code># מבנה תוכנית טוב
+import math
+
+# קבועים
+PI = 3.14159
+TAX_RATE = 0.17
+
+# פונקציות
+def calculate_circle_area(radius):
+    """מחשבת שטח עיגול"""
+    return PI * radius ** 2
+
+def calculate_tax(price):
+    """מחשבת מס"""
+    return price * TAX_RATE
+
+# תוכנית ראשית
+if __name__ == "__main__":
+    r = float(input("הכנס רדיוס: "))
+    area = calculate_circle_area(r)
+    print(f"השטח: {area:.2f}")</code></pre>
+                    </div>
+
+                    <h4>🔧 DRY - Don't Repeat Yourself:</h4>
+                    <div class="code-example">
+                        <pre><code># רע - חזרה על קוד
+print("ברוך הבא לתוכנית!")
+name1 = input("שם תלמיד 1: ")
+grade1 = int(input("ציון תלמיד 1: "))
+print(f"{name1}: {grade1}")
+
+name2 = input("שם תלמיד 2: ")
+grade2 = int(input("ציון תלמיד 2: "))
+print(f"{name2}: {grade2}")
+
+# טוב - פונקציה
+def get_student_info():
+    name = input("שם התלמיד: ")
+    grade = int(input("ציון התלמיד: "))
+    print(f"{name}: {grade}")
+    return name, grade
+
+print("ברוך הבא לתוכנית!")
+student1 = get_student_info()
+student2 = get_student_info()</code></pre>
+                    </div>
+
+                    <h4>🎯 שמות משמעותיים:</h4>
+                    <div class="code-example">
+                        <pre><code># רע
+a = int(input())
+b = a * 0.17
+c = a + b
+
+# טוב
+price = int(input("מחיר המוצר: "))
+tax = price * 0.17
+total_price = price + tax</code></pre>
+                    </div>
+
+                    <h4>✅ רשימת בדיקה לקוד טוב:</h4>
+                    <ul>
+                        <li>האם השמות ברורים ומתארים?</li>
+                        <li>האם יש הערות במקומות המתאימים?</li>
+                        <li>האם הקוד מחולק לפונקציות?</li>
+                        <li>האם יש טיפול בשגיאות?</li>
+                        <li>האם הקוד עובד עם קלטים שונים?</li>
+                        <li>האם הקוד קל לשינוי ולהרחבה?</li>
+                    </ul>
+
+                    <h4>🌟 הטיפ הזהב:</h4>
+                    <p><strong>"כתוב קוד כאילו האדם שיקרא אותו הוא רוצח פסיכופת שיודע איפה אתה גר"</strong> - זכור שאתה עצמך תקרא את הקוד הזה בעוד חודש ולא תזכור מה רצית לעשות!</p>
+                </div>
+            `
+        },
+        // Data Types Section
+        'numbers': {
+            title: '🔢 מספרים',
+            content: `
+                <div class="concept-detail">
+                    <h3>סוגי מספרים בפייתון</h3>
+                    <p>פייתון תומכת במספר סוגי מספרים לשימושים שונים.</p>
+                    
+                    <h4>🔢 מספרים שלמים (int):</h4>
+                    <div class="code-example">
+                        <pre><code># מספרים חיוביים ושליליים
+age = 25
+temperature = -5
+big_number = 1000000
+
+# פעולות בסיסיות
+a = 10
+b = 3
+print(f"חיבור: {a + b}")      # 13
+print(f"חיסור: {a - b}")      # 7
+print(f"כפל: {a * b}")        # 30
+print(f"חלוקה: {a / b}")      # 3.333...
+print(f"חלוקה שלמה: {a // b}") # 3
+print(f"שארית: {a % b}")      # 1
+print(f"חזקה: {a ** b}")      # 1000</code></pre>
+                    </div>
+
+                    <h4>💰 מספרים עשרוניים (float):</h4>
+                    <div class="code-example">
+                        <pre><code># מספרים עם נקודה עשרונית
+price = 19.99
+height = 1.75
+pi = 3.14159
+
+# דיוק בחישובים
+result = 0.1 + 0.2
+print(result)  # 0.30000000000000004 (לא מדויק!)
+
+# פתרון - עיגול
+result = round(0.1 + 0.2, 2)
+print(result)  # 0.3
+
+# עיצוב הצגה
+print(f"מחיר: {price:.2f} שקל")  # מחיר: 19.99 שקל</code></pre>
+                    </div>
+
+                    <h4>🧮 פונקציות שימושיות:</h4>
+                    <div class="code-example">
+                        <pre><code>import math
+
+# פונקציות בסיסיות
+print(abs(-5))        # 5 - ערך מוחלט
+print(max(3, 7, 1))   # 7 - מקסימום
+print(min(3, 7, 1))   # 1 - מינימום
+print(round(3.7))     # 4 - עיגול
+print(round(3.14159, 2))  # 3.14 - עיגול עם דיוק
+
+# פונקציות math
+print(math.sqrt(16))  # 4.0 - שורש ריבועי
+print(math.ceil(3.2)) # 4 - עיגול למעלה
+print(math.floor(3.8)) # 3 - עיגול למטה
+print(math.pi)        # 3.141592653589793</code></pre>
+                    </div>
+
+                    <h4>🔄 המרות בין סוגים:</h4>
+                    <div class="code-example">
+                        <pre><code># המרת מחרוזת למספר
+age_str = "25"
+age = int(age_str)
+print(type(age))  # <class 'int'>
+
+height_str = "1.75"
+height = float(height_str)
+print(type(height))  # <class 'float'>
+
+# המרת מספר למחרוזת
+num = 42
+num_str = str(num)
+print(type(num_str))  # <class 'str'>
+
+# בדיקת סוג
+print(isinstance(25, int))     # True
+print(isinstance(3.14, float)) # True</code></pre>
+                    </div>
+                </div>
+            `
+        },
+        'strings': {
+            title: '📝 מחרוזות (טקסט)',
+            content: `
+                <div class="concept-detail">
+                    <h3>עבודה עם טקסט</h3>
+                    <p>מחרוזת היא רצף של תווים - אותיות, מספרים, סימנים וכו'. זה אחד הסוגים החשובים ביותר בתכנות.</p>
+                    
+                    <h4>✍️ יצירת מחרוזות:</h4>
+                    <div class="code-example">
+                        <pre><code># דרכים שונות ליצירה
+name = "יוסי"
+message = 'שלום עולם!'
+long_text = """זוהי מחרוזת
+ארוכה על פני
+מספר שורות"""
+
+# מחרוזת ריקה
+empty = ""
+empty2 = str()
+
+# הדפסת מחרוזות
+print("שלום " + name + "!")
+print(f"שלום {name}!")  # f-string - הדרך המומלצת</code></pre>
+                    </div>
+
+                    <h4>🔧 פעולות על מחרוזות:</h4>
+                    <div class="code-example">
+                        <pre><code>text = "שלום עולם"
+
+# אורך המחרוזת
+print(len(text))  # 10
+
+# גישה לתווים (index מתחיל מ-0)
+print(text[0])    # ש
+print(text[-1])   # ם (אחרון)
+
+# חיתוך (slicing)
+print(text[0:4])  # שלום
+print(text[5:])   # עולם
+print(text[:4])   # שלום
+
+# בדיקות
+print("שלום" in text)      # True
+print("היי" in text)       # False
+print(text.startswith("שלום"))  # True
+print(text.endswith("עולם"))    # True</code></pre>
+                    </div>
+
+                    <h4>🔤 מתודות שימושיות:</h4>
+                    <div class="code-example">
+                        <pre><code>name = "יוסי כהן"
+sentence = "שלום עולם נפלא"
+
+# שינוי רישיות (באנגלית)
+english = "Hello World"
+print(english.upper())    # HELLO WORLD
+print(english.lower())    # hello world
+print(english.title())    # Hello World
+
+# ניקוי רווחים
+text = "  שלום עולם  "
+print(text.strip())       # "שלום עולם"
+
+# החלפה
+print(sentence.replace("עולם", "יקום"))  # שלום יקום נפלא
+
+# פיצול למילים
+words = sentence.split()
+print(words)  # ['שלום', 'עולם', 'נפלא']
+
+# חיבור מילים
+new_sentence = " ".join(words)
+print(new_sentence)  # שלום עולם נפלא</code></pre>
+                    </div>
+
+                    <h4>🎨 עיצוב מחרוזות:</h4>
+                    <div class="code-example">
+                        <pre><code># f-strings - הדרך המתקדמת
+name = "דני"
+age = 25
+score = 87.5
+
+print(f"שם: {name}")
+print(f"גיל: {age} שנים")
+print(f"ציון: {score:.1f}")  # עיגול לספרה אחת
+
+# יישור טקסט
+print(f"{'שם':<10} | {'ציון':>5}")  # יישור שמאל ו ימין
+print(f"{name:<10} | {score:>5.1f}")
+
+# format() - דרך ישנה יותר
+template = "שלום {}, אתה בן {}"
+print(template.format(name, age))
+
+# % formatting - דרך עתיקה
+print("שלום %s, אתה בן %d" % (name, age))</code></pre>
+                    </div>
+
+                    <h4>🔍 דוגמה מקיפה - עיבוד טקסט:</h4>
+                    <div class="code-example">
+                        <pre><code># קבלת טקסט מהמשתמש ועיבוד
+user_input = input("הכנס משפט: ").strip()
+
+# בדיקות בסיסיות
+if not user_input:
+    print("לא הכנסת כלום!")
+else:
+    # ניתוח המשפט
+    word_count = len(user_input.split())
+    char_count = len(user_input)
+    
+    print(f"המשפט שלך: '{user_input}'")
+    print(f"מספר מילים: {word_count}")
+    print(f"מספר תווים: {char_count}")
+    
+    # בדיקת תוכן
+    if "שלום" in user_input.lower():
+        print("נחמד לראות שאתה מנומס! 😊")</code></pre>
+                    </div>
+                </div>
+            `
+        },
+        'booleans': {
+            title: '✅ ערכי אמת (Boolean)',
+            content: `
+                <div class="concept-detail">
+                    <h3>True ו-False</h3>
+                    <p>ערכי בוליאן מייצגים אמת או שקר. הם בסיס לקבלת החלטות בתוכנית.</p>
+                    
+                    <h4>💡 ערכי בוליאן בסיסיים:</h4>
+                    <div class="code-example">
+                        <pre><code># שני הערכים היחידים
+is_student = True
+is_working = False
+
+print(type(True))   # <class 'bool'>
+print(type(False))  # <class 'bool'>
+
+# בדיקות שמחזירות בוליאן
+age = 20
+print(age > 18)     # True
+print(age < 10)     # False
+print(age == 20)    # True
+print(age != 25)    # True</code></pre>
+                    </div>
+
+                    <h4>🔗 אופרטורים לוגיים:</h4>
+                    <div class="code-example">
+                        <pre><code>age = 22
+has_license = True
+has_car = False
+
+# AND - שניהם צריכים להיות אמת
+can_drive = age >= 18 and has_license
+print(f"יכול לנהוג: {can_drive}")  # True
+
+# OR - אחד מהם צריך להיות אמת
+can_travel = has_license or has_car
+print(f"יכול לנסוע: {can_travel}")  # True
+
+# NOT - הפיכת ערך
+is_minor = not (age >= 18)
+print(f"קטין: {is_minor}")  # False
+
+# שילוב מורכב
+can_buy_car = age >= 18 and has_license and not has_car
+print(f"יכול לקנות רכב: {can_buy_car}")  # True</code></pre>
+                    </div>
+
+                    <h4>🎯 ערכים "חושבים" (Truthy/Falsy):</h4>
+                    <div class="code-example">
+                        <pre><code># ערכים שנחשבים False
+print(bool(0))        # False - אפס
+print(bool(""))       # False - מחרוזת ריקה
+print(bool([]))       # False - רשימה ריקה
+print(bool(None))     # False - None
+
+# ערכים שנחשבים True
+print(bool(1))        # True - מספר שונה מאפס
+print(bool("היי"))    # True - מחרוזת לא ריקה
+print(bool([1, 2]))   # True - רשימה לא ריקה
+print(bool(-5))       # True - גם מספר שלילי
+
+# שימוש בבדיקות
+name = input("הכנס שם: ")
+if name:  # אם השם לא ריק
+    print(f"שלום {name}")
+else:
+    print("לא הכנסת שם")</code></pre>
+                    </div>
+
+                    <h4>🔄 אופרטורי השוואה:</h4>
+                    <div class="code-example">
+                        <pre><code>a = 10
+b = 20
+c = 10
+
+# השוואות בסיסיות
+print(a == c)   # True - שווה
+print(a != b)   # True - לא שווה
+print(a < b)    # True - קטן מ
+print(b > a)    # True - גדול מ
+print(a <= c)   # True - קטן או שווה
+print(b >= a)   # True - גדול או שווה
+
+# השוואת מחרוזות
+name1 = "אלון"
+name2 = "בני"
+print(name1 < name2)  # True - לפי סדר אלפביתי
+
+# זהירות עם סוגים שונים
+print(5 == "5")    # False - מספר ומחרוזת
+print(5 == 5.0)    # True - int ו-float</code></pre>
+                    </div>
+
+                    <h4>💼 דוגמה מעשית - מערכת הרשאות:</h4>
+                    <div class="code-example">
+                        <pre><code># מערכת בדיקת הרשאות
+age = int(input("כמה אתה בן? "))
+has_id = input("יש לך תעודת זהות? (כן/לא) ").lower() == "כן"
+is_citizen = input("אתה אזרח? (כן/לא) ").lower() == "כן"
+
+# בדיקת זכאות להצבעה
+can_vote = age >= 18 and has_id and is_citizen
+
+if can_vote:
+    print("✅ אתה זכאי להצביע!")
+else:
+    print("❌ אינך זכאי להצביע")
+    
+    # הסבר למה לא
+    if age < 18:
+        print("- אתה מתחת לגיל 18")
+    if not has_id:
+        print("- אין לך תעודת זהות")
+    if not is_citizen:
+        print("- אינך אזרח")
+
+# דוגמה למערכת ציונים
+grade = float(input("הכנס ציון: "))
+passed = grade >= 60
+honors = grade >= 90
+
+print(f"עבר: {passed}")
+print(f"בהצטיינות: {honors}")
+
+if passed and honors:
+    print("🏆 מעולה!")
+elif passed:
+    print("👍 עבר בהצלחה")
+else:
+    print("😔 לא עבר")</code></pre>
+                    </div>
+                </div>
+            `
+        },
+        'arithmetic-operators': {
+            title: '➕ אופרטורים אריתמטיים',
+            content: `
+                <div class="concept-detail">
+                    <h3>חישובים מתמטיים</h3>
+                    <p>אופרטורים אריתמטיים מאפשרים לנו לבצע פעולות מתמטיות בסיסיות ומתקדמות.</p>
+                    
+                    <h4>🧮 פעולות בסיסיות:</h4>
+                    <div class="code-example">
+                        <pre><code># חיבור וחיסור
+a = 10
+b = 3
+print(a + b)    # 13 - חיבור
+print(a - b)    # 7 - חיסור
+
+# כפל וחילוק
+print(a * b)    # 30 - כפל
+print(a / b)    # 3.333... - חילוק (תמיד מחזיר float)
+print(a // b)   # 3 - חילוק שלם (רק החלק השלם)
+print(a % b)    # 1 - שארית (מודולו)
+
+# חזקה
+print(a ** b)   # 1000 - 10 בחזקת 3
+print(2 ** 8)   # 256 - 2 בחזקת 8</code></pre>
+                    </div>
+
+                    <h4>📋 סדר פעולות (עדיפות):</h4>
+                    <div class="code-example">
+                        <pre><code># סדר פעולות כמו במתמטיקה
+result = 2 + 3 * 4     # 14 (לא 20!)
+print(result)
+
+# שימוש בסוגריים
+result = (2 + 3) * 4   # 20
+print(result)
+
+# עדיפות מלאה:
+# 1. סוגריים ()
+# 2. חזקה **
+# 3. כפל, חילוק *, /, //, %
+# 4. חיבור, חיסור +, -
+
+complex_calc = 2 + 3 * 4 ** 2 / 8 - 1
+# = 2 + 3 * 16 / 8 - 1
+# = 2 + 48 / 8 - 1  
+# = 2 + 6 - 1
+# = 7
+print(complex_calc)</code></pre>
+                    </div>
+
+                    <h4>🔢 פעולות עם סוגי נתונים שונים:</h4>
+                    <div class="code-example">
+                        <pre><code># מספרים שלמים ועשרוניים
+int_num = 10
+float_num = 3.5
+print(int_num + float_num)   # 13.5 (תוצאה עשרונית)
+
+# כפל מחרוזת במספר
+name = "היי "
+print(name * 3)              # "היי היי היי "
+
+# חיבור מחרוזות
+greeting = "שלום " + "עולם"
+print(greeting)              # "שלום עולם"
+
+# אי אפשר לחבר מחרוזת למספר ישירות
+# print("גיל: " + 25)        # שגיאה!
+print("גיל: " + str(25))     # "גיל: 25" - נכון</code></pre>
+                    </div>
+
+                    <h4>💡 שימושים מעשיים:</h4>
+                    <div class="code-example">
+                        <pre><code># מחשבון טיפים במסעדה
+bill = 120.50
+tip_percent = 15
+tip = bill * (tip_percent / 100)
+total = bill + tip
+print(f"חשבון: {bill:.2f} שקל")
+print(f"טיפ ({tip_percent}%): {tip:.2f} שקל")
+print(f"סה\"כ: {total:.2f} שקל")
+
+# בדיקה אם מספר זוגי או אי זוגי
+number = 17
+if number % 2 == 0:
+    print(f"{number} הוא זוגי")
+else:
+    print(f"{number} הוא אי-זוגי")
+
+# חישוב שטח עיגול
+import math
+radius = 5
+area = math.pi * radius ** 2
+print(f"שטח עיגול ברדיוס {radius}: {area:.2f}")</code></pre>
+                    </div>
+
+                    <h4>⚠️ דברים לשים לב אליהם:</h4>
+                    <ul>
+                        <li><strong>חילוק באפס:</strong> גורם לשגיאה - תמיד בדקו!</li>
+                        <li><strong>דיוק עשרוני:</strong> 0.1 + 0.2 לא בדיוק 0.3</li>
+                        <li><strong>מספרים גדולים:</strong> Python יכול לעבוד עם מספרים ענקיים</li>
+                        <li><strong>חילוק שלם שלילי:</strong> -7 // 3 = -3 (לא -2)</li>
+                    </ul>
+                </div>
+            `
+        },
+        'comparison-operators': {
+            title: '⚖️ אופרטורי השוואה',
+            content: `
+                <div class="concept-detail">
+                    <h3>השוואת ערכים</h3>
+                    <p>אופרטורי השוואה מאפשרים לנו להשוות ערכים ולקבל תשובה של True או False.</p>
+                    
+                    <h4>🔍 אופרטורי השוואה בסיסיים:</h4>
+                    <div class="code-example">
+                        <pre><code># שווה ולא שווה
+a = 5
+b = 3
+c = 5
+
+print(a == c)    # True - שווה
+print(a == b)    # False - לא שווה
+print(a != b)    # True - לא שווה
+print(a != c)    # False - שווה (אז לא "לא שווה")
+
+# גדול וקטן
+print(a > b)     # True - 5 גדול מ-3
+print(b < a)     # True - 3 קטן מ-5
+print(a >= c)    # True - 5 גדול או שווה ל-5
+print(b <= a)    # True - 3 קטן או שווה ל-5</code></pre>
+                    </div>
+
+                    <h4>📝 השוואת מחרוזות:</h4>
+                    <div class="code-example">
+                        <pre><code># השוואת מחרוזות - לפי סדר אלפביתי
+name1 = "אברהם"
+name2 = "יצחק"
+name3 = "אברהם"
+
+print(name1 == name3)    # True
+print(name1 != name2)    # True
+print(name1 < name2)     # True - אברהם לפני יצחק באלפבית
+
+# השוואה רגישה לאותיות גדולות/קטנות (באנגלית)
+english1 = "Hello"
+english2 = "hello"
+print(english1 == english2)    # False!
+print(english1.lower() == english2.lower())  # True - אחרי המרה לקטנות</code></pre>
+                    </div>
+
+                    <h4>🔢 השוואת סוגי נתונים שונים:</h4>
+                    <div class="code-example">
+                        <pre><code># מספרים שלמים ועשרוניים
+print(5 == 5.0)      # True - הערך זהה
+print(5 == 5.1)      # False
+
+# מחרוזת מול מספר
+print(5 == "5")      # False - סוגים שונים
+print(str(5) == "5") # True - לאחר המרה
+
+# רשימות ו-tuples
+list1 = [1, 2, 3]
+list2 = [1, 2, 3]
+list3 = [1, 2, 4]
+
+print(list1 == list2)  # True - אותו תוכן
+print(list1 == list3)  # False - תוכן שונה
+
+# בדיקת אורך
+print(len("שלום") == 4)      # True
+print(len([1, 2, 3]) > 2)    # True</code></pre>
+                    </div>
+
+                    <h4>🎯 שימושים מעשיים:</h4>
+                    <div class="code-example">
+                        <pre><code># בדיקת גיל להרשאות
+age = int(input("כמה אתה בן? "))
+
+if age >= 18:
+    print("אתה בגיר - יכול להצביע")
+elif age >= 16:
+    print("יכול לקבל רישיון נהיגה")
+else:
+    print("אתה קטין")
+
+# מערכת ציונים
+grade = float(input("הכנס ציון: "))
+
+if grade >= 90:
+    print("מעולה!")
+elif grade >= 80:
+    print("טוב מאוד")
+elif grade >= 70:
+    print("טוב")
+elif grade >= 60:
+    print("עבר")
+else:
+    print("נכשל")
+
+# בדיקת סיסמה
+password = input("הכנס סיסמה: ")
+if len(password) >= 8:
+    print("סיסמה חזקה")
+else:
+    print("סיסמה חלשה - צריך לפחות 8 תווים")</code></pre>
+                    </div>
+
+                    <h4>🔗 שילוב עם אופרטורים לוגיים:</h4>
+                    <div class="code-example">
+                        <pre><code># בדיקה מורכבת
+age = 25
+salary = 8000
+has_experience = True
+
+# בדיקת זכאות למשכנתא
+eligible = age >= 21 and salary >= 6000 and has_experience
+print(f"זכאי למשכנתא: {eligible}")
+
+# בדיקת הנחה לסטודנטים או קשישים
+student_age = 20
+senior_age = 67
+
+gets_discount = student_age <= 25 or senior_age >= 65
+print(f"זכאי להנחה: {gets_discount}")
+
+# בדיקת טווח
+temperature = 22
+comfortable = 18 <= temperature <= 26
+print(f"טמפרטורה נוחה: {comfortable}")</code></pre>
+                    </div>
+                </div>
+            `
+        },
+        'logical-operators': {
+            title: '🧠 אופרטורים לוגיים',
+            content: `
+                <div class="concept-detail">
+                    <h3>חיבור תנאים</h3>
+                    <p>אופרטורים לוגיים מאפשרים לנו לשלב מספר תנאים ליצירת תנאים מורכבים.</p>
+                    
+                    <h4>🔗 האופרטור AND (וגם):</h4>
+                    <div class="code-example">
+                        <pre><code># AND - שני התנאים חייבים להיות אמת
+age = 25
+has_license = True
+owns_car = False
+
+# כדי לנהוג צריך גיל מתאים AND רישיון
+can_drive = age >= 18 and has_license
+print(f"יכול לנהוג: {can_drive}")  # True
+
+# כדי להשכיר רכב צריך הכל
+can_rent_car = age >= 21 and has_license and age <= 70
+print(f"יכול לשכור רכב: {can_rent_car}")  # True
+
+# טבלת אמת ל-AND
+print("טבלת אמת ל-AND:")
+print(f"True and True = {True and True}")     # True
+print(f"True and False = {True and False}")   # False
+print(f"False and True = {False and True}")   # False
+print(f"False and False = {False and False}") # False</code></pre>
+                    </div>
+
+                    <h4>🔀 האופרטור OR (או):</h4>
+                    <div class="code-example">
+                        <pre><code># OR - לפחות אחד מהתנאים צריך להיות אמת
+is_weekend = True
+is_holiday = False
+has_vacation = False
+
+# יום חופשי אם זה סוף שבוע OR חג OR חופשה
+free_day = is_weekend or is_holiday or has_vacation
+print(f"יום חופשי: {free_day}")  # True
+
+# הנחה לסטודנטים או לקשישים
+age = 67
+is_student = False
+gets_discount = age <= 25 or age >= 65 or is_student
+print(f"זכאי להנחה: {gets_discount}")  # True
+
+# טבלת אמת ל-OR
+print("טבלת אמת ל-OR:")
+print(f"True or True = {True or True}")     # True
+print(f"True or False = {True or False}")   # True
+print(f"False or True = {False or True}")   # True
+print(f"False or False = {False or False}") # False</code></pre>
+                    </div>
+
+                    <h4>🚫 האופרטור NOT (לא):</h4>
+                    <div class="code-example">
+                        <pre><code># NOT - הופך אמת לשקר ושקר לאמת
+is_raining = False
+is_sunny = not is_raining
+print(f"שמשי: {is_sunny}")  # True
+
+logged_in = True
+needs_login = not logged_in
+print(f"צריך להתחבר: {needs_login}")  # False
+
+# שימוש עם תנאים
+password = "1234"
+is_secure = not (len(password) < 8)
+print(f"סיסמה בטוחה: {is_secure}")  # False
+
+# טבלת אמת ל-NOT
+print("טבלת אמת ל-NOT:")
+print(f"not True = {not True}")   # False
+print(f"not False = {not False}") # True</code></pre>
+                    </div>
+
+                    <h4>🔄 שילוב אופרטורים:</h4>
+                    <div class="code-example">
+                        <pre><code># שילוב מורכב של אופרטורים
+age = 30
+salary = 12000
+has_debt = False
+credit_score = 750
+
+# בדיקת זכאות להלוואה
+eligible_for_loan = (age >= 21 and age <= 65) and \
+                   (salary >= 8000) and \
+                   (not has_debt) and \
+                   (credit_score >= 700)
+
+print(f"זכאי להלוואה: {eligible_for_loan}")  # True
+
+# סדר פעולות עם סוגריים
+# AND לפני OR (כמו כפל לפני חיבור)
+condition = True or False and False  # True or (False and False) = True
+condition_with_parentheses = (True or False) and False  # False
+
+print(f"ללא סוגריים: {condition}")           # True
+print(f"עם סוגריים: {condition_with_parentheses}")  # False</code></pre>
+                    </div>
+
+                    <h4>🎮 דוגמה מעשית - משחק:</h4>
+                    <div class="code-example">
+                        <pre><code># מערכת הרשאות במשחק
+player_level = 15
+has_key = True
+completed_quest = True
+is_premium = False
+
+# כניסה לשטח מיוחד
+can_enter_special_area = (player_level >= 10 and has_key) or \
+                        (completed_quest and is_premium) or \
+                        player_level >= 50
+
+print(f"יכול להיכנס לשטח מיוחד: {can_enter_special_area}")
+
+# מערכת התרעות
+health = 25
+mana = 80
+enemies_nearby = True
+
+# התרעה על סכנה
+in_danger = (health <= 30 and enemies_nearby) or health <= 10
+show_warning = in_danger and not (mana >= 50 and health > 20)
+
+if show_warning:
+    print("⚠️ אזהרה: אתה בסכנה!")
+else:
+    print("✅ אתה בטוח")
+
+# חישוב נזק מותנה
+base_damage = 100
+is_critical = True
+has_power_up = True
+target_is_weak = False
+
+final_damage = base_damage
+if is_critical and (has_power_up or target_is_weak):
+    final_damage *= 2
+
+print(f"נזק סופי: {final_damage}")</code></pre>
+                    </div>
+                </div>
+            `
+        },
+        'assignment-operators': {
+            title: '📝 אופרטורי השמה',
+            content: `
+                <div class="concept-detail">
+                    <h3>השמת ערכים למשתנים</h3>
+                    <p>אופרטורי השמה מאפשרים לנו לשמור ערכים במשתנים ולעדכן אותם בדרכים שונות.</p>
+                    
+                    <h4>🎯 השמה בסיסית (=):</h4>
+                    <div class="code-example">
+                        <pre><code># השמה פשוטה
+name = "יוסי"
+age = 25
+height = 1.75
+is_student = True
+
+print(f"שם: {name}, גיל: {age}")
+
+# השמה מרובה
+x = y = z = 0
+print(f"x={x}, y={y}, z={z}")  # x=0, y=0, z=0
+
+# השמה מרובה עם פירוק
+name, age, city = "שרה", 22, "תל אביב"
+print(f"{name} בת {age} מ{city}")
+
+# החלפת ערכים
+a = 10
+b = 20
+print(f"לפני: a={a}, b={b}")
+a, b = b, a  # החלפה אלגנטית
+print(f"אחרי: a={a}, b={b}")
+</code></pre>
+                    </div>
+
+                    <h4>➕ אופרטורי השמה עם פעולה:</h4>
+                    <div class="code-example">
+                        <pre><code># במקום לכתוב: x = x + 5
+x = 10
+x += 5    # זהה ל: x = x + 5
+print(x)  # 15
+
+# כל האופרטורים האריתמטיים
+score = 100
+score += 20    # score = score + 20 → 120
+score -= 5     # score = score - 5  → 115  
+score *= 2     # score = score * 2  → 230
+score /= 10    # score = score / 10 → 23.0
+score //= 3    # score = score // 3 → 7.0
+score %= 4     # score = score % 4  → 3.0
+score **= 2    # score = score ** 2 → 9.0
+
+print(f"ציון סופי: {score}")
+
+# עם משתנים אחרים
+bonus = 50
+score += bonus  # הוספת בונוס
+print(f"עם בונוס: {score}")
+</code></pre>
+                    </div>
+
+                    <h4>📝 השמה עם מחרוזות:</h4>
+                    <div class="code-example">
+                        <pre><code># חיבור מחרוזות
+message = "שלום"
+message += " עולם"
+message += "!"
+print(message)  # "שלום עולם!"
+
+# הכפלת מחרוזת
+pattern = "-"
+pattern *= 20
+print(pattern)  # "--------------------"
+
+# בניית מחרוזת מורכבת
+greeting = "היי "
+name = "דני"
+greeting += name
+greeting += ", איך אתה?"
+print(greeting)  # "היי דני, איך אתה?"
+
+# דרך יותר יעילה עם f-strings
+name = "רונה"
+greeting = f"היי {name}, איך את?"
+print(greeting)
+</code></pre>
+                    </div>
+
+                    <h4>📊 דוגמאות מעשיות:</h4>
+                    <div class="code-example">
+                        <pre><code># מונה פשוט
+count = 0
+for i in range(5):
+    count += 1
+    print(f"ספירה: {count}")
+
+# חישוב עלות עם מע\"מ
+price = 100
+tax_rate = 0.17
+price *= (1 + tax_rate)  # price = price * 1.17
+print(f"מחיר עם מע\"מ: {price:.2f}")
+
+# צבירת נקודות במשחק
+points = 0
+level = 1
+
+# שלב 1
+points += 100
+print(f"שלב {level}: {points} נקודות")
+
+# שלב 2 - בונוס כפול
+level += 1
+level_bonus = 50
+points += level_bonus * level
+print(f"שלב {level}: {points} נקודות")
+
+# הכפלת נקודות בסוף המשחק
+points *= 1.5
+print(f"נקודות סופיות: {int(points)}")
+</code></pre>
+                    </div>
+
+                    <h4>🔄 דוגמה לקאונטר:</h4>
+                    <div class="code-example">
+                        <pre><code># מערכת קאונטר עם פעולות שונות
+counter = 0
+print(f"התחלה: {counter}")
+
+# הוספות
+counter += 1    # +1
+counter += 5    # +5
+counter += 10   # +10
+print(f"אחרי הוספות: {counter}")  # 16
+
+# כפל
+counter *= 2
+print(f"אחרי כפל ב-2: {counter}")  # 32
+
+# חיסור
+counter -= 7
+print(f"אחרי חיסור 7: {counter}")  # 25
+
+# חילוק
+counter //= 5   # חילוק שלם
+print(f"אחרי חילוק ב-5: {counter}")  # 5
+
+# איפוס
+counter = 0
+print(f"לאחר איפוס: {counter}")
+
+# שימוש במשתנה עזר
+increment = 3
+counter += increment
+print(f"לאחר הוספת {increment}: {counter}")
+</code></pre>
+                    </div>
+
+                    <h4>💡 טיפים חשובים:</h4>
+                    <ul>
+                        <li><strong>קריאות:</strong> x += 1 יותר קריא מ-x = x + 1</li>
+                        <li><strong>ביצועים:</strong> עם רשימות ומחרוזות ארוכות, += יעיל יותר</li>
+                        <li><strong>זהירות:</strong> counter += "5" שונה מ-counter += 5</li>
+                        <li><strong>השמה מרובה:</strong> השתמש בה בחכמה - לא תמיד ברורה</li>
+                    </ul>
+                </div>
+            `
+        },
+        'if-statements': {
+            title: '🔀 הוראות תנאי (if)',
+            content: `
+                <div class="concept-detail">
+                    <h3>🔀 הוראות תנאי</h3>
+                    <p>הוראות if מאפשרות להריץ קוד רק כשתנאי מסוים מתקיים.</p>
+                    
+                    <h4>📋 מבנה בסיסי:</h4>
+                    <div class="code-example">
+                        <pre><code># מבנה בסיסי של if
+if condition:
+    # קוד שירוץ אם התנאי נכון
+    print("התנאי נכון!")
+
+# דוגמה
+age = 18
+if age >= 18:
+    print("אתה בגיר!")
+</code></pre>
+                    </div>
+
+                    <h4>🔄 if-else:</h4>
+                    <div class="code-example">
+                        <pre><code># if עם else
+age = 16
+if age >= 18:
+    print("אתה בגיר!")
+else:
+    print("אתה קטין")
+
+# דוגמה נוספת
+score = 85
+if score >= 60:
+    print("עברת את המבחן")
+else:
+    print("נכשלת במבחן")
+</code></pre>
+                    </div>
+
+                    <h4>🎯 if-elif-else:</h4>
+                    <div class="code-example">
+                        <pre><code># מספר תנאים עם elif
+grade = 85
+
+if grade >= 90:
+    print("ציון מעולה! A")
+elif grade >= 80:
+    print("ציון טוב מאוד! B")
+elif grade >= 70:
+    print("ציון טוב! C")
+elif grade >= 60:
+    print("ציון עובר! D")
+else:
+    print("ציון נכשל! F")
+
+# דוגמה לבדיקת מזג אויר
+weather = "גשום"
+if weather == "שמש":
+    print("יום נהדר לטיול!")
+elif weather == "עננים":
+    print("אולי כדאי לקחת מטריה")
+elif weather == "גשום":
+    print("הישארו בבית!")
+else:
+    print("מזג אוויר לא ידוע")
+</code></pre>
+                    </div>
+
+                    <h4>🎪 תנאים מקוננים:</h4>
+                    <div class="code-example">
+                        <pre><code># תנאים אחד בתוך השני
+age = 20
+has_license = True
+
+if age >= 18:
+    print("אתה בגיר")
+    if has_license:
+        print("אתה יכול לנהוג!")
+    else:
+        print("אבל אין לך רישיון נהיגה")
+else:
+    print("אתה קטין, לא יכול לנהוג")
+</code></pre>
+                    </div>
+
+                    <h4>🔗 תנאים מורכבים:</h4>
+                    <div class="code-example">
+                        <pre><code># שימוש באופרטורים לוגיים
+age = 25
+income = 5000
+
+# שימוש ב-and
+if age >= 18 and income >= 3000:
+    print("זכאי להלוואה")
+
+# שימוש ב-or
+day = "שבת"
+if day == "שבת" or day == "יום ראשון":
+    print("סוף שבוע!")
+
+# שימוש ב-not
+is_raining = False
+if not is_raining:
+    print("אפשר לצאת החוצה")
+</code></pre>
+                    </div>
+
+                    <h4>💡 טיפים חשובים:</h4>
+                    <ul>
+                        <li><strong>Colon:</strong> זיכרו את ה-colon (:) בסוף כל if/elif/else</li>
+                        <li><strong>Indentation:</strong> השתמשו ב-indentation (רווחים) לסימון בלוק הקוד</li>
+                        <li><strong>elif:</strong> elif = else + if (בדיקת תנאי נוסף)</li>
+                        <li><strong>אופציונלי:</strong> else תמיד אחרון ואופציונלי</li>
+                        <li><strong>גמישות:</strong> אפשר לכתוב if בלי else</li>
+                        <li><strong>תנאים מורכבים:</strong> and, or, not</li>
+                    </ul>
+                </div>
+            `
+        },
+        'for-loops': {
+            title: '🔁 לולאת for',
+            content: `
+                <div class="concept-detail">
+                    <h3>🔁 לולאת for</h3>
+                    <p>לולאת for מאפשרת לחזור על פעולות מספר פעמים או על אלמנטים ברשימה.</p>
+                    
+                    <h4>📋 מעבר על רשימה:</h4>
+                    <div class="code-example">
+                        <pre><code># מעבר על רשימת מספרים
+numbers = [1, 2, 3, 4, 5]
+for num in numbers:
+    print(f"המספר הוא: {num}")
+
+# מעבר על רשימת שמות
+names = ["אחמד", "יוסף", "מרים", "דנה"]
+for name in names:
+    print(f"שלום {name}!")
+
+# מעבר על מחרוזת
+word = "פייתון"
+for letter in word:
+    print(f"האות: {letter}")
+</code></pre>
+                    </div>
+
+                    <h4>🎯 שימוש ב-range():</h4>
+                    <div class="code-example">
+                        <pre><code># range(n) - מ-0 עד n-1
+for i in range(5):
+    print(f"ספירה: {i}")  # 0, 1, 2, 3, 4
+
+# range(start, stop) - מ-start עד stop-1
+for i in range(2, 8):
+    print(f"מספר: {i}")  # 2, 3, 4, 5, 6, 7
+
+# range(start, stop, step) - עם קפיצות
+for i in range(0, 10, 2):
+    print(f"זוגי: {i}")  # 0, 2, 4, 6, 8
+
+# ספירה לאחור
+for i in range(10, 0, -1):
+    print(f"ספירה לאחור: {i}")  # 10, 9, 8...1
+</code></pre>
+                    </div>
+
+                    <h4>📊 enumerate() - אינדקס וערך:</h4>
+                    <div class="code-example">
+                        <pre><code># קבלת אינדקס וערך יחד
+fruits = ["תפוח", "בננה", "תפוז"]
+for index, fruit in enumerate(fruits):
+    print(f"{index}: {fruit}")
+# 0: תפוח
+# 1: בננה  
+# 2: תפוז
+
+# התחלה מאינדקס אחר
+for index, fruit in enumerate(fruits, 1):
+    print(f"{index}. {fruit}")
+# 1. תפוח
+# 2. בננה
+# 3. תפוז
+</code></pre>
+                    </div>
+
+                    <h4>⏹️ break ו-continue:</h4>
+                    <div class="code-example">
+                        <pre><code># break - יציאה מהלולאה
+for i in range(10):
+    if i == 5:
+        break  # עוצר את הלולאה כשi=5
+    print(i)  # ידפיס: 0, 1, 2, 3, 4
+
+# continue - דילוג על איטרציה נוכחית
+for i in range(10):
+    if i % 2 == 0:  # אם זוגי
+        continue  # דלג על השאר
+    print(i)  # ידפיס רק אי-זוגיים: 1, 3, 5, 7, 9
+</code></pre>
+                    </div>
+
+                    <h4>💡 דוגמאות מעשיות:</h4>
+                    <div class="code-example">
+                        <pre><code># חישוב סכום
+numbers = [10, 20, 30, 40, 50]
+total = 0
+for num in numbers:
+    total += num
+print(f"הסכום: {total}")  # 150
+
+# יצירת רשימה חדשה
+numbers = [1, 2, 3, 4, 5]
+squares = []
+for num in numbers:
+    squares.append(num ** 2)
+print(squares)  # [1, 4, 9, 16, 25]
+
+# יצירת דפוס
+for i in range(5):
+    print("*" * (i + 1))
+# *
+# **
+# ***
+# ****
+# *****
+</code></pre>
+                    </div>
+
+                    <h4>💡 טיפים חשובים:</h4>
+                    <ul>
+                        <li><strong>for in:</strong> עובר על כל אלמנט ברשימה</li>
+                        <li><strong>range():</strong> יוצר רצף מספרים</li>
+                        <li><strong>enumerate():</strong> נותן אינדקס + ערך</li>
+                        <li><strong>break:</strong> יוצא מהלולאה</li>
+                        <li><strong>continue:</strong> דולג לאיטרציה הבאה</li>
+                        <li><strong>else בלולאה:</strong> רק אם לא היה break</li>
+                    </ul>
+                </div>
+            `
+        },
+        'while-loops': {
+            title: '🔄 לולאת while',
+            content: `
+                <div class="concept-detail">
+                    <h3>🔄 לולאת while</h3>
+                    <p>לולאת while רצה כל עוד תנאי מסוים נכון. שימושית כשלא יודעים כמה איטרציות נצטרך.</p>
+                    
+                    <h4>📋 מבנה בסיסי:</h4>
+                    <div class="code-example">
+                        <pre><code># מבנה בסיסי
+while condition:
+    # קוד שירוץ כל עוד התנאי נכון
+    # חשוב לעדכן את התנאי!
+
+# דוגמה פשוטה
+count = 0
+while count < 5:
+    print(f"ספירה: {count}")
+    count += 1  # חשוב! עדכון התנאי
+
+print("סיימנו!")  # ירוץ אחרי הלולאה
+</code></pre>
+                    </div>
+
+                    <h4>🎯 דוגמאות בסיסיות:</h4>
+                    <div class="code-example">
+                        <pre><code># ספירה לאחור
+countdown = 5
+while countdown > 0:
+    print(f"עוד {countdown} שניות...")
+    countdown -= 1
+print("זמן!")
+
+# חיבור מספרים
+total = 0
+num = 1
+while num <= 10:
+    total += num
+    num += 1
+print(f"סכום 1-10: {total}")  # 55
+
+# כפל ב-2 עד שמגיעים ל-100
+value = 1
+while value < 100:
+    print(value)
+    value *= 2
+print(f"העבר את 100: {value}")  # 128
+</code></pre>
+                    </div>
+
+                    <h4>🎮 אינטראקציה עם משתמש:</h4>
+                    <div class="code-example">
+                        <pre><code># משחק ניחוש
+import random
+target = random.randint(1, 10)
+guess = 0
+
+while guess != target:
+    guess = int(input("נחש מספר בין 1-10: "))
+    if guess < target:
+        print("נמוך מדי!")
+    elif guess > target:
+        print("גבוה מדי!")
+    else:
+        print("כל הכבוד! ניחשת נכון!")
+
+# תפריט
+choice = ""
+while choice != "יציאה":
+    print("1. הוסף")
+    print("2. הסר") 
+    print("3. הצג")
+    print("יציאה - לסיום")
+    choice = input("בחר אפשרות: ")
+    
+    if choice == "1":
+        print("הוספת פריט")
+    elif choice == "2":
+        print("הסרת פריט")
+    elif choice == "3":
+        print("הצגת רשימה")
+    elif choice != "יציאה":
+        print("אפשרות לא חוקית!")
+</code></pre>
+                    </div>
+
+                    <h4>⚠️ הימנעות מלולאה אינסופית:</h4>
+                    <div class="code-example">
+                        <pre><code># שגוי - לולאה אינסופית!
+# count = 0
+# while count < 5:
+#     print(count)
+#     # שכחנו להגדיל את count!
+
+# נכון - עם עדכון התנאי
+count = 0
+while count < 5:
+    print(count)
+    count += 1  # עדכון חשוב!
+
+# עם מגבלת איטרציות (בטיחות)
+tries = 0
+max_tries = 3
+password = ""
+
+while password != "1234" and tries < max_tries:
+    password = input("הכנס סיסמה: ")
+    tries += 1
+    if password != "1234":
+        print(f"סיסמה שגויה! נותרו {max_tries - tries} ניסיונות")
+
+if password == "1234":
+    print("התחברת בהצלחה!")
+else:
+    print("חרגת ממספר הניסיונות המותר")
+</code></pre>
+                    </div>
+
+                    <h4>⏹️ break ו-continue ב-while:</h4>
+                    <div class="code-example">
+                        <pre><code># break - יציאה מוקדמת
+count = 0
+while True:  # לולאה אינסופית
+    count += 1
+    if count == 5:
+        break  # יוצא כש-count=5
+    print(count)
+
+# continue - דילוג
+num = 0
+while num < 10:
+    num += 1
+    if num % 2 == 0:  # זוגי
+        continue  # דלג על הדפסה
+    print(f"אי-זוגי: {num}")
+</code></pre>
+                    </div>
+
+                    <h4>💡 טיפים חשובים:</h4>
+                    <ul>
+                        <li><strong>עדכון התנאי:</strong> תמיד וודאו שהתנאי יכול להשתנות!</li>
+                        <li><strong>עדכון משתנים:</strong> עדכנו משתנים בתוך הלולאה</li>
+                        <li><strong>בטיחות:</strong> השתמשו במגבלת איטרציות לבטיחות</li>
+                        <li><strong>while True:</strong> while True + break = לולאה עד תנאי</li>
+                        <li><strong>continue:</strong> דולג לבדיקת התנאי</li>
+                        <li><strong>else ב-while:</strong> רק אם לא היה break</li>
+                    </ul>
+                </div>
+            `
+        },
+        'functions': {
+            title: '🔧 פונקציות',
+            content: `
+                <div class="concept-detail">
+                    <h3>🔧 פונקציות</h3>
+                    <p>פונקציות מאפשרות לארגן קוד לבלוקים הניתנים לשימוש חוזר, מה שהופך את הקוד לנקי ויעיל יותר.</p>
+                    
+                    <h4>📋 הגדרת פונקציה בסיסית:</h4>
+                    <div class="code-example">
+                        <pre><code># מבנה בסיסי של פונקציה
+def function_name():
+    # קוד הפונקציה
+    print("זו פונקציה!")
+
+# קריאה לפונקציה
+function_name()
+
+# דוגמה פשוטה
+def greet():
+    print("שלום!")
+    print("איך הולך?")
+
+greet()  # יפעיל את הפונקציה
+</code></pre>
+                    </div>
+
+                    <h4>📝 פונקציות עם פרמטרים:</h4>
+                    <div class="code-example">
+                        <pre><code># פונקציה עם פרמטר אחד
+def greet_person(name):
+    print(f"שלום {name}!")
+
+greet_person("יוסי")
+greet_person("מרים")
+
+# פונקציה עם מספר פרמטרים
+def add_numbers(a, b):
+    result = a + b
+    print(f"{a} + {b} = {result}")
+
+add_numbers(5, 3)
+add_numbers(10, 20)
+
+# פונקציה עם פרמטרי ברירת מחדל
+def greet_with_time(name, time="בוקר"):
+    print(f"{time} טוב, {name}!")
+
+greet_with_time("דני")          # יחכה "בוקר טוב, דני!"
+greet_with_time("שרה", "לילה")  # יחכה "לילה טוב, שרה!"
+</code></pre>
+                    </div>
+
+                    <h4>↩️ החזרת ערכים עם return:</h4>
+                    <div class="code-example">
+                        <pre><code># פונקציה שמחזירה ערך
+def add(a, b):
+    return a + b
+
+result = add(5, 3)
+print(f"התוצאה: {result}")  # 8
+
+# פונקציה שמחזירה מספר ערכים
+def calculate(a, b):
+    sum_result = a + b
+    diff_result = a - b
+    return sum_result, diff_result
+
+sum_val, diff_val = calculate(10, 3)
+print(f"חיבור: {sum_val}, חיסור: {diff_val}")
+
+# פונקציה עם תנאי return
+def divide(a, b):
+    if b == 0:
+        return "שגיאה: חלוקה באפס!"
+    return a / b
+
+print(divide(10, 2))  # 5.0
+print(divide(10, 0))  # שגיאה: חלוקה באפס!
+</code></pre>
+                    </div>
+
+                    <h4>📚 דוגמאות מעשיות:</h4>
+                    <div class="code-example">
+                        <pre><code># פונקציית חישוב שטח מעגל
+import math
+
+def circle_area(radius):
+    return math.pi * radius ** 2
+
+area = circle_area(5)
+print(f"שטח המעגל: {area:.2f}")
+
+# פונקציית בדיקת גיל
+def check_age_category(age):
+    if age < 13:
+        return "ילד"
+    elif age < 20:
+        return "נוער"
+    elif age < 65:
+        return "מבוגר"
+    else:
+        return "גמלאי"
+
+category = check_age_category(25)
+print(f"קטגוריה: {category}")
+
+# פונקציית חישוב ממוצע
+def calculate_average(numbers):
+    if len(numbers) == 0:
+        return 0
+    return sum(numbers) / len(numbers)
+
+grades = [85, 92, 78, 88, 91]
+avg = calculate_average(grades)
+print(f"ממוצע: {avg:.1f}")
+</code></pre>
+                    </div>
+
+                    <h4>🔧 סוגי פרמטרים מתקדמים:</h4>
+                    <div class="code-example">
+                        <pre><code># *args - מספר משתנה של ארגומנטים
+def sum_all(*numbers):
+    total = 0
+    for num in numbers:
+        total += num
+    return total
+
+print(sum_all(1, 2, 3))        # 6
+print(sum_all(1, 2, 3, 4, 5))  # 15
+
+# **kwargs - מילות מפתח משתנות
+def create_profile(**info):
+    print("פרופיל המשתמש:")
+    for key, value in info.items():
+        print(f"{key}: {value}")
+
+create_profile(name="דני", age=28, job="מתכנת", city="ירושלים")
+
+# פונקציות lambda (קצרות)
+square = lambda x: x ** 2
+print(square(4))  # 16
+
+add = lambda a, b: a + b
+print(add(3, 7))  # 10
+</code></pre>
+                    </div>
+
+                    <h4>💡 טיפים חשובים:</h4>
+                    <ul>
+                        <li><strong>שמות ברורים:</strong> השתמשו בשמות ברורים לפונקציות</li>
+                        <li><strong>משימה אחת:</strong> פונקציה צריכה לעשות דבר אחד טוב</li>
+                        <li><strong>תיעוד:</strong> הוסיפו docstring לפונקציות מורכבות</li>
+                        <li><strong>return:</strong> return מסיים את הפונקציה מיד</li>
+                        <li><strong>משתנים מקומיים:</strong> משתנים בפונקציה הם מקומיים</li>
+                        <li><strong>*args ו-**kwargs:</strong> לגמישות</li>
+                </div>
+            `
+        },
+        'lists': {
+            title: '📋 רשימות (list)',
+            content: `
+                <div class="concept-detail">
+                    <h3>📋 רשימות (list)</h3>
+                    <p>רשימות הן אוספים מסודרים של אלמנטים שניתן לשנות. הן אחד מטיפוסי הנתונים השימושיים ביותר בפייתון.</p>
+                    
+                    <h4>🎯 יצירת רשימות:</h4>
+                    <div class="code-example">
+                        <pre><code># רשימה ריקה
+empty_list = []
+names = ["אחמד", "יוסף", "מרים", "דנה"]
+numbers = [1, 2, 3, 4, 5]
+mixed = [1, "שלום", 3.14, True]
+
+# גישה לאלמנטים
+print(names[0])     # "אחמד"
+print(names[-1])    # "דנה" (האחרון)
+
+# הוספת אלמנטים
+names.append("שרה")
+names.insert(1, "עלי")
+
+# מחיקת אלמנטים
+names.remove("יוסף")
+last = names.pop()
+
+print(f"רשימת שמות: {names}")
+</code></pre>
+                    </div>
+
+                    <h4>💡 טיפים חשובים:</h4>
+                    <ul>
+                        <li><strong>אינדקס:</strong> רשימות מתחילות מאינדקס 0</li>
+                        <li><strong>מותר לשנות:</strong> רשימות הן mutable</li>
+                        <li><strong>סוגים מעורבים:</strong> יכולה להכיל טיפוסים שונים</li>
+                        <li><strong>אינדקס שלילי:</strong> -1 זה האחרון</li>
+                    </ul>
+                </div>
+            `
+        },
+        'dictionaries': {
+            title: '🗂️ מילונים (dict)',
+            content: `
+                <div class="concept-detail">
+                    <h3>🗂️ מילונים (dict)</h3>
+                    <p>מילונים הם אוספים של זוגות מפתח-ערך, המאפשרים אחסון וגישה מהירה למידע.</p>
+                    
+                    <h4>🎯 יצירת מילונים:</h4>
+                    <div class="code-example">
+                        <pre><code># יצירת מילון
+student = {
+    "name": "יוסי",
+    "age": 20,
+    "grade": 85
+}
+
+# גישה לערכים
+print(student["name"])        # "יוסי"
+print(student.get("age"))     # 20
+
+# הוספה ועדכון
+student["city"] = "תל אביב"
+student["age"] = 21
+
+# מחיקה
+del student["grade"]
+
+# לולאה על מילון
+for key, value in student.items():
+    print(f"{key}: {value}")
+</code></pre>
+                    </div>
+
+                    <h4>💡 טיפים חשובים:</h4>
+                    <ul>
+                        <li><strong>מפתחות ייחודיים:</strong> כל מפתח מופיע פעם אחת</li>
+                        <li><strong>גישה בטוחה:</strong> השתמשו ב-get() למניעת שגיאות</li>
+                        <li><strong>ביצועים:</strong> גישה למפתח מהירה מאוד</li>
+                        <li><strong>סוגי מפתחות:</strong> מחרוזות, מספרים, tuples</li>
+                    </ul>
+                </div>
+            `
+        },
+        'type-conversion': {
+            title: '🔄 המרת טיפוסים',
+            content: `
+                <div class="concept-detail">
+                    <h3>🔄 המרת טיפוסים</h3>
+                    <p>המרת טיפוסים מאפשרת להמיר נתונים מסוג אחד לסוג אחר.</p>
+                    
+                    <h4>🎯 המרות בסיסיות:</h4>
+                    <div class="code-example">
+                        <pre><code># המרה למספר שלם
+age_str = "25"
+age_int = int(age_str)     # 25
+
+# המרה למספר עשרוני
+price_str = "19.99"
+price_float = float(price_str)  # 19.99
+
+# המרה למחרוזת
+number = 42
+number_str = str(number)   # "42"
+
+# המרה לבוליאני
+print(bool(1))      # True
+print(bool(0))      # False
+print(bool(""))     # False
+print(bool("שלום")) # True
+
+# בדיקת טיפוס
+print(type(age_int))    # <class 'int'>
+print(isinstance(age_int, int))  # True
+</code></pre>
+                    </div>
+
+                    <h4>⚠️ טיפול בשגיאות:</h4>
+                    <div class="code-example">
+                        <pre><code># המרה בטוחה
+def safe_int(text):
+    try:
+        return int(text)
+    except ValueError:
+        print(f"לא ניתן להמיר '{text}' למספר")
+        return None
+
+result = safe_int("42")    # 42
+result = safe_int("abc")   # None + הודעה
+</code></pre>
+                    </div>
+
+                    <h4>💡 טיפים חשובים:</h4>
+                    <ul>
+                        <li><strong>בדיקת תקינות:</strong> בדקו שההמרה אפשרית</li>
+                        <li><strong>טיפול בשגיאות:</strong> השתמשו ב-try/except</li>
+                        <li><strong>int() חותך:</strong> מ-float ל-int חותך עשרוניות</li>
+                        <li><strong>bool():</strong> רק 0 ורשימה ריקה הם False</li>
+                    </ul>
+                </div>
+            `
+        }
+    };
+
+    if (conceptData[conceptId]) {
+        showModal(conceptData[conceptId].title, conceptData[conceptId].content);
+    }
+}
