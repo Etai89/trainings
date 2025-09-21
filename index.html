@@ -19,8 +19,11 @@
         <div class="container">
             <ul>
                 <li><a href="#home" data-section="home">בית</a></li>
-                <li><a href="#lessons" data-section="lessons">שיעורים</a></li>
+                <li><a href="#basics" data-section="basics">יסודות התכנות</a></li>
+                <li><a href="#types" data-section="types">טיפוסי נתונים</a></li>
+                <li><a href="#operators" data-section="operators">אופרטורים</a></li>
                 <li><a href="#strings" data-section="strings">מחרוזות</a></li>
+                <li><a href="#statements" data-section="statements">הוראות ובקרה</a></li>
                 <li><a href="#practice" data-section="practice">תרגול</a></li>
                 <li><a href="#test" data-section="test">בחינות אימון</a></li>
             </ul>
@@ -31,187 +34,484 @@
         <!-- Home Section -->
         <section id="home" class="content-section active">
             <div class="welcome-card">
+                <div class="update-banner">
+                    <span class="update-icon">🆕</span>
+                    <span class="update-text">עודכן! מבחנים עם שאלות רנדומליות</span>
+                </div>
                 <h2>ברוכים הבאים למרכז הלימוד</h2>
                 <p>כאן תמצאו את כל החומר הדרוש להכנה לבחינה בפייתון</p>
                 <div class="stats">
                     <div class="stat-item">
-                        <span class="stat-number">6</span>
-                        <span class="stat-label">שיעורים</span>
+                        <span class="stat-number">8</span>
+                        <span class="stat-label">נושאי לימוד</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-number">50+</span>
-                        <span class="stat-label">שאלות תרגול</span>
+                        <span class="stat-number">160+</span>
+                        <span class="stat-label">שאלות בבנק</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">20</span>
+                        <span class="stat-label">שאלות רנדומליות בכל מבחן</span>
                     </div>
                     <div class="stat-item">
                         <span class="stat-number">3</span>
                         <span class="stat-label">בחינות אימון</span>
                     </div>
                 </div>
+                
+                <div class="features-section">
+                    <h3>🚀 מה חדש באתר?</h3>
+                    <div class="features-grid">
+                        <div class="feature-item">
+                            <span class="feature-icon">🎲</span>
+                            <h4>שאלות רנדומליות</h4>
+                            <p>כל מבחן מציג 20 שאלות רנדומליות מבנק של 160+ שאלות</p>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">📚</span>
+                            <h4>בנק שאלות מורחב</h4>
+                            <p>160+ שאלות מגוונות בכל הנושאים</p>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">📱</span>
+                            <h4>עיצוב רספונסיבי</h4>
+                            <p>מותאם למחשב, טאבלט ומובייל</p>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">⏱️</span>
+                            <h4>מבחנים מתוזמנים</h4>
+                            <p>15 דקות לכל מבחן עם טיימר חזותי</p>
+                        </div>
+                    </div>
+                </div>
+                
                 <button class="cta-button" onclick="startLearning()">התחל ללמוד</button>
             </div>
         </section>
 
-        <!-- Lessons Section -->
-        <section id="lessons" class="content-section">
-            <h2>סיכומי שיעורים</h2>
-            <div class="lessons-grid">
-                <div class="lesson-card" data-lesson="1">
-                    <div class="lesson-header">
-                        <h3>שיעור 1</h3>
-                        <span class="lesson-status">✓</span>
+        <!-- Programming Basics Section -->
+        <section id="basics" class="content-section">
+            <h2>יסודות התכנות</h2>
+            <div class="concept-grid">
+                <div class="concept-card">
+                    <div class="concept-header">
+                        <h3>📝 הכרת שפת פייתון</h3>
                     </div>
-                    <p>יסודות פייתון - משתנים וטיפוסי נתונים</p>
-                    <ul>
-                        <li>הכרת שפת פייתון</li>
-                        <li>משתנים ומתן ערכים</li>
-                        <li>טיפוסי נתונים בסיסיים</li>
-                        <li>פעולות חשבון</li>
-                    </ul>
-                    <button class="study-btn" onclick="expandLesson(1)">לימוד מפורט</button>
+                    <div class="concept-content">
+                        <ul>
+                            <li>מה זה פייתון ולמה משתמשים בו?</li>
+                            <li>כתיבת התוכנית הראשונה</li>
+                            <li>הפעלת קוד פייתון</li>
+                            <li>תכנות אינטראקטיבי</li>
+                        </ul>
+                        <div class="code-example">
+                            <pre><code>print("שלום עולם!")
+# זוהי ההדפסה הראשונה שלנו</code></pre>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="lesson-card" data-lesson="2">
-                    <div class="lesson-header">
-                        <h3>שיעור 2</h3>
-                        <span class="lesson-status">✓</span>
+                <div class="concept-card">
+                    <div class="concept-header">
+                        <h3>🔤 משתנים</h3>
                     </div>
-                    <p>קלט ופלט - תנאים ולולאות</p>
-                    <ul>
-                        <li>פונקציות input() ו-print()</li>
-                        <li>משפטי תנאי (if, elif, else)</li>
-                        <li>לולאות for ו-while</li>
-                        <li>אופרטורים לוגיים</li>
-                    </ul>
-                    <button class="study-btn" onclick="expandLesson(2)">לימוד מפורט</button>
+                    <div class="concept-content">
+                        <ul>
+                            <li>מה זה משתנה?</li>
+                            <li>כללי מתן שמות למשתנים</li>
+                            <li>השמת ערכים</li>
+                            <li>שינוי ערכי משתנים</li>
+                        </ul>
+                        <div class="code-example">
+                            <pre><code>name = "יוסי"
+age = 25
+height = 1.75</code></pre>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="lesson-card" data-lesson="3">
-                    <div class="lesson-header">
-                        <h3>שיעור 3</h3>
-                        <span class="lesson-status">✓</span>
+                <div class="concept-card">
+                    <div class="concept-header">
+                        <h3>📥 קלט ופלט</h3>
                     </div>
-                    <p>רשימות ופונקציות</p>
-                    <ul>
-                        <li>יצירה ועבודה עם רשימות</li>
-                        <li>מתודות רשימה</li>
-                        <li>הגדרת פונקציות</li>
-                        <li>פרמטרים והחזרת ערכים</li>
-                    </ul>
-                    <button class="study-btn" onclick="expandLesson(3)">לימוד מפורט</button>
+                    <div class="concept-content">
+                        <ul>
+                            <li>פונקציית print() - הדפסה למסך</li>
+                            <li>פונקציית input() - קבלת קלט מהמשתמש</li>
+                            <li>עיצוב הפלט</li>
+                            <li>המרת טיפוסים בקלט</li>
+                        </ul>
+                        <div class="code-example">
+                            <pre><code>name = input("מה השם שלך? ")
+print("שלום", name)</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Data Types Section -->
+        <section id="types" class="content-section">
+            <h2>טיפוסי נתונים</h2>
+            <div class="concept-grid">
+                <div class="concept-card">
+                    <div class="concept-header">
+                        <h3>🔢 מספרים</h3>
+                    </div>
+                    <div class="concept-content">
+                        <ul>
+                            <li>מספרים שלמים (int)</li>
+                            <li>מספרים עשרוניים (float)</li>
+                            <li>פעולות חשבון בסיסיות</li>
+                            <li>המרה בין טיפוסי מספרים</li>
+                        </ul>
+                        <div class="code-example">
+                            <pre><code>x = 10          # int
+y = 3.14        # float
+result = x + y  # 13.14</code></pre>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="lesson-card" data-lesson="4">
-                    <div class="lesson-header">
-                        <h3>שיעור 4</h3>
-                        <span class="lesson-status">✓</span>
+                <div class="concept-card">
+                    <div class="concept-header">
+                        <h3>📝 מחרוזות (str)</h3>
                     </div>
-                    <p>מבני נתונים מתקדמים</p>
-                    <ul>
-                        <li>טיופלים (Tuples)</li>
-                        <li>מילונים (Dictionaries)</li>
-                        <li>קבוצות (Sets)</li>
-                        <li>עבודה עם מבני נתונים מורכבים</li>
-                    </ul>
-                    <button class="study-btn" onclick="expandLesson(4)">לימוד מפורט</button>
+                    <div class="concept-content">
+                        <ul>
+                            <li>יצירת מחרוזות</li>
+                            <li>הדבקה והשרשור</li>
+                            <li>אורך מחרוזת</li>
+                            <li>גישה לתווים</li>
+                        </ul>
+                        <div class="code-example">
+                            <pre><code>text = "פייתון"
+print(len(text))  # 5
+print(text[0])    # פ</code></pre>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="lesson-card" data-lesson="5">
-                    <div class="lesson-header">
-                        <h3>שיעור 5</h3>
-                        <span class="lesson-status">⭐</span>
+                <div class="concept-card">
+                    <div class="concept-header">
+                        <h3>✅ בוליאניים (bool)</h3>
                     </div>
-                    <p>סיכום ביניים + עבודת כיתה</p>
-                    <ul>
-                        <li>חזרה על כל הנושאים</li>
-                        <li>תרגילים מתקדמים</li>
-                        <li>עבודת כיתה מעשית</li>
-                        <li>הכנה לבחינה</li>
-                    </ul>
-                    <button class="study-btn" onclick="expandLesson(5)">לימוד מפורט</button>
+                    <div class="concept-content">
+                        <ul>
+                            <li>ערכים: True ו-False</li>
+                            <li>השוואות והשוואות לוגיות</li>
+                            <li>המרה לבוליאני</li>
+                            <li>שימוש בתנאים</li>
+                        </ul>
+                        <div class="code-example">
+                            <pre><code>is_student = True
+age = 18
+can_vote = age >= 18  # True</code></pre>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="lesson-card" data-lesson="6">
-                    <div class="lesson-header">
-                        <h3>שיעור 6</h3>
-                        <span class="lesson-status">✓</span>
+                <div class="concept-card">
+                    <div class="concept-header">
+                        <h3>📋 רשימות (list)</h3>
                     </div>
-                    <p>נושאים מתקדמים</p>
-                    <ul>
-                        <li>קבצים וקריאה/כתיבה</li>
-                        <li>טיפול בשגיאות</li>
-                        <li>מודולים וייבוא</li>
-                        <li>פונקציות מתקדמות</li>
-                    </ul>
-                    <button class="study-btn" onclick="expandLesson(6)">לימוד מפורט</button>
+                    <div class="concept-content">
+                        <ul>
+                            <li>יצירת רשימות</li>
+                            <li>הוספה והסרה של איברים</li>
+                            <li>גישה לאיברים</li>
+                            <li>מתודות רשימה שימושיות</li>
+                        </ul>
+                        <div class="code-example">
+                            <pre><code>fruits = ["תפוח", "בננה", "תפוז"]
+fruits.append("ענבים")
+print(fruits[0])  # תפוח</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Operators Section -->
+        <section id="operators" class="content-section">
+            <h2>אופרטורים</h2>
+            <div class="concept-grid">
+                <div class="concept-card">
+                    <div class="concept-header">
+                        <h3>➕ אופרטורים חשבוניים</h3>
+                    </div>
+                    <div class="concept-content">
+                        <ul>
+                            <li>חיבור (+), חיסור (-)</li>
+                            <li>כפל (*), חילוק (/)</li>
+                            <li>חילוק שלם (//), שארית (%)</li>
+                            <li>חזקה (**)</li>
+                        </ul>
+                        <div class="code-example">
+                            <pre><code>a = 10
+b = 3
+print(a + b)   # 13
+print(a // b)  # 3
+print(a % b)   # 1</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <div class="concept-header">
+                        <h3>🔍 אופרטורי השוואה</h3>
+                    </div>
+                    <div class="concept-content">
+                        <ul>
+                            <li>שווה (==), לא שווה (!=)</li>
+                            <li>גדול מ (>), קטן מ (<)</li>
+                            <li>גדול או שווה (>=)</li>
+                            <li>קטן או שווה (<=)</li>
+                        </ul>
+                        <div class="code-example">
+                            <pre><code>x = 5
+y = 10
+print(x == y)  # False
+print(x < y)   # True</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <div class="concept-header">
+                        <h3>🔗 אופרטורים לוגיים</h3>
+                    </div>
+                    <div class="concept-content">
+                        <ul>
+                            <li>and - "וגם"</li>
+                            <li>or - "או"</li>
+                            <li>not - "לא"</li>
+                            <li>עדיפות אופרטורים</li>
+                        </ul>
+                        <div class="code-example">
+                            <pre><code>age = 20
+is_student = True
+discount = age < 25 and is_student</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <div class="concept-header">
+                        <h3>📝 אופרטורי השמה</h3>
+                    </div>
+                    <div class="concept-content">
+                        <ul>
+                            <li>השמה רגילה (=)</li>
+                            <li>השמה עם חשבון (+=, -=)</li>
+                            <li>השמה עם כפל (*=)</li>
+                            <li>השמה עם חילוק (/=)</li>
+                        </ul>
+                        <div class="code-example">
+                            <pre><code>x = 10
+x += 5    # x = x + 5
+x *= 2    # x = x * 2
+print(x)  # 30</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Statements Section -->
+        <section id="statements" class="content-section">
+            <h2>הוראות ובקרה</h2>
+            <div class="concept-grid">
+                <div class="concept-card">
+                    <div class="concept-header">
+                        <h3>🔀 תנאים (if)</h3>
+                    </div>
+                    <div class="concept-content">
+                        <ul>
+                            <li>הוראת if בסיסית</li>
+                            <li>else - במקרה הפוך</li>
+                            <li>elif - תנאים מרובים</li>
+                            <li>תנאים מקוננים</li>
+                        </ul>
+                        <div class="code-example">
+                            <pre><code>grade = 85
+if grade >= 90:
+    print("מעולה")
+elif grade >= 80:
+    print("טוב מאוד")
+else:
+    print("צריך להשתפר")</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <div class="concept-header">
+                        <h3>🔁 לולאת for</h3>
+                    </div>
+                    <div class="concept-content">
+                        <ul>
+                            <li>מעבר על רשימות</li>
+                            <li>שימוש ב-range()</li>
+                            <li>לולאות מקוננות</li>
+                            <li>break ו-continue</li>
+                        </ul>
+                        <div class="code-example">
+                            <pre><code>numbers = [1, 2, 3, 4, 5]
+for num in numbers:
+    print(num * 2)
+
+for i in range(3):
+    print(f"ספירה: {i}")</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <div class="concept-header">
+                        <h3>🔄 לולאת while</h3>
+                    </div>
+                    <div class="concept-content">
+                        <ul>
+                            <li>לולאה עם תנאי</li>
+                            <li>מונה ועדכון תנאי</li>
+                            <li>הימנעות מלולאה אינסופית</li>
+                            <li>שימוש ב-break</li>
+                        </ul>
+                        <div class="code-example">
+                            <pre><code>count = 0
+while count < 5:
+    print(f"ספירה: {count}")
+    count += 1</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <div class="concept-header">
+                        <h3>🔧 פונקציות</h3>
+                    </div>
+                    <div class="concept-content">
+                        <ul>
+                            <li>הגדרת פונקציה עם def</li>
+                            <li>פרמטרים וארגומנטים</li>
+                            <li>החזרת ערכים עם return</li>
+                            <li>פונקציות עם ערכי ברירת מחדל</li>
+                        </ul>
+                        <div class="code-example">
+                            <pre><code>def greet(name, greeting="שלום"):
+    return f"{greeting}, {name}!"
+
+message = greet("יוסי")
+print(message)  # שלום, יוסי!</code></pre>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- Strings Section -->
         <section id="strings" class="content-section">
-            <h2>פונקציות מחרוזות</h2>
-            <div class="strings-container">
-                <div class="strings-summary">
-                    <h3>סיכום פונקציות על מחרוזות</h3>
-                    <div class="function-grid">
-                        <div class="function-card">
-                            <h4>len()</h4>
-                            <p>מחזירה את אורך המחרוזת</p>
-                            <code>len("hello") → 5</code>
+            <h2>מחרוזות בפייתון</h2>
+            
+            <div class="concept-content">
+                <h3>📖 מה זו מחרוזת?</h3>
+                <p>מחרוזת היא רצף של תווים (אותיות, מספרים, סימנים). במחרוזת אנחנו יכולים לשמור טקסט, שמות, הודעות ועוד.</p>
+                
+                <div class="code-example">
+                    <h4>דוגמאות בסיסיות:</h4>
+                    <pre><code>name = "יוסי"           # עם גרשיים כפולים
+city = 'תל אביב'         # עם גרש בודד
+message = "שלום עולם!"   # מחרוזת עם רווחים
+empty = ""              # מחרוזת ריקה</code></pre>
+                </div>
+
+                <h3>🔧 פונקציות מחרוזות עיקריות</h3>
+                <div class="functions-grid">
+                    <div class="function-card">
+                        <h4>len() - אורך המחרוזת</h4>
+                        <p>מחזירה את מספר התווים במחרוזת</p>
+                        <div class="code-example">
+                            <code>len("שלום") → 4<br>len("Hello World") → 11</code>
                         </div>
-                        <div class="function-card">
-                            <h4>upper() / lower()</h4>
-                            <p>המרה לאותיות גדולות/קטנות</p>
-                            <code>"Hello".upper() → "HELLO"</code>
+                    </div>
+                    <div class="function-card">
+                        <h4>upper() - אותיות גדולות</h4>
+                        <p>הופך את כל האותיות לגדולות</p>
+                        <div class="code-example">
+                            <code>"hello".upper() → "HELLO"<br>"Python".upper() → "PYTHON"</code>
                         </div>
-                        <div class="function-card">
-                            <h4>strip()</h4>
-                            <p>הסרת רווחים מהתחלה והסוף</p>
-                            <code>" hello ".strip() → "hello"</code>
+                    </div>
+                    <div class="function-card">
+                        <h4>lower() - אותיות קטנות</h4>
+                        <p>הופך את כל האותיות לקטנות</p>
+                        <div class="code-example">
+                            <code>"HELLO".lower() → "hello"<br>"Python".lower() → "python"</code>
                         </div>
-                        <div class="function-card">
-                            <h4>split()</h4>
-                            <p>פיצול המחרוזת לרשימה</p>
-                            <code>"a,b,c".split(",") → ["a","b","c"]</code>
-                        </div>
-                        <div class="function-card">
-                            <h4>join()</h4>
-                            <p>חיבור רשימה למחרוזת</p>
-                            <code>",".join(["a","b"]) → "a,b"</code>
-                        </div>
-                        <div class="function-card">
-                            <h4>replace()</h4>
-                            <p>החלפת טקסט במחרוזת</p>
-                            <code>"hello".replace("l","x") → "hexxo"</code>
-                        </div>
-                        <div class="function-card">
-                            <h4>find() / index()</h4>
-                            <p>מציאת מיקום תו או מחרוזת</p>
-                            <code>"hello".find("e") → 1</code>
-                        </div>
-                        <div class="function-card">
-                            <h4>startswith() / endswith()</h4>
-                            <p>בדיקה אם מתחיל/נגמר במחרוזת</p>
-                            <code>"hello".startswith("he") → True</code>
+                    </div>
+                    <div class="function-card">
+                        <h4>count() - ספירת תווים</h4>
+                        <p>סופר כמה פעמים תו מופיע במחרוזת</p>
+                        <div class="code-example">
+                            <code>"hello".count("l") → 2<br>"python".count("n") → 1</code>
                         </div>
                     </div>
                 </div>
 
-                <div class="strings-practice">
-                    <h3>תרגול מחרוזות</h3>
-                    <div class="practice-area">
-                        <div class="code-editor">
-                            <textarea id="string-code" placeholder='# נסה כאן פונקציות מחרוזות
-text = "Hello World"
-print(len(text))
-print(text.upper())
-print(text.split())'></textarea>
-                            <button onclick="runStringCode()">הרץ קוד</button>
+                <h3>📋 אינדקסים ובדיקות</h3>
+                <div class="concept-explanation">
+                    <p>כל תו במחרוזת יש לו מקום (אינדקס) שמתחיל מ-0:</p>
+                    <div class="code-example">
+                        <pre><code>text = "Python"
+print(text[0])      # P (תו ראשון)
+print(text[1])      # y (תו שני)
+print(text[-1])     # n (תו אחרון)
+
+# בדיקה אם טקסט נמצא במחרוזת
+if "th" in text:
+    print("נמצא!")   # ידפיס כי "th" נמצא ב-"Python"</code></pre>
+                    </div>
+                </div>
+
+                <h3>💡 דוגמאות שימושיות</h3>
+                <div class="tips-container">
+                    <div class="tip">
+                        <h4>🔤 השוואת מחרוזות:</h4>
+                        <div class="code-example">
+                            <code>name1 = "יוסי"<br>name2 = "יוסי"<br>if name1.lower() == name2.lower():<br>    print("זהה!")</code>
                         </div>
-                        <div class="output-area">
-                            <h4>פלט:</h4>
-                            <pre id="string-output"></pre>
+                    </div>
+                    <div class="tip">
+                        <h4>📊 סטטיסטיקה על מחרוזת:</h4>
+                        <div class="code-example">
+                            <code>text = "Hello Python"<br>print(f"אורך: {len(text)}")<br>print(f"כמות o: {text.count('o')}")</code>
                         </div>
+                    </div>
+                    <div class="tip">
+                        <h4>� בדיקת תוכן:</h4>
+                        <div class="code-example">
+                            <code>email = "user@gmail.com"<br>if "@" in email:<br>    print("זה נראה כמו אימייל")</code>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>🎯 תרגילים לתרגול</h3>
+                <div class="practice-exercises">
+                    <div class="exercise">
+                        <h4>תרגיל 1: ספירת תווים</h4>
+                        <p>צור מחרוזת עם השם שלך ומצא כמה אותיות יש בה</p>
+                    </div>
+                    <div class="exercise">
+                        <h4>תרגיל 2: המרת אותיות</h4>
+                        <p>קבל קלט מהמשתמש והפוך את כל האותיות לגדולות</p>
+                    </div>
+                    <div class="exercise">
+                        <h4>תרגיל 3: בדיקת אימייל</h4>
+                        <p>בדוק אם מחרוזת מכילה @ וכתוב הודעה בהתאם</p>
+                    </div>
+                    <div class="exercise">
+                        <h4>תרגיל 4: סטטיסטיקות</h4>
+                        <p>ספור כמה פעמים האות 'a' מופיעה במחרוזת "programming"</p>
                     </div>
                 </div>
             </div>
@@ -222,24 +522,28 @@ print(text.split())'></textarea>
             <h2>תרגול שאלות</h2>
             <div class="practice-categories">
                 <div class="category-card" onclick="startPractice('basics')">
+                    <div class="card-icon">🐍</div>
                     <h3>יסודות פייתון</h3>
-                    <p>15 שאלות על משתנים, טיפוסים ופעולות</p>
+                    <p>15 שאלות רנדומליות על משתנים וטיפוסי נתונים</p>
+                    <span class="difficulty easy">קל</span>
+                </div>
+                <div class="category-card" onclick="startPractice('operators')">
+                    <div class="card-icon">🔢</div>
+                    <h3>אופרטורים</h3>
+                    <p>15 שאלות רנדומליות על אופרטורים מתמטיים ולוגיים</p>
                     <span class="difficulty easy">קל</span>
                 </div>
                 <div class="category-card" onclick="startPractice('control')">
+                    <div class="card-icon">🔀</div>
                     <h3>תנאים ולולאות</h3>
-                    <p>12 שאלות על if, for, while</p>
-                    <span class="difficulty medium">בינוני</span>
-                </div>
-                <div class="category-card" onclick="startPractice('functions')">
-                    <h3>פונקציות ורשימות</h3>
-                    <p>18 שאלות על הגדרה וקריאה לפונקציות</p>
+                    <p>15 שאלות רנדומליות על if, for, while</p>
                     <span class="difficulty medium">בינוני</span>
                 </div>
                 <div class="category-card" onclick="startPractice('strings')">
+                    <div class="card-icon">📝</div>
                     <h3>מחרוזות</h3>
-                    <p>20 שאלות על פונקציות מחרוזות</p>
-                    <span class="difficulty hard">קשה</span>
+                    <p>15 שאלות רנדומליות על פונקציות מחרוזות</p>
+                    <span class="difficulty medium">בינוני</span>
                 </div>
             </div>
 
@@ -289,36 +593,63 @@ print(text.split())'></textarea>
             
             <div class="test-grid">
                 <div class="test-card">
-                    <h3>בחינת אימון 1</h3>
+                    <div class="card-icon test-icon">📋</div>
+                    <h3>מבחן 1 - יסודות פייתון</h3>
                     <div class="test-details">
-                        <span>⏱️ 45 דקות</span>
-                        <span>📝 20 שאלות</span>
-                        <span>🎯 כל הנושאים</span>
+                        <span>⏱️ 15 דקות</span>
+                        <span>📝 20 שאלות רנדומליות</span>
+                        <span>🎯 משתנים וטיפוסים</span>
                     </div>
-                    <p>בחינה כללית הכוללת את כל הנושאים שנלמדו</p>
-                    <button class="test-btn" onclick="startTest(1)">התחל בחינה</button>
+                    <p>בדיקת הבנת יסודות השפה, משתנים, טיפוסי נתונים ואופרטורים בסיסיים</p>
+                    <button class="test-btn" onclick="startTest('test1')">התחל בחינה</button>
                 </div>
 
                 <div class="test-card">
-                    <h3>בחינת אימון 2</h3>
+                    <div class="card-icon test-icon">⚖️</div>
+                    <h3>מבחן 2 - תנאים ולולאות</h3>
                     <div class="test-details">
-                        <span>⏱️ 40 דקות</span>
-                        <span>📝 18 שאלות</span>
-                        <span>🎯 מחרוזות ופונקציות</span>
+                        <span>⏱️ 15 דקות</span>
+                        <span>📝 20 שאלות רנדומליות</span>
+                        <span>🎯 if, for, while</span>
                     </div>
-                    <p>מתמקדת במחרוזות, פונקציות ורשימות</p>
-                    <button class="test-btn" onclick="startTest(2)">התחל בחינה</button>
+                    <p>מבחן על תנאים, לולאות, אופרטורים לוגיים ומשפטי בקרה</p>
+                    <button class="test-btn" onclick="startTest('test2')">התחל בחינה</button>
                 </div>
 
                 <div class="test-card">
-                    <h3>בחינת אימון 3</h3>
+                    <div class="card-icon test-icon">🔤</div>
+                    <h3>מבחן 3 - מחרוזות</h3>
                     <div class="test-details">
-                        <span>⏱️ 50 דקות</span>
-                        <span>📝 25 שאלות</span>
-                        <span>🎯 רמה מתקדמת</span>
+                        <span>⏱️ 15 דקות</span>
+                        <span>📝 20 שאלות רנדומליות</span>
+                        <span>🎯 len, upper, lower, in</span>
                     </div>
-                    <p>בחינה מתקדמת לתלמידים חזקים</p>
-                    <button class="test-btn" onclick="startTest(3)">התחל בחינה</button>
+                    <p>עבודה עם מחרוזות, פונקציות מובנות כמו len, upper, lower ואינדקסים</p>
+                    <button class="test-btn" onclick="startTest('test3')">התחל בחינה</button>
+                </div>
+
+                <div class="test-card">
+                    <div class="card-icon test-icon">🔄</div>
+                    <h3>מבחן 4 - אופרטורים</h3>
+                    <div class="test-details">
+                        <span>⏱️ 15 דקות</span>
+                        <span>📝 20 שאלות רנדומליות</span>
+                        <span>🎯 +, -, *, /, %, **</span>
+                    </div>
+                    <p>אופרטורים מתמטיים, לוגיים והשוואה</p>
+                    <button class="test-btn" onclick="startTest('test4')">התחל בחינה</button>
+                </div>
+
+                <div class="test-card">
+                    <div class="card-icon test-icon">🎯</div>
+                    <h3>מבחן מקיף - חזרה כללית</h3>
+                    <div class="test-details">
+                        <span>⏱️ 15 דקות</span>
+                        <span>📝 20 שאלות רנדומליות</span>
+                        <span>🎯 כל החומר</span>
+                    </div>
+                    <p>מבחן מקיף על כל החומר שנלמד עד כה - מתאים לפני הבחינה האמיתית</p>
+                    <button class="test-btn" onclick="startTest('test5')">התחל בחינה</button>
                 </div>
             </div>
 
@@ -369,7 +700,7 @@ print(text.split())'></textarea>
                 <div class="test-actions">
                     <button onclick="retryTest()">בחינה מחדש</button>
                     <button onclick="backToTests()">בחזרה לבחינות</button>
-                    <button onclick="showSection('lessons')">חזור ללמידה</button>
+                    <button onclick="showSection('basics')">חזור ללמידה</button>
                 </div>
             </div>
         </section>

@@ -22,6 +22,70 @@ $(document).ready(function() {
     
     // Initialize tooltips and animations
     initializeAnimations();
+    
+    // Practice navigation
+    $(document).on('click', '.category-card', function(e) {
+        e.preventDefault();
+        const onclickAttr = $(this).attr('onclick');
+        if (onclickAttr) {
+            const topic = onclickAttr.match(/'([^']+)'/)[1];
+            startPractice(topic);
+        }
+    });
+    
+    // Test navigation  
+    $(document).on('click', '.test-btn', function(e) {
+        console.log('Test button clicked');
+        const onclickAttr = $(this).attr('onclick');
+        console.log('onclick attribute:', onclickAttr);
+        if (onclickAttr) {
+            // Don't prevent default since we want onclick to work
+            // e.preventDefault();
+            const match = onclickAttr.match(/'([^']+)'/);
+            if (match) {
+                const testId = match[1];
+                console.log('Extracted testId:', testId);
+                startTest(testId);
+            } else {
+                console.error('Could not extract testId from onclick:', onclickAttr);
+            }
+        } else {
+            console.error('No onclick attribute found');
+        }
+    });
+    
+    // Also handle direct onclick calls
+    window.startTest = startTest;
+    window.startPractice = startPractice;
+    window.selectAnswer = selectAnswer;
+    window.nextQuestion = nextQuestion;
+    window.closeQuiz = closeQuiz;
+    window.retryQuiz = retryQuiz;
+    
+    // Back to home button
+    $(document).on('click', '.back-btn', function() {
+        showSection('home');
+    });
+    
+    // Quiz answer handling
+    $(document).on('click', '.answer-option', function() {
+        $('.answer-option').removeClass('selected');
+        $(this).addClass('selected');
+    });
+    
+    // Next button handling
+    $(document).on('click', '#next-btn', function() {
+        if ($('.answer-option.selected').length === 0) {
+            alert('אנא בחר תשובה');
+            return;
+        }
+        
+        const selectedAnswer = $('.answer-option.selected').data('answer');
+        userAnswers[currentQuestionIndex] = selectedAnswer;
+        
+        currentQuestionIndex++;
+        showQuizQuestion();
+    });
 });
 
 function showSection(sectionName) {
@@ -37,1311 +101,1514 @@ function showSection(sectionName) {
     
     currentSection = sectionName;
     
+    // Initialize section-specific functionality
+    switch(sectionName) {
+        case 'home':
+            initializeHome();
+            break;
+        case 'basics':
+            initializeConcepts();
+            break;
+        case 'types':
+            initializeConcepts();
+            break;
+        case 'operators':
+            initializeConcepts();
+            break;
+        case 'strings':
+            initializeStrings();
+            break;
+        case 'statements':
+            initializeConcepts();
+            break;
+        case 'practice':
+            initializePractice();
+            break;
+        case 'test':
+            initializeTest();
+            break;
+    }
+    
     // Scroll to top
     window.scrollTo(0, 0);
 }
 
 function startLearning() {
-    showSection('lessons');
+    showSection('basics');
 }
 
-// Lesson Functions
-function expandLesson(lessonNumber) {
-    const lessons = {
-        1: {
-            title: "שיעור 1 - יסודות פייתון",
-            content: `
-<h3>משתנים וטיפוסי נתונים</h3>
-<div class="lesson-content">
-    <h4>הגדרת משתנים:</h4>
-    <div class="code-example">
-        <code>name = "דוד"
-age = 25
-height = 1.75
-is_student = True</code>
-    </div>
-    
-    <h4>טיפוסי נתונים בסיסיים:</h4>
-    <ul>
-        <li><strong>str</strong> - מחרוזת (טקסט)</li>
-        <li><strong>int</strong> - מספר שלם</li>
-        <li><strong>float</strong> - מספר עשרוני</li>
-        <li><strong>bool</strong> - ערך בוליאני (True/False)</li>
-    </ul>
-    
-    <h4>פעולות חשבון:</h4>
-    <div class="code-example">
-        <code>x = 10
-y = 3
-print(x + y)  # חיבור: 13
-print(x - y)  # חיסור: 7
-print(x * y)  # כפל: 30
-print(x / y)  # חילוק: 3.333...
-print(x // y) # חילוק שלם: 3
-print(x % y)  # שארית: 1
-print(x ** y) # חזקה: 1000</code>
-    </div>
-    
-    <h4>תרגילים:</h4>
-    <ol>
-        <li>צור משתנה עם השם שלך והדפס אותו</li>
-        <li>חשב את השטח של מלבן באורך 5 ורוחב 3</li>
-        <li>המר טמפרטורה מצלזיוס לפרנהייט</li>
-    </ol>
-</div>`
-        },
-        2: {
-            title: "שיעור 2 - קלט, פלט ותנאים",
-            content: `
-<h3>קלט ופלט</h3>
-<div class="lesson-content">
-    <h4>קבלת קלט מהמשתמש:</h4>
-    <div class="code-example">
-        <code>name = input("מה השם שלך? ")
-age = int(input("כמה את/ה בן/בת? "))
-print(f"שלום {name}, את/ה בן/בת {age}")</code>
-    </div>
-    
-    <h4>משפטי תנאי:</h4>
-    <div class="code-example">
-        <code>age = int(input("מה הגיל שלך? "))
-
-if age >= 18:
-    print("את/ה מבוגר/ת")
-elif age >= 13:
-    print("את/ה נער/ה")
-else:
-    print("את/ה ילד/ה")
-    
-# אופרטורים לוגיים
-if age >= 18 and age <= 65:
-    print("יכול לעבוד")
-    
-if age < 12 or age > 65:
-    print("כניסה חופשית")</code>
-    </div>
-    
-    <h4>לולאות:</h4>
-    <div class="code-example">
-        <code># לולאת for
-for i in range(5):
-    print(f"מספר: {i}")
-
-# לולאת while
-count = 0
-while count < 3:
-    print(f"ספירה: {count}")
-    count += 1
-    
-# לולאה על רשימה
-fruits = ["תפוח", "בננה", "תפוז"]
-for fruit in fruits:
-    print(fruit)</code>
-    </div>
-</div>`
-        },
-        3: {
-            title: "שיעור 3 - רשימות ופונקציות",
-            content: `
-<h3>עבודה עם רשימות</h3>
-<div class="lesson-content">
-    <h4>יצירת רשימות:</h4>
-    <div class="code-example">
-        <code>numbers = [1, 2, 3, 4, 5]
-names = ["אלי", "דנה", "רון"]
-mixed = [1, "שלום", 3.14, True]
-empty_list = []</code>
-    </div>
-    
-    <h4>פעולות על רשימות:</h4>
-    <div class="code-example">
-        <code>fruits = ["תפוח", "בננה"]
-
-# הוספת איברים
-fruits.append("תפוז")        # הוספה בסוף
-fruits.insert(1, "אבטיח")    # הוספה במקום מסוים
-
-# הסרת איברים
-fruits.remove("בננה")        # הסרה לפי ערך
-last_fruit = fruits.pop()    # הסרה והחזרת האיבר האחרון
-
-# גישה לאיברים
-print(fruits[0])             # האיבר הראשון
-print(fruits[-1])            # האיבר האחרון
-print(len(fruits))           # מספר האיברים</code>
-    </div>
-    
-    <h4>הגדרת פונקציות:</h4>
-    <div class="code-example">
-        <code>def greet(name):
-    return f"שלום {name}!"
-
-def calculate_area(length, width):
-    area = length * width
-    return area
-
-def print_numbers(n):
-    for i in range(1, n + 1):
-        print(i)
-
-# קריאה לפונקציות
-message = greet("משה")
-print(message)
-
-area = calculate_area(5, 3)
-print(f"השטח הוא: {area}")
-
-print_numbers(5)</code>
-    </div>
-</div>`
-        },
-        4: {
-            title: "שיעור 4 - מבני נתונים מתקדמים",
-            content: `
-<h3>טיופלים, מילונים וקבוצות</h3>
-<div class="lesson-content">
-    <h4>טיופלים (Tuples):</h4>
-    <div class="code-example">
-        <code># טיופל - מבנה נתונים שאינו ניתן לשינוי
-coordinates = (10, 20)
-colors = ("אדום", "כחול", "ירוק")
-
-# גישה לאיברים
-x, y = coordinates
-print(f"X: {x}, Y: {y}")
-print(colors[0])  # "אדום"</code>
-    </div>
-    
-    <h4>מילונים (Dictionaries):</h4>
-    <div class="code-example">
-        <code># מילון - זוגות מפתח-ערך
-student = {
-    "name": "יוסי",
-    "age": 20,
-    "grades": [85, 90, 88]
+// Initialize Functions
+function initializeHome() {
+    console.log('Initializing home section');
 }
 
-# גישה ושינוי ערכים
-print(student["name"])
-student["age"] = 21
-student["city"] = "תל אביב"
-
-# מעבר על המילון
-for key, value in student.items():
-    print(f"{key}: {value}")
-
-# בדיקת קיום מפתח
-if "name" in student:
-    print("המפתח 'name' קיים")</code>
-    </div>
-    
-    <h4>קבוצות (Sets):</h4>
-    <div class="code-example">
-        <code># קבוצה - איברים ייחודיים ללא סדר
-fruits = {"תפוח", "בננה", "תפוז"}
-numbers = {1, 2, 3, 2, 1}  # יהיה {1, 2, 3}
-
-# פעולות על קבוצות
-fruits.add("אבטיח")
-fruits.remove("בננה")
-
-# פעולות מתמטיות
-set1 = {1, 2, 3}
-set2 = {3, 4, 5}
-
-print(set1.union(set2))        # איחוד: {1, 2, 3, 4, 5}
-print(set1.intersection(set2)) # חיתוך: {3}</code>
-    </div>
-</div>`
+function initializeConcepts() {
+    console.log('Initializing concepts section');
+    // Add interactive features for concept cards
+    $('.concept-card').hover(
+        function() {
+            $(this).find('.code-example').slideDown(200);
         },
-        5: {
-            title: "שיעור 5 - סיכום ביניים ועבודת כיתה",
-            content: `
-<h3>חזרה כללית ותרגילים מתקדמים</h3>
-<div class="lesson-content">
-    <h4>דוגמאות למשימות מתקדמות:</h4>
-    
-    <h5>1. מערכת ניהול ציונים:</h5>
-    <div class="code-example">
-        <code>def calculate_average(grades):
-    return sum(grades) / len(grades)
-
-def get_letter_grade(average):
-    if average >= 90:
-        return "A"
-    elif average >= 80:
-        return "B"
-    elif average >= 70:
-        return "C"
-    elif average >= 60:
-        return "D"
-    else:
-        return "F"
-
-students = {
-    "אלי": [85, 90, 88],
-    "דנה": [92, 87, 95],
-    "רון": [78, 82, 75]
+        function() {
+            // Keep code example visible
+        }
+    );
 }
 
-for name, grades in students.items():
-    avg = calculate_average(grades)
-    letter = get_letter_grade(avg)
-    print(f"{name}: ממוצע {avg:.1f}, ציון {letter}")</code>
-    </div>
-    
-    <h5>2. משחק ניחוש מספר:</h5>
-    <div class="code-example">
-        <code>import random
+function initializeAnimations() {
+    // Add scroll animations
+    $(window).scroll(function() {
+        $('.concept-card, .lesson-card').each(function() {
+            const elementTop = $(this).offset().top;
+            const elementBottom = elementTop + $(this).outerHeight();
+            const viewportTop = $(window).scrollTop();
+            const viewportBottom = viewportTop + $(window).height();
+            
+            if (elementBottom > viewportTop && elementTop < viewportBottom) {
+                $(this).addClass('animate-in');
+            }
+        });
+    });
+}
 
-def guessing_game():
-    number = random.randint(1, 100)
-    attempts = 0
-    max_attempts = 7
-    
-    print("נחש מספר בין 1 ל-100!")
-    
-    while attempts < max_attempts:
-        guess = int(input("הזן ניחוש: "))
-        attempts += 1
-        
-        if guess == number:
-            print(f"כל הכבוד! ניחשת ב-{attempts} ניסיונות")
-            return
-        elif guess < number:
-            print("המספר גדול יותר")
-        else:
-            print("המספר קטן יותר")
-    
-    print(f"נגמרו הניסיונות. המספר היה: {number}")
+// Initialize Functions
+function initializeHome() {
+    console.log('Initializing home section');
+}
 
-guessing_game()</code>
-    </div>
-    
-    <h5>3. מנתח טקסט:</h5>
-    <div class="code-example">
-        <code>def analyze_text(text):
-    words = text.split()
-    
-    analysis = {
-        "word_count": len(words),
-        "char_count": len(text),
-        "char_count_no_spaces": len(text.replace(" ", "")),
-        "sentence_count": text.count(".") + text.count("!") + text.count("?")
-    }
-    
-    return analysis
-
-text = input("הזן טקסט לניתוח: ")
-result = analyze_text(text)
-
-for key, value in result.items():
-    print(f"{key}: {value}")</code>
-    </div>
-</div>`
+function initializeConcepts() {
+    console.log('Initializing concepts section');
+    // Add interactive features for concept cards
+    $('.concept-card').hover(
+        function() {
+            $(this).find('.code-example').slideDown(200);
         },
-        6: {
-            title: "שיעור 6 - נושאים מתקדמים",
-            content: `
-<h3>קבצים, שגיאות ומודולים</h3>
-<div class="lesson-content">
-    <h4>עבודה עם קבצים:</h4>
-    <div class="code-example">
-        <code># כתיבה לקובץ
-with open("students.txt", "w", encoding="utf-8") as file:
-    file.write("רשימת תלמידים:\n")
-    file.write("אלי\n")
-    file.write("דנה\n")
-    file.write("רון\n")
+        function() {
+            // Keep code example visible
+        }
+    );
+}
 
-# קריאה מקובץ
-with open("students.txt", "r", encoding="utf-8") as file:
-    content = file.read()
-    print(content)
+function initializeStrings() {
+    console.log('Initializing strings section');
+    // Add interactive examples
+    $('.example-section').each(function() {
+        $(this).click(function() {
+            $(this).toggleClass('expanded');
+        });
+    });
+}
 
-# קריאה שורה אחר שורה
-with open("students.txt", "r", encoding="utf-8") as file:
-    for line in file:
-        print(line.strip())</code>
-    </div>
-    
-    <h4>טיפול בשגיאות:</h4>
-    <div class="code-example">
-        <code>try:
-    age = int(input("הזן גיל: "))
-    result = 100 / age
-    print(f"התוצאה: {result}")
-except ValueError:
-    print("שגיאה: יש להזין מספר שלם")
-except ZeroDivisionError:
-    print("שגיאה: לא ניתן לחלק באפס")
-except Exception as e:
-    print(f"שגיאה כללית: {e}")
-finally:
-    print("בלוק זה תמיד מתבצע")</code>
-    </div>
-    
-    <h4>שימוש במודולים:</h4>
-    <div class="code-example">
-        <code>import math
-import random
-from datetime import datetime
 
-# שימוש במודול math
-print(math.pi)
-print(math.sqrt(16))
-print(math.factorial(5))
+// Practice Functions
+function initializePractice() {
+    console.log('Initializing practice section');
+}
 
-# שימוש במודול random
-print(random.randint(1, 10))
-print(random.choice(["אדום", "כחול", "ירוק"]))
-
-# שימוש במודול datetime
-now = datetime.now()
-print(f"התאריך הנוכחי: {now.strftime('%Y-%m-%d %H:%M:%S')}")</code>
-    </div>
-    
-    <h4>יצירת מודול משלך:</h4>
-    <div class="code-example">
-        <code># קובץ: my_functions.py
-def add_numbers(a, b):
-    return a + b
-
-def multiply_numbers(a, b):
-    return a * b
-
-PI = 3.14159
-
-# קובץ: main.py
-import my_functions
-
-result1 = my_functions.add_numbers(5, 3)
-result2 = my_functions.multiply_numbers(4, 7)
-print(f"PI = {my_functions.PI}")</code>
-    </div>
-</div>`
+function startPractice(topic) {
+    const practiceData = {
+        'basics': {
+            title: 'יסודות פייתון',
+            getQuestions: () => getRandomQuestions(questionBanks.basics, 15)
+        },
+        'control': {
+            title: 'תנאים ולולאות',
+            getQuestions: () => getRandomQuestions(questionBanks.control, 15)
+        },
+        'strings': {
+            title: 'מחרוזות',
+            getQuestions: () => getRandomQuestions(questionBanks.strings, 15)
+        },
+        'operators': {
+            title: 'אופרטורים',
+            getQuestions: () => getRandomQuestions(questionBanks.operators, 15)
         }
     };
     
-    const lesson = lessons[lessonNumber];
-    if (lesson) {
-        // Create modal or expand content
-        showLessonModal(lesson.title, lesson.content);
-    }
+    const practiceInfo = practiceData[topic];
+    startPracticeQuiz(topic, practiceInfo);
 }
 
-function showLessonModal(title, content) {
-    const modal = $(`
-        <div class="lesson-modal" id="lessonModal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>${title}</h2>
-                    <span class="close-modal" onclick="closeLessonModal()">&times;</span>
+function startPracticeQuiz(topic, practiceInfo) {
+    if (!practiceInfo) {
+        alert('נושא תרגול לא נמצא');
+        return;
+    }
+    
+    // Get random questions for this practice
+    currentQuizData = practiceInfo.getQuestions();
+    if (currentQuizData.length === 0) {
+        alert('אין שאלות זמינות לנושא זה');
+        return;
+    }
+    
+    currentQuestionIndex = 0;
+    userAnswers = [];
+    currentQuiz = topic;
+    
+    // Hide practice section and show quiz
+    $('.content-section').removeClass('active');
+    if ($('#quiz-container').length === 0) {
+        createQuizContainer();
+    }
+    $('#quiz-container').addClass('active');
+    $('#quiz-title').text(practiceInfo.title);
+    
+    showQuizQuestion();
+}
+
+function createQuizContainer() {
+    const quizHTML = `
+        <div id="quiz-container" class="content-section">
+            <div class="quiz-header">
+                <h2 id="quiz-title"></h2>
+                <button class="back-btn">חזרה לתרגול</button>
+            </div>
+            <div class="quiz-content">
+                <div class="question-container">
+                    <div class="question-progress">
+                        <span id="question-counter"></span>
+                        <div class="progress-bar">
+                            <div class="progress" id="progress-fill"></div>
+                        </div>
+                    </div>
+                    <div class="question-text" id="question-text"></div>
+                    <div class="options-container" id="options-container"></div>
+                    <div class="quiz-controls">
+                        <button id="next-btn" class="btn-primary">שאלה הבאה</button>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    ${content}
+            </div>
+            <div id="quiz-results" class="quiz-results hidden">
+                <h3>תוצאות התרגול</h3>
+                <div class="results-summary">
+                    <div class="score-circle">
+                        <span class="score-number"></span>
+                    </div>
+                    <div class="score-details">
+                        <div class="correct-answers"></div>
+                        <div class="score-percentage"></div>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button onclick="closeLessonModal()">סגור</button>
+                <div class="results-actions">
+                    <button onclick="showSection('practice')" class="btn-secondary">תרגול נוסף</button>
+                    <button onclick="showSection('home')" class="btn-primary">דף הבית</button>
                 </div>
             </div>
         </div>
-    `);
+    `;
     
-    $('body').append(modal);
-    $('#lessonModal').fadeIn();
+    $('body').append(quizHTML);
 }
 
-function closeLessonModal() {
-    $('#lessonModal').fadeOut(function() {
-        $(this).remove();
-    });
-}
-
-// String Functions Practice
-function runStringCode() {
-    const code = $('#string-code').val();
-    try {
-        // Simple string function simulator
-        let output = '';
-        const lines = code.split('\n');
+function showQuizQuestion() {
+    if (currentQuestionIndex >= currentQuizData.length) {
+        showQuizResults();
+        return;
+    }
+    
+    const question = currentQuizData[currentQuestionIndex];
+    
+    const quizHtml = `
+        <div class="quiz-container">
+            <div class="quiz-header">
+                <h3>שאלה ${currentQuestionIndex + 1} מתוך ${currentQuizData.length}</h3>
+                <div class="progress-bar">
+                    <div class="progress" style="width: ${((currentQuestionIndex + 1) / currentQuizData.length) * 100}%"></div>
+                </div>
+            </div>
+            <div class="question">
+                <h4>${question.question}</h4>
+                <div class="options">
+                    ${question.options.map((option, index) => 
+                        `<button class="option-btn" onclick="selectAnswer(${index})">${option}</button>`
+                    ).join('')}
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Create or update quiz modal
+    if ($('#quizModal').length === 0) {
+        $('body').append(`
+            <div id="quizModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeQuiz()">&times;</span>
+                    <div id="quiz-content"></div>
+                </div>
+            </div>
+        `);
         
-        for (let line of lines) {
-            line = line.trim();
-            if (line.startsWith('print(')) {
-                const content = line.slice(6, -1);
-                output += evaluateStringExpression(content) + '\n';
+        // Add click outside to close modal
+        $('#quizModal').click(function(e) {
+            if (e.target === this) {
+                closeQuiz();
             }
-        }
+        });
         
-        $('#string-output').text(output);
-    } catch (error) {
-        $('#string-output').text('שגיאה בקוד: ' + error.message);
-    }
-}
-
-function evaluateStringExpression(expr) {
-    // Simple evaluator for demonstration
-    try {
-        if (expr.includes('len(')) {
-            const match = expr.match(/len\("(.+)"\)/);
-            if (match) return match[1].length;
-        }
-        
-        if (expr.includes('.upper()')) {
-            const match = expr.match(/"(.+)"\.upper\(\)/);
-            if (match) return match[1].toUpperCase();
-        }
-        
-        if (expr.includes('.lower()')) {
-            const match = expr.match(/"(.+)"\.lower\(\)/);
-            if (match) return match[1].toLowerCase();
-        }
-        
-        if (expr.includes('.split()')) {
-            const match = expr.match(/"(.+)"\.split\(\)/);
-            if (match) return JSON.stringify(match[1].split(' '));
-        }
-        
-        // Simple string literal
-        const stringMatch = expr.match(/"(.+)"/);
-        if (stringMatch) return stringMatch[1];
-        
-        return expr;
-    } catch {
-        return 'שגיאה בביטוי';
-    }
-}
-
-// Practice Quiz Functions
-function startPractice(category) {
-    const quizData = getQuizData(category);
-    currentQuiz = category;
-    currentQuizData = quizData;
-    currentQuestionIndex = 0;
-    userAnswers = [];
-    
-    $('.practice-categories').hide();
-    $('#practice-area').removeClass('hidden').show();
-    
-    setupQuiz();
-    showQuestion();
-}
-
-function getQuizData(category) {
-    const quizzes = {
-        basics: {
-            title: "יסודות פייתון",
-            questions: [
-                {
-                    question: "איזה מהבאים הוא טיפוס נתונים נכון בפייתון?",
-                    code: "",
-                    options: ["str", "varchar", "string", "text"],
-                    correct: 0,
-                    explanation: "str הוא טיפוס הנתונים למחרוזות בפייתון"
-                },
-                {
-                    question: "מה יהיה הפלט של הקוד הבא?",
-                    code: "x = 10\ny = 3\nprint(x // y)",
-                    options: ["3.333", "3", "4", "שגיאה"],
-                    correct: 1,
-                    explanation: "// מבצע חילוק שלם ומחזיר 3"
-                },
-                {
-                    question: "איך מגדירים משתנה עם ערך בוליאני True?",
-                    code: "",
-                    options: ["is_true = true", "is_true = True", "is_true = TRUE", "is_true = 1"],
-                    correct: 1,
-                    explanation: "בפייתון ערכים בוליאנים מתחילים באות גדולה: True, False"
-                },
-                {
-                    question: "מה התוצאה של 2 ** 3?",
-                    code: "",
-                    options: ["6", "8", "9", "23"],
-                    correct: 1,
-                    explanation: "** הוא אופרטור החזקה, 2³ = 8"
-                },
-                {
-                    question: "איזה מהבאים ישמש להמרת מחרוזת למספר שלם?",
-                    code: "",
-                    options: ["string()", "int()", "number()", "integer()"],
-                    correct: 1,
-                    explanation: "int() מסב מחרוזת או מספר עשרוני למספר שלם"
-                }
-            ]
-        },
-        control: {
-            title: "תנאים ולולאות",
-            questions: [
-                {
-                    question: "מה יודפס אם x = 15?",
-                    code: "x = 15\nif x > 10:\n    print('גדול')\nelse:\n    print('קטן')",
-                    options: ["גדול", "קטן", "שגיאה", "כלום"],
-                    correct: 0,
-                    explanation: "15 > 10 הוא תנאי אמת, לכן יודפס 'גדול'"
-                },
-                {
-                    question: "כמה פעמים תרוץ הלולאה?",
-                    code: "for i in range(5):\n    print(i)",
-                    options: ["4", "5", "6", "אינסוף"],
-                    correct: 1,
-                    explanation: "range(5) יוצר 5 מספרים: 0,1,2,3,4"
-                },
-                {
-                    question: "מה הבעיה בקוד הבא?",
-                    code: "x = 5\nwhile x > 0:\n    print(x)",
-                    options: ["אין בעיה", "לולאה אינסופית", "שגיאת תחביר", "x לא מוגדר"],
-                    correct: 1,
-                    explanation: "x לא משתנה בלולאה, לכן התנאי תמיד אמת"
-                },
-                {
-                    question: "מה יקרה אם age = 17?",
-                    code: "age = 17\nif age >= 18:\n    print('מבוגר')\nelif age >= 13:\n    print('נער')\nelse:\n    print('ילד')",
-                    options: ["מבוגר", "נער", "ילד", "שגיאה"],
-                    correct: 1,
-                    explanation: "17 >= 13 אמת, לכן יודפס 'נער'"
-                },
-                {
-                    question: "איך יוצרים לולאה שרצה 3 פעמים?",
-                    code: "",
-                    options: ["for i in range(3):", "for i in 3:", "while i < 3:", "loop 3:"],
-                    correct: 0,
-                    explanation: "range(3) יוצר רצף 0,1,2 - 3 איברים"
-                }
-            ]
-        },
-        functions: {
-            title: "פונקציות ורשימות",
-            questions: [
-                {
-                    question: "איך מגדירים פונקציה שמחזירה ערך?",
-                    code: "",
-                    options: ["def func(): return 5", "function func() return 5", "def func() -> 5", "return func(): 5"],
-                    correct: 0,
-                    explanation: "def מגדיר פונקציה ו-return מחזיר ערך"
-                },
-                {
-                    question: "מה יקרה בקוד הבא?",
-                    code: "numbers = [1, 2, 3]\nnumbers.append(4)\nprint(numbers)",
-                    options: ["[1, 2, 3]", "[1, 2, 3, 4]", "שגיאה", "[4, 1, 2, 3]"],
-                    correct: 1,
-                    explanation: "append מוסיף איבר בסוף הרשימה"
-                },
-                {
-                    question: "איך ניגש לאיבר השני ברשימה?",
-                    code: "fruits = ['תפוח', 'בננה', 'תפוז']",
-                    options: ["fruits[2]", "fruits[1]", "fruits[second]", "fruits.get(2)"],
-                    correct: 1,
-                    explanation: "אינדקס מתחיל מ-0, האיבר השני הוא באינדקס 1"
-                },
-                {
-                    question: "מה יחזיר len([1, 2, 3, 4])?",
-                    code: "",
-                    options: ["3", "4", "5", "שגיאה"],
-                    correct: 1,
-                    explanation: "len מחזיר את מספר האיברים ברשימה"
-                },
-                {
-                    question: "איך מסירים איבר מרשימה לפי ערכו?",
-                    code: "",
-                    options: ["list.delete()", "list.remove()", "list.pop()", "list.clear()"],
-                    correct: 1,
-                    explanation: "remove מסיר איבר לפי הערך שלו"
-                }
-            ]
-        },
-        strings: {
-            title: "פונקציות מחרוזות",
-            questions: [
-                {
-                    question: "מה יחזיר 'Hello'.upper()?",
-                    code: "",
-                    options: ["hello", "HELLO", "Hello", "שגיאה"],
-                    correct: 1,
-                    explanation: "upper() הופך את כל האותיות לגדולות"
-                },
-                {
-                    question: "מה התוצאה של הקוד?",
-                    code: "text = '  שלום עולם  '\nprint(text.strip())",
-                    options: ["'  שלום עולם  '", "'שלום עולם'", "'שלוםעולם'", "שגיאה"],
-                    correct: 1,
-                    explanation: "strip() מסיר רווחים מההתחלה והסוף"
-                },
-                {
-                    question: "איך מפצלים מחרוזת לרשימה?",
-                    code: "text = 'א,ב,ג'",
-                    options: ["text.split()", "text.split(',')", "text.divide(',')", "text.break(',')"],
-                    correct: 1,
-                    explanation: "split עם פרמטר מפצל לפי התו שצוין"
-                },
-                {
-                    question: "מה יחזיר 'python'.find('th')?",
-                    code: "",
-                    options: ["2", "3", "4", "-1"],
-                    correct: 1,
-                    explanation: "find מחזיר את האינדקס הראשון של המחרוזת שנמצאה"
-                },
-                {
-                    question: "איך מחליפים טקסט במחרוזת?",
-                    code: "",
-                    options: ["replace(old, new)", "change(old, new)", "swap(old, new)", "substitute(old, new)"],
-                    correct: 0,
-                    explanation: "replace מחליף את כל המופעים של הטקסט הישן בחדש"
-                }
-            ]
-        }
-    };
-    
-    return quizzes[category];
-}
-
-function setupQuiz() {
-    $('#quiz-title').text(currentQuizData.title);
-    $('#question-counter').text(`שאלה 1 מתוך ${currentQuizData.questions.length}`);
-    updateProgressBar();
-}
-
-function showQuestion() {
-    const question = currentQuizData.questions[currentQuestionIndex];
-    
-    $('#question-text').text(question.question);
-    $('#question-code').text(question.code);
-    if (!question.code) {
-        $('#question-code').hide();
-    } else {
-        $('#question-code').show();
+        // Prevent modal content clicks from closing modal
+        $('#quizModal .modal-content').click(function(e) {
+            e.stopPropagation();
+        });
     }
     
-    // Create answer options
-    const optionsHtml = question.options.map((option, index) => 
-        `<div class="answer-option" data-index="${index}">${option}</div>`
-    ).join('');
-    
-    $('#answer-options').html(optionsHtml);
-    
-    // Add click handlers
-    $('.answer-option').click(function() {
-        $('.answer-option').removeClass('selected');
-        $(this).addClass('selected');
-        userAnswers[currentQuestionIndex] = parseInt($(this).data('index'));
-    });
-    
-    // Restore previous answer if exists
-    if (userAnswers[currentQuestionIndex] !== undefined) {
-        $(`.answer-option[data-index="${userAnswers[currentQuestionIndex]}"]`).addClass('selected');
-    }
-    
-    // Update buttons
-    $('#prev-btn').prop('disabled', currentQuestionIndex === 0);
-    $('#next-btn').prop('disabled', false);
-    
-    if (currentQuestionIndex === currentQuizData.questions.length - 1) {
-        $('#next-btn').addClass('hidden');
-        $('#submit-btn').removeClass('hidden');
-    } else {
-        $('#next-btn').removeClass('hidden');
-        $('#submit-btn').addClass('hidden');
-    }
-    
-    // Update counter and progress
-    $('#question-counter').text(`שאלה ${currentQuestionIndex + 1} מתוך ${currentQuizData.questions.length}`);
-    updateProgressBar();
+    $('#quiz-content').html(quizHtml);
+    $('#quizModal').addClass('show').fadeIn();
+    $('body').addClass('modal-open');
 }
 
-function updateProgressBar() {
-    const progress = ((currentQuestionIndex + 1) / currentQuizData.questions.length) * 100;
-    $('#progress-fill').css('width', progress + '%');
-}
-
-function previousQuestion() {
-    if (currentQuestionIndex > 0) {
-        currentQuestionIndex--;
-        showQuestion();
+function selectAnswer(answerIndex) {
+    userAnswers[currentQuestionIndex] = answerIndex;
+    
+    // Show correct/incorrect feedback
+    const question = currentQuizData[currentQuestionIndex];
+    const isCorrect = answerIndex === question.correct;
+    
+    $('.option-btn').removeClass('selected correct incorrect');
+    $(`.option-btn:eq(${answerIndex})`).addClass('selected');
+    $(`.option-btn:eq(${question.correct})`).addClass('correct');
+    
+    if (!isCorrect) {
+        $(`.option-btn:eq(${answerIndex})`).addClass('incorrect');
     }
+    
+    // Show explanation
+    const explanationHtml = `
+        <div class="explanation ${isCorrect ? 'correct' : 'incorrect'}">
+            <p><strong>${isCorrect ? 'נכון!' : 'לא נכון.'}</strong></p>
+            <p>${question.explanation}</p>
+            <button class="btn-primary" onclick="nextQuestion()" style="margin-top: 1rem;">
+                ${currentQuestionIndex < currentQuizData.length - 1 ? 'שאלה הבאה' : 'סיום בחינה'}
+            </button>
+        </div>
+    `;
+    
+    $('.question').append(explanationHtml);
+    $('.option-btn').prop('disabled', true);
 }
 
 function nextQuestion() {
-    if (currentQuestionIndex < currentQuizData.questions.length - 1) {
-        currentQuestionIndex++;
-        showQuestion();
-    }
+    currentQuestionIndex++;
+    showQuizQuestion();
 }
 
-function submitQuiz() {
-    // Calculate score
-    let score = 0;
-    for (let i = 0; i < currentQuizData.questions.length; i++) {
-        if (userAnswers[i] === currentQuizData.questions[i].correct) {
-            score++;
-        }
-    }
+function showQuizResults() {
+    const correctAnswers = userAnswers.filter((answer, index) => 
+        answer === currentQuizData[index].correct
+    ).length;
     
-    const percentage = Math.round((score / currentQuizData.questions.length) * 100);
+    const percentage = Math.round((correctAnswers / currentQuizData.length) * 100);
+    let message = '';
+    let color = '';
     
-    // Hide quiz and show results
-    $('#practice-area').hide();
-    $('#quiz-results').removeClass('hidden').show();
-    
-    // Display score
-    $('#score-percentage').text(percentage + '%');
-    
-    let scoreText = '';
-    if (percentage >= 90) {
-        scoreText = 'מצוין! בהצלחה בבחינה!';
-    } else if (percentage >= 80) {
-        scoreText = 'טוב מאוד! עוד קצת תרגול ואתה מוכן';
-    } else if (percentage >= 70) {
-        scoreText = 'בסדר, כדאי לחזור על החומר';
+    if (percentage >= 80) {
+        message = 'מעולה! אתה מבין את החומר היטב!';
+        color = 'success';
+    } else if (percentage >= 60) {
+        message = 'טוב! עדיין יש מקום לשיפור.';
+        color = 'warning';
     } else {
-        scoreText = 'צריך לחזור על החומר ולתרגל עוד';
+        message = 'כדאי לחזור על החומר ולנסות שוב.';
+        color = 'error';
     }
-    $('#score-text').text(scoreText);
     
-    // Show detailed results
-    showAnswersReview();
-}
-
-function showAnswersReview() {
-    let reviewHtml = '';
-    
-    for (let i = 0; i < currentQuizData.questions.length; i++) {
-        const question = currentQuizData.questions[i];
-        const userAnswer = userAnswers[i];
-        const isCorrect = userAnswer === question.correct;
-        
-        reviewHtml += `
-            <div class="answer-review-item ${isCorrect ? 'correct' : 'incorrect'}">
-                <h5>שאלה ${i + 1}</h5>
-                <p>${question.question}</p>
-                <p><strong>התשובה שלך:</strong> ${question.options[userAnswer] || 'לא נענה'}</p>
-                <p><strong>התשובה הנכונה:</strong> ${question.options[question.correct]}</p>
-                <p><strong>הסבר:</strong> ${question.explanation}</p>
+    const resultsHtml = `
+        <div class="quiz-results ${color}">
+            <h3>תוצאות הבחינה</h3>
+            <div class="score">
+                <span class="score-number">${correctAnswers}/${currentQuizData.length}</span>
+                <span class="score-percentage">${percentage}%</span>
             </div>
-        `;
-    }
+            <p>${message}</p>
+            <div class="results-actions">
+                <button class="btn-secondary" onclick="closeQuiz()">סגור</button>
+                <button class="btn-primary" onclick="retryQuiz()">נסה שוב</button>
+            </div>
+        </div>
+    `;
     
-    $('#answers-review').html(reviewHtml);
+    $('#quiz-content').html(resultsHtml);
 }
 
 function retryQuiz() {
     currentQuestionIndex = 0;
     userAnswers = [];
-    
-    $('#quiz-results').hide();
-    $('#practice-area').show();
-    
-    showQuestion();
+    showQuizQuestion();
 }
 
-function backToPractice() {
-    $('#quiz-results').hide();
-    $('#practice-area').hide();
-    $('.practice-categories').show();
+function closeQuiz() {
+    $('#quizModal').removeClass('show').fadeOut();
+    $('body').removeClass('modal-open');
+    currentQuiz = null;
+    currentQuizData = [];
+    $('a[href="#practice"]').click();
 }
 
 // Test Functions
-function startTest(testNumber) {
-    const testData = getTestData(testNumber);
-    currentQuiz = `test${testNumber}`;
-    currentQuizData = testData;
+function initializeTest() {
+    console.log('Initializing test section');
+}
+
+function startFullTest() {
+    const testQuestions = [
+        {
+            question: 'מה יהיה הפלט של הקוד הבא?\n\nx = 5\ny = 2\nprint(x // y)',
+            options: ['2.5', '2', '3', '10'],
+            correct: 1,
+            explanation: 'האופרטור // מבצע חילוק שלם, אז 5 // 2 = 2'
+        },
+        {
+            question: 'איזה מהפקודות הבאות תיצור רשימה ריקה?',
+            options: ['list = []', 'list = ()', 'list = {}', 'list = ""'],
+            correct: 0,
+            explanation: '[] יוצר רשימה ריקה בפייתון'
+        },
+        {
+            question: 'מה יקרה אם נפעיל: "hello".upper()?',
+            options: ['hello', 'HELLO', 'Hello', 'שגיאה'],
+            correct: 1,
+            explanation: 'המתודה upper() הופכת את כל האותיות לאותיות גדולות'
+        },
+        {
+            question: 'איך בודקים אם מספר הוא זוגי?',
+            options: ['x % 2 == 0', 'x / 2 == 0', 'x * 2 == 0', 'x + 2 == 0'],
+            correct: 0,
+            explanation: 'מספר זוגי אם השארית מחילוק ב-2 היא 0'
+        },
+        {
+            question: 'מה יהיה הפלט של: len("Python")?',
+            options: ['5', '6', '7', 'שגיאה'],
+            correct: 1,
+            explanation: 'המחרוזת "Python" מכילה 6 תווים'
+        }
+    ];
+    
+    currentQuizData = testQuestions;
     currentQuestionIndex = 0;
     userAnswers = [];
-    testTimeLeft = testData.timeLimit * 60; // Convert to seconds
+    testTimeLeft = 15 * 60; // 15 minutes
     
-    $('.test-grid').hide();
-    $('#test-area').removeClass('hidden').show();
-    
-    setupTest();
-    showTestQuestion();
     startTestTimer();
-}
-
-function getTestData(testNumber) {
-    const tests = {
-        1: {
-            title: "בחינת אימון 1 - כללי",
-            timeLimit: 45, // minutes
-            questions: [
-                {
-                    question: "מה יודפס בקוד הבא?",
-                    code: "x = 5\ny = 10\nprint(x + y * 2)",
-                    options: ["30", "25", "20", "15"],
-                    correct: 1,
-                    topic: "יסודות",
-                    explanation: "סדר פעולות: כפל לפני חיבור. 5 + (10 * 2) = 5 + 20 = 25"
-                },
-                {
-                    question: "איזה מהבאים יסב מחרוזת למספר עשרוני?",
-                    code: "",
-                    options: ["int()", "float()", "str()", "decimal()"],
-                    correct: 1,
-                    topic: "טיפוסי נתונים",
-                    explanation: "float() מסב למספר עשרוני"
-                },
-                {
-                    question: "מה התוצאה של הקוד?",
-                    code: "name = 'אליס'\nage = 25\nprint(f'שלום {name}, גיל {age}')",
-                    options: ["שלום אליס, גיל 25", "שלום name, גיל age", "שגיאה", "f'שלום אליס, גיל 25'"],
-                    correct: 0,
-                    topic: "מחרוזות",
-                    explanation: "f-string מחליף משתנים בערכים בזמן ריצה"
-                }
-                // Add more questions...
-            ]
-        },
-        2: {
-            title: "בחינת אימון 2 - מחרוזות ופונקציות",
-            timeLimit: 40,
-            questions: [
-                {
-                    question: "מה יחזיר הקוד הבא?",
-                    code: "text = 'Hello World'\nprint(text.lower().count('l'))",
-                    options: ["2", "3", "4", "1"],
-                    correct: 1,
-                    topic: "מחרוזות",
-                    explanation: "אחרי lower(): 'hello world', יש 3 אותיות 'l'"
-                },
-                {
-                    question: "איך מגדירים פונקציה עם פרמטר ברירת מחדל?",
-                    code: "",
-                    options: ["def func(x=5):", "def func(x:5):", "def func(x default 5):", "def func(x || 5):"],
-                    correct: 0,
-                    topic: "פונקציות",
-                    explanation: "פרמטר ברירת מחדל מוגדר עם ="
-                }
-                // Add more questions...
-            ]
-        },
-        3: {
-            title: "בחינת אימון 3 - רמה מתקדמת",
-            timeLimit: 50,
-            questions: [
-                {
-                    question: "מה יודפס בקוד המורכב הבא?",
-                    code: "def modify_list(lst):\n    lst.append(4)\n    return lst\n\noriginal = [1, 2, 3]\nresult = modify_list(original)\nprint(len(original))",
-                    options: ["3", "4", "שגיאה", "None"],
-                    correct: 1,
-                    topic: "פונקציות מתקדמות",
-                    explanation: "רשימות מועברות בהתייחסות, לכן השינוי משפיע על המקור"
-                }
-                // Add more questions...
-            ]
-        }
-    };
-    
-    return tests[testNumber];
-}
-
-function setupTest() {
-    $('#test-title').text(currentQuizData.title);
-    updateTestTimer();
-    generateQuestionOverview();
-    $('#test-question-counter').text(`שאלה 1 מתוך ${currentQuizData.questions.length}`);
-}
-
-function showTestQuestion() {
-    const question = currentQuizData.questions[currentQuestionIndex];
-    
-    $('#test-question-text').text(question.question);
-    $('#test-question-code').text(question.code);
-    if (!question.code) {
-        $('#test-question-code').hide();
-    } else {
-        $('#test-question-code').show();
-    }
-    
-    // Create answer options
-    const optionsHtml = question.options.map((option, index) => 
-        `<div class="answer-option" data-index="${index}">${option}</div>`
-    ).join('');
-    
-    $('#test-answer-options').html(optionsHtml);
-    
-    // Add click handlers
-    $('.answer-option').click(function() {
-        $('.answer-option').removeClass('selected');
-        $(this).addClass('selected');
-        userAnswers[currentQuestionIndex] = parseInt($(this).data('index'));
-        updateQuestionOverview();
-    });
-    
-    // Restore previous answer if exists
-    if (userAnswers[currentQuestionIndex] !== undefined) {
-        $(`.answer-option[data-index="${userAnswers[currentQuestionIndex]}"]`).addClass('selected');
-    }
-    
-    // Update buttons and counter
-    $('#test-prev-btn').prop('disabled', currentQuestionIndex === 0);
-    $('#test-next-btn').prop('disabled', currentQuestionIndex === currentQuizData.questions.length - 1);
-    
-    if (currentQuestionIndex === currentQuizData.questions.length - 1) {
-        $('#test-next-btn').addClass('hidden');
-        $('#test-submit-btn').removeClass('hidden');
-    } else {
-        $('#test-next-btn').removeClass('hidden');
-        $('#test-submit-btn').addClass('hidden');
-    }
-    
-    $('#test-question-counter').text(`שאלה ${currentQuestionIndex + 1} מתוך ${currentQuizData.questions.length}`);
-    updateQuestionOverview();
-}
-
-function generateQuestionOverview() {
-    let overviewHtml = '';
-    for (let i = 0; i < currentQuizData.questions.length; i++) {
-        overviewHtml += `<div class="question-button" data-question="${i}" onclick="jumpToQuestion(${i})">${i + 1}</div>`;
-    }
-    $('#question-overview').html(overviewHtml);
-}
-
-function updateQuestionOverview() {
-    $('.question-button').removeClass('current answered');
-    $(`.question-button[data-question="${currentQuestionIndex}"]`).addClass('current');
-    
-    for (let i = 0; i < userAnswers.length; i++) {
-        if (userAnswers[i] !== undefined) {
-            $(`.question-button[data-question="${i}"]`).addClass('answered');
-        }
-    }
-}
-
-function jumpToQuestion(questionIndex) {
-    currentQuestionIndex = questionIndex;
-    showTestQuestion();
-}
-
-function previousTestQuestion() {
-    if (currentQuestionIndex > 0) {
-        currentQuestionIndex--;
-        showTestQuestion();
-    }
-}
-
-function nextTestQuestion() {
-    if (currentQuestionIndex < currentQuizData.questions.length - 1) {
-        currentQuestionIndex++;
-        showTestQuestion();
-    }
+    showQuizQuestion();
 }
 
 function startTestTimer() {
+    if (testTimer) clearInterval(testTimer);
+    
     testTimer = setInterval(() => {
         testTimeLeft--;
-        updateTestTimer();
+        updateTimerDisplay();
         
         if (testTimeLeft <= 0) {
             clearInterval(testTimer);
-            alert('זמן הבחינה נגמר!');
-            submitTest();
+            showQuizResults();
         }
     }, 1000);
 }
 
-function updateTestTimer() {
+function updateTimerDisplay() {
     const minutes = Math.floor(testTimeLeft / 60);
     const seconds = testTimeLeft % 60;
-    $('#timer-display').text(`${minutes}:${seconds.toString().padStart(2, '0')}`);
+    const timerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    
+    if ($('.timer').length === 0) {
+        $('.quiz-header').append(`<div class="timer">זמן נותר: <span id="timer-display">${timerText}</span></div>`);
+    } else {
+        $('#timer-display').text(timerText);
+    }
     
     // Change color when time is running out
-    if (testTimeLeft < 300) { // Less than 5 minutes
-        $('#timer-display').css('color', '#e53e3e');
+    if (testTimeLeft <= 60) {
+        $('.timer').addClass('warning');
     }
 }
 
-function submitTest() {
-    if (testTimer) {
-        clearInterval(testTimer);
-    }
-    
-    // Calculate score and topic breakdown
-    let score = 0;
-    const topicScores = {};
-    
-    for (let i = 0; i < currentQuizData.questions.length; i++) {
-        const question = currentQuizData.questions[i];
-        const topic = question.topic;
-        
-        if (!topicScores[topic]) {
-            topicScores[topic] = { correct: 0, total: 0 };
-        }
-        topicScores[topic].total++;
-        
-        if (userAnswers[i] === question.correct) {
-            score++;
-            topicScores[topic].correct++;
-        }
-    }
-    
-    const percentage = Math.round((score / currentQuizData.questions.length) * 100);
-    
-    // Hide test and show results
-    $('#test-area').hide();
-    $('#test-results').removeClass('hidden').show();
-    
-    // Display final score
-    $('#final-score-percentage').text(percentage + '%');
-    
-    // Calculate grade
-    let grade = '';
-    if (percentage >= 95) grade = 'A+';
-    else if (percentage >= 90) grade = 'A';
-    else if (percentage >= 85) grade = 'B+';
-    else if (percentage >= 80) grade = 'B';
-    else if (percentage >= 75) grade = 'C+';
-    else if (percentage >= 70) grade = 'C';
-    else if (percentage >= 60) grade = 'D';
-    else grade = 'F';
-    
-    $('#final-grade').text(grade);
-    
-    // Set grade color
-    const gradeElement = $('#final-grade');
-    if (percentage >= 80) {
-        gradeElement.css('background', '#48bb78').css('color', 'white');
-    } else if (percentage >= 70) {
-        gradeElement.css('background', '#ed8936').css('color', 'white');
-    } else {
-        gradeElement.css('background', '#e53e3e').css('color', 'white');
-    }
-    
-    let scoreText = '';
-    if (percentage >= 90) {
-        scoreText = 'מצוין! אתה מוכן לבחינה!';
-    } else if (percentage >= 80) {
-        scoreText = 'טוב מאוד! עוד קצת תרגול ואתה מושלם';
-    } else if (percentage >= 70) {
-        scoreText = 'ביצועים סבירים, כדאי לחזור על החומר';
-    } else {
-        scoreText = 'יש לחזור על החומר ולתרגל הרבה יותר';
-    }
-    $('#final-score-text').text(scoreText);
-    
-    // Show topic breakdown
-    showTopicBreakdown(topicScores);
-    
-    // Show detailed test review
-    showTestAnswersReview();
-}
-
-function showTopicBreakdown(topicScores) {
-    let breakdownHtml = '';
-    
-    for (const topic in topicScores) {
-        const score = topicScores[topic];
-        const percentage = Math.round((score.correct / score.total) * 100);
-        
-        breakdownHtml += `
-            <div class="topic-item">
-                <span>${topic}</span>
-                <span>${score.correct}/${score.total} (${percentage}%)</span>
+// Utility Functions
+function showModal(title, content) {
+    const modal = $(`
+        <div class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>${title}</h2>
+                <div>${content}</div>
             </div>
-        `;
-    }
+        </div>
+    `);
     
-    $('#topic-breakdown').html(breakdownHtml);
-}
-
-function showTestAnswersReview() {
-    let reviewHtml = '';
+    $('body').append(modal);
+    modal.addClass('show').fadeIn();
+    $('body').addClass('modal-open');
     
-    for (let i = 0; i < currentQuizData.questions.length; i++) {
-        const question = currentQuizData.questions[i];
-        const userAnswer = userAnswers[i];
-        const isCorrect = userAnswer === question.correct;
-        
-        reviewHtml += `
-            <div class="answer-review-item ${isCorrect ? 'correct' : 'incorrect'}">
-                <h5>שאלה ${i + 1} - ${question.topic}</h5>
-                <p>${question.question}</p>
-                ${question.code ? `<div class="code-block">${question.code}</div>` : ''}
-                <p><strong>התשובה שלך:</strong> ${question.options[userAnswer] || 'לא נענה'}</p>
-                <p><strong>התשובה הנכונה:</strong> ${question.options[question.correct]}</p>
-                <p><strong>הסבר:</strong> ${question.explanation}</p>
-            </div>
-        `;
-    }
-    
-    $('#test-answers-review').html(reviewHtml);
-}
-
-function retryTest() {
-    currentQuestionIndex = 0;
-    userAnswers = [];
-    testTimeLeft = currentQuizData.timeLimit * 60;
-    
-    $('#test-results').hide();
-    $('#test-area').show();
-    
-    showTestQuestion();
-    startTestTimer();
-}
-
-function backToTests() {
-    $('#test-results').hide();
-    $('#test-area').hide();
-    $('.test-grid').show();
-}
-
-// Animation and UI Functions
-function initializeAnimations() {
-    // Add smooth scrolling
-    $('a[href^="#"]').on('click', function(event) {
-        const target = $(this.getAttribute('href'));
-        if (target.length) {
-            event.preventDefault();
-            $('html, body').stop().animate({
-                scrollTop: target.offset().top - 100
-            }, 1000);
+    // Click outside to close
+    modal.click(function(e) {
+        if (e.target === this) {
+            modal.removeClass('show').fadeOut(function() {
+                modal.remove();
+                $('body').removeClass('modal-open');
+            });
         }
     });
     
-    // Add hover effects
-    $('.lesson-card, .category-card, .test-card').hover(
-        function() { $(this).addClass('hovered'); },
-        function() { $(this).removeClass('hovered'); }
-    );
+    // Prevent modal content clicks from closing modal
+    modal.find('.modal-content').click(function(e) {
+        e.stopPropagation();
+    });
+    
+    modal.find('.close').click(function() {
+        modal.removeClass('show').fadeOut(function() {
+            modal.remove();
+            $('body').removeClass('modal-open');
+        });
+    });
 }
 
-// Add CSS for lesson modal
-$('<style>').prop('type', 'text/css').html(`
-.lesson-modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.5);
-    backdrop-filter: blur(5px);
+// Error handling
+window.onerror = function(msg, url, line) {
+    console.error('JavaScript Error:', msg, 'at line:', line);
+    return false;
+};
+
+// Question Banks - Large collection of questions for each topic
+const questionBanks = {
+    'basics': [
+        {
+            question: 'איך יוצרים משתנה בשם age עם הערך 20?',
+            options: ['age = 20', '20 = age', 'var age = 20', 'int age = 20'],
+            correct: 0,
+            explanation: 'בפייתון יוצרים משתנה על ידי השמת ערך: age = 20'
+        },
+        {
+            question: 'מה יהיה הפלט של: print(type(5))?',
+            options: ['<class \'int\'>', '<class \'number\'>', '<class \'float\'>', '<class \'str\'>'],
+            correct: 0,
+            explanation: '5 הוא מספר שלם, ולכן הטיפוס שלו הוא int'
+        },
+        {
+            question: 'איך מקבלים קלט מהמשתמש?',
+            options: ['get()', 'input()', 'read()', 'scan()'],
+            correct: 1,
+            explanation: 'הפונקציה input() מקבלת קלט מהמשתמש'
+        },
+        {
+            question: 'מה יהיה הפלט של: print(10 // 3)?',
+            options: ['3.33', '3', '4', '10'],
+            correct: 1,
+            explanation: 'האופרטור // מבצע חילוק שלם, אז 10 // 3 = 3'
+        },
+        {
+            question: 'איך מדפיסים הודעה למסך?',
+            options: ['show()', 'display()', 'print()', 'output()'],
+            correct: 2,
+            explanation: 'הפונקציה print() מדפיסה הודעות למסך'
+        },
+        {
+            question: 'מה יהיה הפלט של: print(type("שלום"))?',
+            options: ['<class \'str\'>', '<class \'string\'>', '<class \'text\'>', '<class \'char\'>'],
+            correct: 0,
+            explanation: 'מחרוזות בפייתון הן מטיפוס str'
+        },
+        {
+            question: 'איך יוצרים מספר עשרוני?',
+            options: ['x = 3.14', 'x = float(3.14)', 'x = decimal(3.14)', 'x = number(3.14)'],
+            correct: 0,
+            explanation: 'מספר עשרוני נוצר פשוט עם נקודה: x = 3.14'
+        },
+        {
+            question: 'מה יהיה הפלט של: print(5 + 3)?',
+            options: ['8', '53', '5+3', 'שגיאה'],
+            correct: 0,
+            explanation: '5 + 3 = 8 (חיבור מתמטי)'
+        },
+        {
+            question: 'איך יוצרים הערה בפייתון?',
+            options: ['// הערה', '/* הערה */', '# הערה', '<!-- הערה -->'],
+            correct: 2,
+            explanation: 'הערות בפייתון מתחילות עם #'
+        },
+        {
+            question: 'מה יהיה הפלט של: print(2 ** 4)?',
+            options: ['8', '16', '24', '6'],
+            correct: 1,
+            explanation: '2 ** 4 = 2⁴ = 16 (2 בחזקת 4)'
+        },
+        {
+            question: 'איך בודקים את טיפוס משתנה?',
+            options: ['typeof(x)', 'type(x)', 'getType(x)', 'x.type()'],
+            correct: 1,
+            explanation: 'type(x) מחזיר את טיפוס המשתנה x'
+        },
+        {
+            question: 'מה יהיה הפלט של: print(7 % 2)?',
+            options: ['3', '1', '3.5', '0'],
+            correct: 1,
+            explanation: '7 % 2 = 1 (השארית מחילוק 7 ב-2)'
+        },
+        {
+            question: 'איך הופכים מחרוזת למספר?',
+            options: ['int("123")', 'number("123")', 'parse("123")', 'convert("123")'],
+            correct: 0,
+            explanation: 'int() הופך מחרוזת למספר שלם'
+        },
+        {
+            question: 'מה יהיה הפלט של: print(10 / 3)?',
+            options: ['3', '3.33333...', '10/3', 'שגיאה'],
+            correct: 1,
+            explanation: 'האופרטור / מבצע חילוק עשרוני'
+        },
+        {
+            question: 'איך הופכים מספר למחרוזת?',
+            options: ['str(123)', 'string(123)', 'text(123)', 'toString(123)'],
+            correct: 0,
+            explanation: 'str() הופך מספר למחרוזת'
+        },
+        {
+            question: 'מה יהיה הפלט של: print(True and False)?',
+            options: ['True', 'False', '1', '0'],
+            correct: 1,
+            explanation: 'and מחזיר True רק אם שני הצדדים True'
+        },
+        {
+            question: 'איך יוצרים משתנה בוליאני?',
+            options: ['x = True', 'x = true', 'x = boolean(1)', 'x = bool(1)'],
+            correct: 0,
+            explanation: 'ערכים בוליאניים הם True או False (עם אות גדולה)'
+        },
+        {
+            question: 'מה יהיה הפלט של: print(not True)?',
+            options: ['True', 'False', 'None', 'שגיאה'],
+            correct: 1,
+            explanation: 'not הופך True ל-False'
+        },
+        {
+            question: 'איך בודקים שוויון בין שני ערכים?',
+            options: ['x = y', 'x == y', 'x eq y', 'x equals y'],
+            correct: 1,
+            explanation: '== בודק שוויון, = משמש להשמה'
+        },
+        {
+            question: 'מה יהיה הפלט של: print(5 != 3)?',
+            options: ['True', 'False', '2', 'שגיאה'],
+            correct: 0,
+            explanation: '!= בודק אי-שוויון, 5 לא שווה ל-3'
+        },
+        {
+            question: 'איך יוצרים קבוע (מוסכמה)?',
+            options: ['PI = 3.14', 'const PI = 3.14', 'final PI = 3.14', '#define PI 3.14'],
+            correct: 0,
+            explanation: 'בפייתון אין קבועים אמיתיים, המוסכמה היא אותיות גדולות'
+        },
+        {
+            question: 'מה יהיה הפלט של: print(10 > 5 > 3)?',
+            options: ['True', 'False', 'שגיאה', 'None'],
+            correct: 0,
+            explanation: 'פייתון מאפשר השוואות משולשות: 10 > 5 > 3 הוא True'
+        },
+        {
+            question: 'איך מחשבים חזקה?',
+            options: ['pow(2, 3)', '2 ** 3', 'power(2, 3)', 'כל התשובות נכונות'],
+            correct: 3,
+            explanation: 'גם ** וגם pow() מחשבים חזקה'
+        },
+        {
+            question: 'מה יהיה הפלט של: print(15 // 4)?',
+            options: ['3', '3.75', '4', '15'],
+            correct: 0,
+            explanation: '// מבצע חילוק שלם: 15 // 4 = 3'
+        },
+        {
+            question: 'איך בודקים אם מספר חיובי?',
+            options: ['x > 0', 'x.positive()', 'isPositive(x)', 'x >= 1'],
+            correct: 0,
+            explanation: 'x > 0 בודק אם המספר גדול מאפס'
+        },
+        {
+            question: 'מה יהיה הפלט של: print(bool(0))?',
+            options: ['True', 'False', '0', 'None'],
+            correct: 1,
+            explanation: 'bool(0) מחזיר False כי 0 נחשב לערך שקרי'
+        },
+        {
+            question: 'איך יוצרים משתנה עם ערך None?',
+            options: ['x = None', 'x = null', 'x = empty', 'x = void'],
+            correct: 0,
+            explanation: 'None הוא הערך הריק בפייתון'
+        },
+        {
+            question: 'מה יהיה הפלט של: print(3.14 * 2)?',
+            options: ['6.28', '3.142', '6', 'שגיאה'],
+            correct: 0,
+            explanation: '3.14 * 2 = 6.28 (כפל של מספר עשרוני)'
+        },
+        {
+            question: 'איך בודקים את הערך המקסימלי?',
+            options: ['max(5, 3)', 'maximum(5, 3)', 'bigger(5, 3)', 'largest(5, 3)'],
+            correct: 0,
+            explanation: 'max() מחזיר את הערך הגדול ביותר'
+        },
+        {
+            question: 'מה יהיה הפלט של: print(round(3.7))?',
+            options: ['3', '4', '3.7', '3.0'],
+            correct: 1,
+            explanation: 'round() מעגל למספר השלם הקרוב ביותר'
+        },
+        {
+            question: 'איך יוצרים רשימה?',
+            options: ['[1, 2, 3]', '{1, 2, 3}', '(1, 2, 3)', '<1, 2, 3>'],
+            correct: 0,
+            explanation: 'סוגריים מרובעים [] יוצרים רשימה'
+        },
+        {
+            question: 'מה יהיה הפלט של: print(abs(-5))?',
+            options: ['-5', '5', '0', 'שגיאה'],
+            correct: 1,
+            explanation: 'abs() מחזיר את הערך המוחלט'
+        },
+        {
+            question: 'איך בודקים אם משתנה קיים?',
+            options: ['exists(x)', 'defined(x)', 'try: x', '"x" in locals()'],
+            correct: 3,
+            explanation: 'locals() מחזיר מילון של המשתנים המקומיים'
+        },
+        {
+            question: 'מה יהיה הפלט של: print(len([]))?',
+            options: ['0', '1', 'None', 'שגיאה'],
+            correct: 0,
+            explanation: 'רשימה ריקה [] יש לה אורך 0'
+        },
+        {
+            question: 'איך הופכים רשימה למחרוזת?',
+            options: ['str([1,2,3])', '"".join(map(str, [1,2,3]))', 'toString([1,2,3])', 'text([1,2,3])'],
+            correct: 1,
+            explanation: 'join() עם map() הופך רשימה למחרוזת'
+        },
+        {
+            question: 'מה יהיה הפלט של: print(bool(""))?',
+            options: ['True', 'False', '""', 'None'],
+            correct: 1,
+            explanation: 'מחרוזת ריקה נחשבת לערך שקרי'
+        },
+        {
+            question: 'איך יוצרים tuple?',
+            options: ['(1, 2, 3)', '[1, 2, 3]', '{1, 2, 3}', '<1, 2, 3>'],
+            correct: 0,
+            explanation: 'סוגריים עגולים () יוצרים tuple'
+        },
+        {
+            question: 'מה יהיה הפלט של: print(min(5, 2, 8))?',
+            options: ['5', '2', '8', 'שגיאה'],
+            correct: 1,
+            explanation: 'min() מחזיר את הערך הקטן ביותר'
+        },
+        {
+            question: 'איך בודקים אם ערך הוא מספר?',
+            options: ['isinstance(x, int)', 'isNumber(x)', 'type(x) == number', 'x.isNumber()'],
+            correct: 0,
+            explanation: 'isinstance() בודק אם ערך הוא מטיפוס מסוים'
+        },
+        {
+            question: 'מה יהיה הפלט של: print(pow(3, 2))?',
+            options: ['6', '9', '5', '32'],
+            correct: 1,
+            explanation: 'pow(3, 2) = 3² = 9'
+        }
+    ],
+    'control': [
+        {
+            question: 'מה יקרה אם התנאי במשפט if הוא False?',
+            options: ['התוכנית תיעצר', 'יתבצע הקוד בתוך if', 'יתבצע הקוד של else', 'שגיאה'],
+            correct: 2,
+            explanation: 'אם התנאי False, הקוד עובר לחלק else (אם קיים)'
+        },
+        {
+            question: 'מה עושה הפקודה break בתוך לולאה?',
+            options: ['עוצרת את התוכנית', 'יוצאת מהלולאה', 'עוצרת לשנייה', 'עוברת לשאלה הבאה'],
+            correct: 1,
+            explanation: 'break יוצאת מהלולאה הנוכחית לגמרי'
+        },
+        {
+            question: 'איך כותבים לולאה שרצה 5 פעמים?',
+            options: ['for i in 5:', 'for i in range(5):', 'for 5 times:', 'repeat 5:'],
+            correct: 1,
+            explanation: 'range(5) יוצר רצף מ-0 עד 4 (5 מספרים)'
+        },
+        {
+            question: 'מתי לולאת while תיעצר?',
+            options: ['אחרי 10 פעמים', 'כשהתנאי הופך False', 'אף פעם', 'כשרוצים'],
+            correct: 1,
+            explanation: 'לולאת while ממשיכה כל עוד התנאי הוא True'
+        },
+        {
+            question: 'מה עושה continue בלולאה?',
+            options: ['יוצאת מהלולאה', 'עוצרת את התוכנית', 'קופצת לאיטרציה הבאה', 'חוזרת לתחילת התוכנית'],
+            correct: 2,
+            explanation: 'continue מדלגת לאיטרציה הבאה של הלולאה'
+        },
+        {
+            question: 'איך כותבים תנאי מורכב?',
+            options: ['if x > 5 and x < 10:', 'if (x > 5) && (x < 10):', 'if x > 5 & x < 10:', 'if x between 5 and 10:'],
+            correct: 0,
+            explanation: 'and מחבר שני תנאים בפייתון'
+        },
+        {
+            question: 'מה יהיה הפלט של:\nfor i in range(3):\n    print(i)',
+            options: ['1 2 3', '0 1 2', '3', 'שגיאה'],
+            correct: 1,
+            explanation: 'range(3) מייצר 0, 1, 2'
+        },
+        {
+            question: 'איך כותבים elif?',
+            options: ['else if', 'elif', 'elseif', 'ei'],
+            correct: 1,
+            explanation: 'elif הוא הדרך לכתוב "else if" בפייתון'
+        },
+        {
+            question: 'מה יקרה בקוד:\nwhile True:\n    print("שלום")',
+            options: ['ידפיס שלום פעם אחת', 'ידפיס שלום 10 פעמים', 'לולאה אינסופית', 'שגיאה'],
+            correct: 2,
+            explanation: 'while True יוצר לולאה אינסופית'
+        },
+        {
+            question: 'איך בודקים אם מספר בטווח מסוים?',
+            options: ['5 <= x <= 10', 'x >= 5 and x <= 10', '5 <= x and x <= 10', 'כל התשובות נכונות'],
+            correct: 3,
+            explanation: 'כל הדרכים האלו נכונות לבדיקת טווח'
+        },
+        {
+            question: 'מה יהיה הפלט של:\nfor i in range(1, 4):\n    print(i)',
+            options: ['1 2 3', '1 2 3 4', '0 1 2 3', '2 3 4'],
+            correct: 0,
+            explanation: 'range(1, 4) מייצר 1, 2, 3 (לא כולל 4)'
+        },
+        {
+            question: 'איך יוצאים מלולאת while?',
+            options: ['exit', 'break', 'stop', 'end'],
+            correct: 1,
+            explanation: 'break יוצאת מכל סוג של לולאה'
+        },
+        {
+            question: 'מה זה else בלולאה?',
+            options: ['מתבצע אם הלולאה לא רצה', 'מתבצע אחרי הלולאה אם לא היה break', 'מתבצע במקרה של שגיאה', 'לא קיים'],
+            correct: 1,
+            explanation: 'else בלולאה מתבצע רק אם הלולאה הסתיימה ללא break'
+        },
+        {
+            question: 'איך כותבים לולאה הפוכה?',
+            options: ['for i in reverse(range(5)):', 'for i in range(5, 0, -1):', 'for i in range(4, -1, -1):', 'התשובה השנייה והשלישית נכונות'],
+            correct: 3,
+            explanation: 'גם range(5, 0, -1) וגם range(4, -1, -1) יוצרים לולאה הפוכה'
+        },
+        {
+            question: 'מה יהיה הפלט של:\nfor i in range(0, 10, 2):\n    print(i)',
+            options: ['0 2 4 6 8', '2 4 6 8 10', '0 1 2 3 4', '0 2 4 6 8 10'],
+            correct: 0,
+            explanation: 'range(0, 10, 2) מתחיל מ-0, עד 10 (לא כולל), בצעדים של 2'
+        },
+        {
+            question: 'איך בודקים מספר זוגי?',
+            options: ['x % 2 == 0', 'x / 2 == 0', 'x.isEven()', 'even(x)'],
+            correct: 0,
+            explanation: 'מספר זוגי אם השארית מחילוק ב-2 היא 0'
+        },
+        {
+            question: 'מה זה nested loop?',
+            options: ['לולאה שבורה', 'לולאה בתוך לולאה', 'לולאה מהירה', 'לולאה עם תנאי'],
+            correct: 1,
+            explanation: 'nested loop זה לולאה בתוך לולאה אחרת'
+        },
+        {
+            question: 'איך עושים לולאה אינסופית מבוקרת?',
+            options: ['while True: ... if condition: break', 'for ever: ...', 'loop: ...', 'infinite: ...'],
+            correct: 0,
+            explanation: 'while True עם break בתנאי מסוים יוצר לולאה מבוקרת'
+        },
+        {
+            question: 'מה יקרה בקוד:\nfor i in range(5):\n    if i == 3:\n        continue\n    print(i)',
+            options: ['0 1 2 3 4', '0 1 2 4', '1 2 3 4', '0 1 2'],
+            correct: 1,
+            explanation: 'continue מדלג על i=3, אז מדפיס 0 1 2 4'
+        },
+        {
+            question: 'איך בודקים אם מספר אי-זוגי?',
+            options: ['x % 2 == 1', 'x % 2 != 0', 'not (x % 2 == 0)', 'כל התשובות נכונות'],
+            correct: 3,
+            explanation: 'כל הדרכים האלו בודקות אם מספר אי-זוגי'
+        },
+        {
+            question: 'מה ההבדל בין for ו-while?',
+            options: ['אין הבדל', 'for למספר ידוע של איטרציות, while לתנאי', 'while מהיר יותר', 'for רק למספרים'],
+            correct: 1,
+            explanation: 'for טוב למספר ידוע של איטרציות, while לתנאי לא ידוע'
+        },
+        {
+            question: 'איך עושים לולאה על מחרוזת?',
+            options: ['for char in string:', 'for i in len(string):', 'for string[i] in string:', 'while string:'],
+            correct: 0,
+            explanation: 'for char in string עובר על כל תו במחרוזת'
+        },
+        {
+            question: 'מה יהיה הפלט של:\nfor i in range(3):\n    for j in range(2):\n        print(i, j)',
+            options: ['6 שורות', '5 שורות', '2 שורות', '3 שורות'],
+            correct: 0,
+            explanation: 'לולאה מקוננת: 3 × 2 = 6 איטרציות'
+        },
+        {
+            question: 'איך בודקים תנאי מרובה?',
+            options: ['if x == 1 or x == 2 or x == 3:', 'if x in [1, 2, 3]:', 'if x == 1 || x == 2 || x == 3:', 'התשובה הראשונה והשנייה נכונות'],
+            correct: 3,
+            explanation: 'גם or וגם in יכולים לבדוק תנאי מרובה'
+        },
+        {
+            question: 'מה יהיה הפלט של:\nfor i in [1, 2, 3]:\n    if i == 2:\n        break\n    print(i)',
+            options: ['1', '1 2', '1 2 3', '2 3'],
+            correct: 0,
+            explanation: 'break יוצאת מהלולאה כשi=2, אז מדפיס רק 1'
+        },
+        {
+            question: 'איך עושים לולאה עם אינדקס?',
+            options: ['for i, item in enumerate(list):', 'for i in range(len(list)):', 'for item in list:', 'התשובה הראשונה והשנייה נכונות'],
+            correct: 3,
+            explanation: 'גם enumerate וגם range(len()) נותנים אינדקס'
+        },
+        {
+            question: 'מה יהיה הפלט של:\nwhile False:\n    print("שלום")',
+            options: ['שלום', 'לולאה אינסופית', 'כלום', 'שגיאה'],
+            correct: 2,
+            explanation: 'התנאי False אז הלולאה לא רצה בכלל'
+        },
+        {
+            question: 'איך בודקים אם מספר בטווח (לא כולל קצוות)?',
+            options: ['5 < x < 10', 'x > 5 and x < 10', 'x in range(6, 10)', 'כל התשובות נכונות'],
+            correct: 3,
+            explanation: 'כל הדרכים בודקות טווח ללא קצוות'
+        },
+        {
+            question: 'מה עושה pass?',
+            options: ['מדלג על איטרציה', 'יוצא מלולאה', 'לא עושה כלום', 'עוצר תוכנית'],
+            correct: 2,
+            explanation: 'pass הוא placeholder שלא עושה כלום'
+        },
+        {
+            question: 'איך עושים לולאה הפוכה על רשימה?',
+            options: ['for item in reversed(list):', 'for item in list[::-1]:', 'for i in range(len(list)-1, -1, -1):', 'כל התשובות נכונות'],
+            correct: 3,
+            explanation: 'כל הדרכים האלו עוברות על רשימה הפוכה'
+        },
+        {
+            question: 'מה יקרה בקוד:\nfor i in range(2):\n    for j in range(3):\n        if i == j:\n            continue\n        print(i, j)',
+            options: ['4 שורות', '5 שורות', '6 שורות', '3 שורות'],
+            correct: 1,
+            explanation: 'נדפס כל צמד חוץ מ-(0,0) ו-(1,1): 5 שורות'
+        },
+        {
+            question: 'איך בודקים אם רשימה ריקה?',
+            options: ['if not list:', 'if len(list) == 0:', 'if list == []:', 'כל התשובות נכונות'],
+            correct: 3,
+            explanation: 'כל הדרכים בודקות אם רשימה ריקה'
+        },
+        {
+            question: 'מה ההבדל בין break ו-continue?',
+            options: ['אין הבדל', 'break יוצא, continue מדלג', 'break מדלג, continue יוצא', 'שניהם יוצאים'],
+            correct: 1,
+            explanation: 'break יוצא מהלולאה, continue מדלג לאיטרציה הבאה'
+        },
+        {
+            question: 'איך עושים לולאה אינסופית עם תנאי יציאה?',
+            options: ['while True:\n    if condition: break', 'for i in range(∞):', 'loop forever:', 'infinite while:'],
+            correct: 0,
+            explanation: 'while True עם break בתנאי הוא הדרך הנכונה'
+        },
+        {
+            question: 'מה יהיה הפלט של:\nfor i in range(1, 6, 2):\n    print(i)',
+            options: ['1 3 5', '2 4 6', '1 2 3 4 5', '1 3'],
+            correct: 0,
+            explanation: 'range(1, 6, 2) מתחיל מ-1, עד 6 (לא כולל), בצעדים של 2'
+        },
+        {
+            question: 'איך בודקים תנאי מורכב עם סוגריים?',
+            options: ['if (x > 5) and (y < 10):', 'if x > 5 and y < 10:', 'if (x > 5 and y < 10):', 'כל התשובות נכונות'],
+            correct: 3,
+            explanation: 'סוגריים אופציונליים ב-Python אבל עוזרים לקריאות'
+        },
+        {
+            question: 'מה יקרה אם נשכח את ה-: אחרי if?',
+            options: ['התוכנית תרוץ', 'אזהרה', 'שגיאת syntax', 'התוכנית תקפא'],
+            correct: 2,
+            explanation: ': חובה אחרי משפטי תנאי ולולאות'
+        },
+        {
+            question: 'איך עושים לולאה על מילון?',
+            options: ['for key in dict:', 'for key, value in dict.items():', 'for value in dict.values():', 'כל התשובות נכונות'],
+            correct: 3,
+            explanation: 'יש כמה דרכים לעבור על מילון לפי הצורך'
+        },
+        {
+            question: 'מה זה list comprehension?',
+            options: ['הבנת רשימות', '[x for x in range(10)]', 'דרך קצרה ליצור רשימות', 'כל התשובות נכונות'],
+            correct: 3,
+            explanation: 'list comprehension הוא תחביר קצר ליצירת רשימות'
+        }
+    ],
+    'strings': [
+        {
+            question: 'מה יהיה הפלט של: len("שלום")?',
+            options: ['4', '5', '3', 'שגיאה'],
+            correct: 0,
+            explanation: 'המחרוזת "שלום" מכילה 4 תווים'
+        },
+        {
+            question: 'מה יעשה: "HELLO".lower()?',
+            options: ['HELLO', 'hello', 'Hello', 'שגיאה'],
+            correct: 1,
+            explanation: '.lower() הופך את כל האותיות לקטנות'
+        },
+        {
+            question: 'איך ניגש לתו הראשון במחרוזת?',
+            options: ['text[1]', 'text[0]', 'text.first()', 'text[-1]'],
+            correct: 1,
+            explanation: 'האינדקס במחרוזות מתחיל מ-0, אז התו הראשון הוא [0]'
+        },
+        {
+            question: 'מה יחזיר: "א ב ג".split()?',
+            options: ['["א", "ב", "ג"]', '"א ב ג"', '["א ב ג"]', 'שגיאה'],
+            correct: 0,
+            explanation: 'split() חולק את המחרוזת לרשימה של מילים'
+        },
+        {
+            question: 'איך בודקים אם מחרוזת מכילה טקסט מסוים?',
+            options: ['text.has("word")', 'text.contains("word")', '"word" in text', 'text.find("word")'],
+            correct: 2,
+            explanation: 'המילה "in" בודקת אם טקסט נמצא במחרוזת'
+        },
+        {
+            question: 'מה יעשה: "hello".upper()?',
+            options: ['hello', 'HELLO', 'Hello', 'hELLO'],
+            correct: 1,
+            explanation: '.upper() הופך את כל האותיות לגדולות'
+        },
+        {
+            question: 'איך ניגש לתו האחרון במחרוזת?',
+            options: ['text[len(text)]', 'text[-1]', 'text[last]', 'text.last()'],
+            correct: 1,
+            explanation: 'text[-1] ניגש לתו האחרון (אינדקס שלילי)'
+        },
+        {
+            question: 'מה יחזיר: "Python".replace("P", "J")?',
+            options: ['Python', 'Jython', 'python', 'PyJhon'],
+            correct: 1,
+            explanation: 'replace() מחליף את התו הראשון בשני'
+        },
+        {
+            question: 'איך חותכים מחרוזת?',
+            options: ['text[1:3]', 'text.slice(1, 3)', 'text.cut(1, 3)', 'text.substring(1, 3)'],
+            correct: 0,
+            explanation: 'text[start:end] חותך מחרוזת מאינדקס start עד end-1'
+        },
+        {
+            question: 'מה יהיה הפלט של: "123".isdigit()?',
+            options: ['True', 'False', '123', 'שגיאה'],
+            correct: 0,
+            explanation: '.isdigit() בודק אם כל התווים הם ספרות'
+        },
+        {
+            question: 'איך מחברים מחרוזות?',
+            options: ['"hello" + "world"', '"hello".concat("world")', '"hello" & "world"', 'join("hello", "world")'],
+            correct: 0,
+            explanation: 'האופרטור + מחבר מחרוזות בפייתון'
+        },
+        {
+            question: 'מה יחזיר: "  שלום  ".strip()?',
+            options: ['"  שלום  "', '"שלום"', '"שלום  "', '"  שלום"'],
+            correct: 1,
+            explanation: '.strip() מסיר רווחים מתחילת וסוף המחרוזת'
+        },
+        {
+            question: 'איך בודקים אם מחרוזת מתחילה במילה מסוימת?',
+            options: ['text.starts("word")', 'text.startswith("word")', 'text.begin("word")', 'text[0] == "word"'],
+            correct: 1,
+            explanation: '.startswith() בודק אם מחרוזת מתחילה בטקסט מסוים'
+        },
+        {
+            question: 'מה יהיה הפלט של: "ABC".lower().upper()?',
+            options: ['abc', 'ABC', 'Abc', 'aBc'],
+            correct: 1,
+            explanation: 'lower() הופך לקטנות, upper() הופך לגדולות - התוצאה ABC'
+        },
+        {
+            question: 'איך סופרים כמה פעמים תו מופיע במחרוזת?',
+            options: ['text.count("a")', 'text.find("a")', 'text.search("a")', 'text.num("a")'],
+            correct: 0,
+            explanation: '.count() סופר כמה פעמים תו או מחרוזת מופיעים'
+        },
+        {
+            question: 'מה יחזיר: "hello"[1:4]?',
+            options: ['hell', 'ell', 'ello', 'hel'],
+            correct: 1,
+            explanation: '[1:4] לוקח תווים מאינדקס 1 עד 3 (לא כולל 4): "ell"'
+        },
+        {
+            question: 'איך הופכים מחרוזת לרשימה של תווים?',
+            options: ['list("hello")', '"hello".toList()', '"hello".split("")', 'chars("hello")'],
+            correct: 0,
+            explanation: 'list() הופך מחרוזת לרשימה של תווים'
+        },
+        {
+            question: 'מה יחזיר: "".join(["a", "b", "c"])?',
+            options: ['["a", "b", "c"]', '"a b c"', '"abc"', '"a,b,c"'],
+            correct: 2,
+            explanation: '""join() מחבר רשימה למחרוזת בלי מפריד'
+        },
+        {
+            question: 'איך בודקים אם מחרוזת ריקה?',
+            options: ['text == ""', 'len(text) == 0', 'not text', 'כל התשובות נכונות'],
+            correct: 3,
+            explanation: 'כל הדרכים האלו בודקות אם מחרוזת ריקה'
+        },
+        {
+            question: 'מה יהיה הפלט של: "Python"[:3]?',
+            options: ['Pyt', 'Pyth', 'Python', 'hon'],
+            correct: 0,
+            explanation: '[:3] לוקח תווים מההתחלה עד אינדקס 2: "Pyt"'
+        },
+        {
+            question: 'איך הופכים מחרוזת?',
+            options: ['text.reverse()', 'text[::-1]', 'reverse(text)', 'text.flip()'],
+            correct: 1,
+            explanation: 'text[::-1] הופך מחרוזת (צעד של -1)'
+        },
+        {
+            question: 'מה יחזיר: "hello world".split(" ")?',
+            options: ['["hello", "world"]', '"hello world"', '["hello", " ", "world"]', '"hello" "world"'],
+            correct: 0,
+            explanation: 'split(" ") חולק מחרוזת לפי רווח'
+        },
+        {
+            question: 'איך בודקים אם מחרוזת מכילה רק אותיות?',
+            options: ['text.isalpha()', 'text.isletters()', 'text.onlyletters()', 'text.alphabetic()'],
+            correct: 0,
+            explanation: '.isalpha() בודק אם כל התווים הם אותיות'
+        },
+        {
+            question: 'מה יהיה הפלט של: "Python"[2:]?',
+            options: ['Py', 'th', 'thon', 'Python'],
+            correct: 2,
+            explanation: '[2:] לוקח תווים מאינדקס 2 עד הסוף: "thon"'
+        },
+        {
+            question: 'איך מחליפים כל המופעים של תו במחרוזת?',
+            options: ['text.replace("a", "b")', 'text.replaceAll("a", "b")', 'text.change("a", "b")', 'text.substitute("a", "b")'],
+            correct: 0,
+            explanation: '.replace() מחליף את כל המופעים של המחרוזת הראשונה בשנייה'
+        },
+        {
+            question: 'מה יחזיר: "Hello World".find("o")?',
+            options: ['4', '7', '6', '-1'],
+            correct: 0,
+            explanation: '.find() מחזיר את האינדקס של המופע הראשון'
+        },
+        {
+            question: 'איך בודקים אם מחרוזת מסתיימת במילה מסוימת?',
+            options: ['text.endswith("word")', 'text.ends("word")', 'text[-4:] == "word"', 'התשובה הראשונה והשלישית נכונות'],
+            correct: 3,
+            explanation: 'גם endswith() וגם השוואת הסוף נכונים'
+        },
+        {
+            question: 'מה יחזיר: "python".capitalize()?',
+            options: ['python', 'PYTHON', 'Python', 'PyThOn'],
+            correct: 2,
+            explanation: '.capitalize() הופך את האות הראשונה לגדולה והשאר לקטנות'
+        },
+        {
+            question: 'איך חותכים מחרוזת עד אינדקס מסוים?',
+            options: ['text[:5]', 'text.slice(0, 5)', 'text.substring(0, 5)', 'text.cut(5)'],
+            correct: 0,
+            explanation: '[:n] חותך מההתחלה עד אינדקס n-1'
+        },
+        {
+            question: 'מה יהיה הפלט של: "abc" * 3?',
+            options: ['abcabcabc', 'abc3', 'aaa bbb ccc', 'שגיאה'],
+            correct: 0,
+            explanation: 'כפל מחרוזת חוזר עליה מספר פעמים'
+        },
+        {
+            question: 'איך מוצאים את האינדקס של תת-מחרוזת?',
+            options: ['text.index("sub")', 'text.find("sub")', 'text.search("sub")', 'התשובה הראשונה והשנייה נכונות'],
+            correct: 3,
+            explanation: 'גם index() וגם find() מוצאים אינדקס (index זורק שגיאה אם לא נמצא)'
+        },
+        {
+            question: 'מה יחזיר: "123abc".isalnum()?',
+            options: ['True', 'False', '123', 'abc'],
+            correct: 0,
+            explanation: '.isalnum() בודק אם כל התווים הם אותיות או ספרות'
+        },
+        {
+            question: 'איך מסירים תווים מסוימים מהמחרוזת?',
+            options: ['text.strip("abc")', 'text.remove("abc")', 'text.delete("abc")', 'text.cut("abc")'],
+            correct: 0,
+            explanation: '.strip() מסיר תווים מתחילת וסוף המחרוזת'
+        },
+        {
+            question: 'מה יהיה הפלט של: "Hello"[1::2]?',
+            options: ['el', 'ell', 'elo', 'Hlo'],
+            correct: 2,
+            explanation: '[1::2] מתחיל מאינדקס 1 ולוקח כל תו שני: "elo"'
+        },
+        {
+            question: 'איך בודקים אם מחרוזת מכילה רק רווחים?',
+            options: ['text.isspace()', 'text.iswhite()', 'text.isblank()', 'text.isEmpty()'],
+            correct: 0,
+            explanation: '.isspace() בודק אם כל התווים הם רווחים'
+        },
+        {
+            question: 'מה יחזיר: "hello".title()?',
+            options: ['hello', 'HELLO', 'Hello', 'HeLLo'],
+            correct: 2,
+            explanation: '.title() הופך את האות הראשונה של כל מילה לגדולה'
+        },
+        {
+            question: 'איך מחליפים רק את המופע הראשון?',
+            options: ['text.replace("a", "b", 1)', 'text.replaceFirst("a", "b")', 'text.sub("a", "b")', 'text.change("a", "b", 1)'],
+            correct: 0,
+            explanation: '.replace() עם פרמטר שלישי מגביל את מספר ההחלפות'
+        },
+        {
+            question: 'מה יהיה הפלט של: "a,b,c".split(",")?',
+            options: ['["a", "b", "c"]', '"a" "b" "c"', '["a,b,c"]', '"abc"'],
+            correct: 0,
+            explanation: '.split(",") חולק מחרוזת לפי פסיק'
+        },
+        {
+            question: 'איך יוצרים מחרוזת עם ציטוטים?',
+            options: ['"He said \\"Hello\\""', "'He said \"Hello\"'", '"""He said "Hello" """', 'כל התשובות נכונות'],
+            correct: 3,
+            explanation: 'יש כמה דרכים להכניס ציטוטים במחרוזת'
+        },
+        {
+            question: 'מה יחזיר: "Python"*2?',
+            options: ['Python2', 'PythonPython', 'Python Python', 'PP yy tt hh oo nn'],
+            correct: 1,
+            explanation: 'כפל מחרוזת משכפל אותה'
+        }
+    ],
+    'operators': [
+        {
+            question: 'מה יהיה התוצאה של: 7 % 3?',
+            options: ['2', '1', '3', '7'],
+            correct: 1,
+            explanation: '7 % 3 = 1 (השארית מחילוק 7 ב-3)'
+        },
+        {
+            question: 'מה יהיה התוצאה של: 2 ** 3?',
+            options: ['6', '8', '5', '9'],
+            correct: 1,
+            explanation: '2 ** 3 = 2³ = 8 (2 בחזקת 3)'
+        },
+        {
+            question: 'מה זה True and False?',
+            options: ['True', 'False', 'None', 'שגיאה'],
+            correct: 1,
+            explanation: 'אופרטור and מחזיר True רק אם שני הצדדים True'
+        },
+        {
+            question: 'מה זה not True?',
+            options: ['True', 'False', '1', '0'],
+            correct: 1,
+            explanation: 'not הופך True ל-False ו-False ל-True'
+        },
+        {
+            question: 'מה יהיה התוצאה של: 10 // 3?',
+            options: ['3.33', '3', '4', '1'],
+            correct: 1,
+            explanation: '// מבצע חילוק שלם: 10 // 3 = 3'
+        },
+        {
+            question: 'מה זה True or False?',
+            options: ['True', 'False', 'None', 'Both'],
+            correct: 0,
+            explanation: 'or מחזיר True אם לפחות אחד מהצדדים True'
+        },
+        {
+            question: 'מה יהיה התוצאה של: 5 * 3?',
+            options: ['15', '8', '53', '5*3'],
+            correct: 0,
+            explanation: '5 * 3 = 15 (כפל)'
+        },
+        {
+            question: 'מה יהיה התוצאה של: 8 - 3?',
+            options: ['5', '11', '83', '-3'],
+            correct: 0,
+            explanation: '8 - 3 = 5 (חיסור)'
+        },
+        {
+            question: 'איך בודקים אם x גדול או שווה ל-5?',
+            options: ['x >= 5', 'x => 5', 'x > 5 or x = 5', 'x ≥ 5'],
+            correct: 0,
+            explanation: '>= בודק גדול או שווה'
+        },
+        {
+            question: 'מה יהיה התוצאה של: 15 / 4?',
+            options: ['3', '3.75', '4', '15'],
+            correct: 1,
+            explanation: '/ מבצע חילוק עשרוני: 15 / 4 = 3.75'
+        },
+        {
+            question: 'מה זה False or True?',
+            options: ['False', 'True', 'None', 'Error'],
+            correct: 1,
+            explanation: 'or מחזיר True אם אחד הצדדים True'
+        },
+        {
+            question: 'איך בודקים אי-שוויון?',
+            options: ['x != y', 'x <> y', 'x not y', 'x neq y'],
+            correct: 0,
+            explanation: '!= בודק אי-שוויון'
+        },
+        {
+            question: 'מה יהיה התוצאה של: 4 ** 2?',
+            options: ['8', '16', '6', '42'],
+            correct: 1,
+            explanation: '4 ** 2 = 4² = 16'
+        },
+        {
+            question: 'מה יהיה התוצאה של: 9 % 4?',
+            options: ['2', '1', '2.25', '9'],
+            correct: 1,
+            explanation: '9 % 4 = 1 (השארית)'
+        },
+        {
+            question: 'איך בודקים אם x קטן מ-10?',
+            options: ['x < 10', 'x lt 10', '10 > x', 'התשובה הראשונה והשלישית נכונות'],
+            correct: 3,
+            explanation: 'גם x < 10 וגם 10 > x נכונים'
+        },
+        {
+            question: 'מה זה not False?',
+            options: ['False', 'True', 'None', '0'],
+            correct: 1,
+            explanation: 'not False = True'
+        },
+        {
+            question: 'מה יהיה התוצאה של: 6 + 4?',
+            options: ['10', '64', '24', '2'],
+            correct: 0,
+            explanation: '6 + 4 = 10 (חיבור)'
+        },
+        {
+            question: 'איך בודקים אם שני תנאים נכונים?',
+            options: ['condition1 and condition2', 'condition1 & condition2', 'condition1 && condition2', 'התשובה הראשונה נכונה'],
+            correct: 3,
+            explanation: 'and הוא האופרטור הנכון בפייתון'
+        },
+        {
+            question: 'מה יהיה התוצאה של: 20 // 6?',
+            options: ['3.33', '3', '4', '2'],
+            correct: 1,
+            explanation: '20 // 6 = 3 (חילוק שלם)'
+        },
+        {
+            question: 'איך בודקים אם x בין 5 ל-10?',
+            options: ['5 < x < 10', 'x > 5 and x < 10', '5 <= x <= 10', 'כל התשובות יכולות להיות נכונות'],
+            correct: 3,
+            explanation: 'תלוי אם רוצים לכלול את הקצוות או לא'
+        },
+        {
+            question: 'מה יהיה התוצאה של: 3 ** 4?',
+            options: ['12', '81', '7', '34'],
+            correct: 1,
+            explanation: '3 ** 4 = 3⁴ = 81'
+        },
+        {
+            question: 'מה זה True and True?',
+            options: ['True', 'False', '2', 'Both'],
+            correct: 0,
+            explanation: 'and מחזיר True כשהשניים True'
+        },
+        {
+            question: 'איך מגדילים משתנה ב-1?',
+            options: ['x++', 'x += 1', 'x = x + 1', 'התשובה השנייה והשלישית נכונות'],
+            correct: 3,
+            explanation: 'גם x += 1 וגם x = x + 1 מגדילים ב-1'
+        },
+        {
+            question: 'מה יהיה התוצאה של: 12 % 5?',
+            options: ['2', '2.4', '7', '12'],
+            correct: 0,
+            explanation: '12 % 5 = 2 (השארית מחילוק 12 ב-5)'
+        },
+        {
+            question: 'איך בודקים אם x שווה ל-0?',
+            options: ['x = 0', 'x == 0', 'x eq 0', 'x equals 0'],
+            correct: 1,
+            explanation: '== בודק שוויון, = משמש להשמה'
+        },
+        {
+            question: 'מה יהיה התוצאה של: 100 // 7?',
+            options: ['14', '14.28', '15', '7'],
+            correct: 0,
+            explanation: '100 // 7 = 14 (חילוק שלם)'
+        },
+        {
+            question: 'איך בודקים אם שני תנאים שקריים?',
+            options: ['not condition1 and not condition2', 'not (condition1 or condition2)', 'neither condition1 nor condition2', 'התשובה הראשונה והשנייה נכונות'],
+            correct: 3,
+            explanation: 'חוקי דה מורגן: not (A or B) = not A and not B'
+        },
+        {
+            question: 'מה יהיה התוצאה של: 5 ** 0?',
+            options: ['0', '1', '5', 'שגיאה'],
+            correct: 1,
+            explanation: 'כל מספר בחזקת 0 שווה ל-1'
+        },
+        {
+            question: 'איך מחשבים שורש?',
+            options: ['x ** 0.5', 'sqrt(x)', 'x ** (1/2)', 'כל התשובות נכונות'],
+            correct: 3,
+            explanation: 'שורש זה חזקה של 0.5 או 1/2, וגם יש פונקציית sqrt'
+        },
+        {
+            question: 'מה זה 0 or 5?',
+            options: ['0', '5', 'True', 'False'],
+            correct: 1,
+            explanation: 'or מחזיר את הערך הראשון שהוא "אמיתי"'
+        },
+        {
+            question: 'איך בודקים אם מספר שלילי?',
+            options: ['x < 0', 'x <= 0', 'negative(x)', 'x.isNegative()'],
+            correct: 0,
+            explanation: 'x < 0 בודק אם המספר קטן מאפס'
+        },
+        {
+            question: 'מה יהיה התוצאה של: 25 % 7?',
+            options: ['3', '4', '18', '25'],
+            correct: 1,
+            explanation: '25 % 7 = 4 (השארית מחילוק 25 ב-7)'
+        },
+        {
+            question: 'איך מחשבים ערך מוחלט?',
+            options: ['abs(x)', 'absolute(x)', 'math.abs(x)', '|x|'],
+            correct: 0,
+            explanation: 'abs() מחזיר את הערך המוחלט'
+        },
+        {
+            question: 'מה זה True and 5?',
+            options: ['True', '5', 'False', '6'],
+            correct: 1,
+            explanation: 'and מחזיר את הערך השני אם הראשון אמיתי'
+        },
+        {
+            question: 'איך בודקים אם מספר בין 10 ל-20 (כולל)?',
+            options: ['10 <= x <= 20', 'x >= 10 and x <= 20', 'x in range(10, 21)', 'כל התשובות נכונות'],
+            correct: 3,
+            explanation: 'כל הדרכים בודקות טווח כולל קצוות'
+        },
+        {
+            question: 'מה יהיה התוצאה של: (-3) ** 2?',
+            options: ['-9', '9', '-6', '6'],
+            correct: 1,
+            explanation: '(-3)² = 9 (מספר שלילי בחזקת זוגית הוא חיובי)'
+        },
+        {
+            question: 'איך מכפילים משתנה בעצמו?',
+            options: ['x *= x', 'x = x * x', 'x **= 2', 'התשובה הראשונה והשנייה נכונות'],
+            correct: 3,
+            explanation: 'גם x *= x וגם x = x * x מכפילים את x בעצמו'
+        },
+        {
+            question: 'מה זה 10 and 0?',
+            options: ['10', '0', 'True', 'False'],
+            correct: 1,
+            explanation: 'and מחזיר את הערך השני אם הראשון אמיתי, אבל 0 הוא שקרי'
+        },
+        {
+            question: 'איך בודקים אם מספר זוגי בדרך קצרה?',
+            options: ['not x % 2', 'x % 2 == 0', '~x & 1', 'התשובה הראשונה והשנייה נכונות'],
+            correct: 3,
+            explanation: 'גם not x % 2 וגם x % 2 == 0 בודקים זוגיות'
+        },
+        {
+            question: 'מה יהיה התוצאה של: 2 ** 10?',
+            options: ['20', '1024', '512', '100'],
+            correct: 1,
+            explanation: '2¹⁰ = 1024'
+        }
+    ]
+};
+
+// Complete Test Data
+// Function to get random questions from a question bank
+function getRandomQuestions(questionBank, count = 20) {
+    const shuffled = [...questionBank].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, Math.min(count, questionBank.length));
 }
 
-.modal-content {
-    background-color: #fefefe;
-    margin: 5% auto;
-    padding: 0;
-    border-radius: 15px;
-    width: 90%;
-    max-width: 800px;
-    max-height: 80vh;
-    overflow-y: auto;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-}
+// Complete Test Data with randomized questions
+const testData = {
+    'test1': {
+        title: 'מבחן 1 - יסודות פייתון',
+        getQuestions: () => getRandomQuestions(questionBanks.basics, 20)
+    },
+    'test2': {
+        title: 'מבחן 2 - תנאים והשוואות', 
+        getQuestions: () => getRandomQuestions(questionBanks.control, 20)
+    },
+    'test3': {
+        title: 'מבחן 3 - מחרוזות',
+        getQuestions: () => getRandomQuestions(questionBanks.strings, 20)
+    },
+    'test4': {
+        title: 'מבחן 4 - אופרטורים',
+        getQuestions: () => getRandomQuestions(questionBanks.operators, 20)
+    },
+    'test5': {
+        title: 'מבחן מקיף - חזרה על הכל',
+        getQuestions: () => {
+            const allQuestions = [
+                ...questionBanks.basics,
+                ...questionBanks.control, 
+                ...questionBanks.strings,
+                ...questionBanks.operators
+            ];
+            return getRandomQuestions(allQuestions, 20);
+        }
+    }
+};
 
-.modal-header {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-    padding: 1.5rem 2rem;
-    border-radius: 15px 15px 0 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.close-modal {
-    font-size: 2em;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-}
-
-.close-modal:hover {
-    transform: scale(1.2);
-}
-
-.modal-body {
-    padding: 2rem;
-}
-
-.lesson-content h4 {
-    color: #4a5568;
-    margin: 1.5rem 0 1rem 0;
-    font-size: 1.3em;
-}
-
-.lesson-content h5 {
-    color: #667eea;
-    margin: 1rem 0 0.5rem 0;
-}
-
-.code-example {
-    background: #2d3748;
-    color: #68d391;
-    padding: 1rem;
-    border-radius: 8px;
-    margin: 1rem 0;
-    font-family: 'Courier New', monospace;
-    white-space: pre-wrap;
-    overflow-x: auto;
-}
-
-.lesson-content ul, .lesson-content ol {
-    margin: 1rem 0;
-    padding-right: 1.5rem;
-}
-
-.lesson-content li {
-    margin: 0.5rem 0;
-    line-height: 1.6;
-}
-
-.modal-footer {
-    background: #f7fafc;
-    padding: 1rem 2rem;
-    border-radius: 0 0 15px 15px;
-    text-align: center;
-}
-
-.modal-footer button {
-    background: #667eea;
-    color: white;
-    border: none;
-    padding: 0.8rem 2rem;
-    border-radius: 25px;
-    cursor: pointer;
-    font-size: 1.1em;
-    transition: all 0.3s ease;
-}
-
-.modal-footer button:hover {
-    background: #5a67d8;
-    transform: translateY(-2px);
-}
-
-.answer-review-item {
-    border: 2px solid #e2e8f0;
-    border-radius: 10px;
-    padding: 1rem;
-    margin: 1rem 0;
-}
-
-.answer-review-item.correct {
-    border-color: #48bb78;
-    background: #f0fff4;
-}
-
-.answer-review-item.incorrect {
-    border-color: #e53e3e;
-    background: #fff5f5;
-}
-
-.answer-review-item h5 {
-    margin: 0 0 0.5rem 0;
-    color: #4a5568;
-}
-
-@media (max-width: 768px) {
-    .modal-content {
-        width: 95%;
-        margin: 10% auto;
+function startTest(testId) {
+    console.log('startTest called with:', testId);
+    
+    if (!testData[testId]) {
+        console.error('Test data not found for:', testId);
+        alert('בחינה לא נמצאה');
+        return;
     }
     
-    .modal-header {
-        padding: 1rem;
+    console.log('Test data found:', testData[testId]);
+    
+    // Get random questions for this test
+    currentQuizData = testData[testId].getQuestions();
+    if (currentQuizData.length === 0) {
+        console.error('No questions found for test:', testId);
+        alert('אין שאלות זמינות לבחינה זו');
+        return;
     }
     
-    .modal-body {
-        padding: 1rem;
+    console.log('Starting test with', currentQuizData.length, 'random questions');
+    
+    currentQuestionIndex = 0;
+    userAnswers = [];
+    currentQuiz = testId;
+    testTimeLeft = 15 * 60; // 15 minutes
+    
+    // Hide all sections and show quiz
+    $('.content-section').removeClass('active');
+    if ($('#quiz-container').length === 0) {
+        console.log('Creating quiz container');
+        createQuizContainer();
     }
+    $('#quiz-container').addClass('active');
+    $('#quiz-title').text(testData[testId].title);
+    
+    console.log('Starting timer and showing first question');
+    startTestTimer();
+    showQuizQuestion();
 }
-`).appendTo('head');
