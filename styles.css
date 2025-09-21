@@ -1,3 +1,9 @@
+@charset "UTF-8";
+
+/* Hebrew Font Imports for better rendering */
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@300;400;500;600;700&display=swap');
+
 /* Reset and Base Styles */
 * {
     margin: 0;
@@ -6,7 +12,7 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Heebo', 'Noto Sans Hebrew', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     color: #333;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -1723,6 +1729,9 @@ body.menu-open {
     direction: rtl;
     text-align: right;
     line-height: 1.8;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
 }
 
 .concept-detail h3 {
@@ -1731,6 +1740,7 @@ body.menu-open {
     margin-bottom: 1rem;
     border-bottom: 3px solid #667eea;
     padding-bottom: 0.5rem;
+    overflow-wrap: break-word;
 }
 
 .concept-detail h4 {
@@ -1741,6 +1751,7 @@ body.menu-open {
     background: linear-gradient(135deg, #f7fafc, #edf2f7);
     border-radius: 10px;
     border-right: 4px solid #667eea;
+    overflow-wrap: break-word;
 }
 
 .concept-detail p {
@@ -1750,6 +1761,8 @@ body.menu-open {
     background: rgba(102, 126, 234, 0.05);
     border-radius: 10px;
     font-size: 1.1rem;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
 }
 
 .concept-detail ul {
@@ -1762,6 +1775,8 @@ body.menu-open {
     color: #444;
     font-size: 1rem;
     line-height: 1.6;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
 }
 
 .concept-detail li strong {
@@ -1776,6 +1791,8 @@ body.menu-open {
     padding: 1.5rem;
     border: 2px solid #4a5568;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .concept-detail .code-example pre {
@@ -1786,6 +1803,9 @@ body.menu-open {
     line-height: 1.6;
     white-space: pre-wrap;
     word-wrap: break-word;
+    overflow-wrap: break-word;
+    direction: ltr;
+    text-align: left;
 }
 
 .concept-detail .code-example code {
@@ -2071,6 +2091,33 @@ body.menu-open {
         max-width: 95%;
     }
     
+    /* Concept Detail Responsive - Tablet */
+    .concept-detail h3 {
+        font-size: 1.6rem;
+        margin-bottom: 0.8rem;
+    }
+    
+    .concept-detail h4 {
+        font-size: 1.2rem;
+        margin: 1.5rem 0 0.8rem 0;
+        padding: 0.6rem;
+    }
+    
+    .concept-detail p {
+        font-size: 1rem;
+        padding: 0.8rem;
+    }
+    
+    .concept-detail .code-example {
+        padding: 1.2rem;
+        margin: 1.2rem 0;
+    }
+    
+    .concept-detail .code-example pre {
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+    
     #quiz-container {
         padding: 1.5rem;
     }
@@ -2115,6 +2162,58 @@ body.menu-open {
         max-height: calc(100vh - 1rem);
         margin: 0.5rem 0;
         border-radius: 15px;
+    }
+    
+    /* Concept Detail Responsive - Mobile */
+    .concept-detail h3 {
+        font-size: 1.4rem;
+        margin-bottom: 0.6rem;
+        padding-bottom: 0.3rem;
+    }
+    
+    .concept-detail h4 {
+        font-size: 1.1rem;
+        margin: 1.2rem 0 0.6rem 0;
+        padding: 0.5rem;
+        border-right: 3px solid #667eea;
+    }
+    
+    .concept-detail p {
+        font-size: 0.95rem;
+        padding: 0.6rem;
+        margin-bottom: 1rem;
+        line-height: 1.6;
+    }
+    
+    .concept-detail ul {
+        padding-right: 1rem;
+        margin: 0.8rem 0;
+    }
+    
+    .concept-detail li {
+        margin-bottom: 0.6rem;
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+    
+    .concept-detail .code-example {
+        padding: 1rem;
+        margin: 1rem 0;
+        border-radius: 10px;
+    }
+    
+    .concept-detail .code-example pre {
+        font-size: 0.85rem;
+        line-height: 1.4;
+        overflow-x: auto;
+        white-space: pre;
+        word-wrap: normal;
+    }
+    
+    /* Enhanced scrolling for mobile */
+    .concept-detail {
+        -webkit-overflow-scrolling: touch;
+        overflow-x: hidden;
     }
     
     #quiz-container {
@@ -2294,6 +2393,79 @@ body.menu-open {
         border-radius: 10px;
     }
     
+    /* Concept Detail Responsive - Small Mobile */
+    .concept-detail h3 {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+        padding-bottom: 0.3rem;
+        line-height: 1.3;
+    }
+    
+    .concept-detail h4 {
+        font-size: 1rem;
+        margin: 1rem 0 0.5rem 0;
+        padding: 0.4rem;
+        border-right: 3px solid #667eea;
+        line-height: 1.4;
+    }
+    
+    .concept-detail p {
+        font-size: 0.9rem;
+        padding: 0.5rem;
+        margin-bottom: 0.8rem;
+        line-height: 1.5;
+    }
+    
+    .concept-detail ul {
+        padding-right: 0.8rem;
+        margin: 0.6rem 0;
+    }
+    
+    .concept-detail li {
+        margin-bottom: 0.5rem;
+        font-size: 0.85rem;
+        line-height: 1.4;
+    }
+    
+    .concept-detail .code-example {
+        padding: 0.8rem;
+        margin: 0.8rem 0;
+        border-radius: 8px;
+        overflow-x: auto;
+    }
+    
+    .concept-detail .code-example pre {
+        font-size: 0.75rem;
+        line-height: 1.3;
+        overflow-x: auto;
+        white-space: pre;
+        word-wrap: normal;
+        max-width: 100%;
+    }
+    
+    /* Better touch scrolling */
+    .modal-content {
+        -webkit-overflow-scrolling: touch;
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+    }
+    
+    .concept-detail {
+        -webkit-overflow-scrolling: touch;
+        overflow-x: hidden;
+    }
+    
+    /* Improved close button for small screens */
+    .close {
+        top: 0.25rem;
+        left: 0.25rem;
+        width: 30px;
+        height: 30px;
+        font-size: 1.2rem;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(5px);
+    }
+    
     #quiz-container {
         padding: 0.8rem;
         border-radius: 10px;
@@ -2313,14 +2485,6 @@ body.menu-open {
     .answer-option {
         padding: 0.6rem;
         font-size: 0.85rem;
-    }
-    
-    .close {
-        top: 0.25rem;
-        left: 0.25rem;
-        width: 30px;
-        height: 30px;
-        font-size: 1.2rem;
     }
     
     header h1 {
@@ -2372,5 +2536,157 @@ body.menu-open {
     
     .welcome-card h2 {
         font-size: 1.6em;
+    }
+}
+
+/* Additional responsive improvements for better mobile experience */
+@media (max-width: 1024px) and (orientation: landscape) {
+    .modal-content {
+        max-height: 85vh;
+        margin: 1rem auto;
+    }
+    
+    .concept-detail h3 {
+        font-size: 1.5rem;
+    }
+    
+    .concept-detail h4 {
+        font-size: 1.15rem;
+        margin: 1.2rem 0 0.6rem 0;
+    }
+}
+
+/* iPad and Tablet Portrait */
+@media (max-width: 768px) and (orientation: portrait) {
+    .modal {
+        align-items: flex-start;
+        padding: 1rem 0.5rem;
+    }
+    
+    .modal-content {
+        margin: 1rem 0;
+        max-height: calc(100vh - 2rem);
+    }
+    
+    .concept-detail .code-example pre {
+        font-size: 0.8rem;
+        line-height: 1.4;
+    }
+}
+
+/* Landscape mode for phones */
+@media (max-width: 768px) and (orientation: landscape) {
+    .modal {
+        padding: 0.25rem;
+    }
+    
+    .modal-content {
+        max-height: calc(100vh - 0.5rem);
+        margin: 0.25rem 0;
+        padding: 0.8rem;
+    }
+    
+    .concept-detail h3 {
+        font-size: 1.3rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .concept-detail h4 {
+        font-size: 1.05rem;
+        margin: 1rem 0 0.5rem 0;
+        padding: 0.4rem;
+    }
+    
+    .concept-detail p {
+        font-size: 0.9rem;
+        padding: 0.5rem;
+        margin-bottom: 0.8rem;
+    }
+    
+    .concept-detail .code-example {
+        padding: 0.6rem;
+        margin: 0.6rem 0;
+    }
+    
+    .concept-detail .code-example pre {
+        font-size: 0.75rem;
+        line-height: 1.3;
+    }
+    
+    .close {
+        width: 28px;
+        height: 28px;
+        font-size: 1.1rem;
+    }
+}
+
+/* Very small screens (old phones) */
+@media (max-width: 360px) {
+    .concept-detail h3 {
+        font-size: 1.1rem;
+        line-height: 1.2;
+    }
+    
+    .concept-detail h4 {
+        font-size: 0.95rem;
+        padding: 0.3rem;
+        margin: 0.8rem 0 0.4rem 0;
+    }
+    
+    .concept-detail p {
+        font-size: 0.85rem;
+        padding: 0.4rem;
+        line-height: 1.4;
+    }
+    
+    .concept-detail li {
+        font-size: 0.8rem;
+        line-height: 1.3;
+    }
+    
+    .concept-detail .code-example {
+        padding: 0.6rem;
+    }
+    
+    .concept-detail .code-example pre {
+        font-size: 0.7rem;
+        line-height: 1.2;
+    }
+    
+    .modal-content {
+        padding: 0.6rem;
+    }
+}
+
+/* Touch improvements for all mobile devices */
+@media (hover: none) and (pointer: coarse) {
+    .concept-card:hover,
+    .interactive-card:hover {
+        transform: none;
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+    }
+    
+    .concept-card:active,
+    .interactive-card:active {
+        transform: scale(0.98);
+        transition: transform 0.1s ease;
+    }
+    
+    .close:hover {
+        background: rgba(255, 255, 255, 0.95);
+    }
+    
+    .close:active {
+        transform: scale(0.95);
+    }
+    
+    /* Better scrollbar for mobile */
+    .concept-detail::-webkit-scrollbar {
+        width: 6px;
+    }
+    
+    .concept-detail::-webkit-scrollbar-thumb {
+        background: rgba(102, 126, 234, 0.6);
+        border-radius: 3px;
     }
 }
