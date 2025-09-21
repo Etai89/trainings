@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מרכז לימוד פייתון - הכנה לבחינה</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🐍 מרכז לימוד פייתון</h1>
+            <p>הכנה מקיפה לבחינה - חומר לימוד ותרגול</p>
+        </div>
+    </header>
+
+    <nav class="main-nav">
+        <div class="container">
+            <ul>
+                <li><a href="#home" data-section="home">בית</a></li>
+                <li><a href="#lessons" data-section="lessons">שיעורים</a></li>
+                <li><a href="#strings" data-section="strings">מחרוזות</a></li>
+                <li><a href="#practice" data-section="practice">תרגול</a></li>
+                <li><a href="#test" data-section="test">בחינות אימון</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- Home Section -->
+        <section id="home" class="content-section active">
+            <div class="welcome-card">
+                <h2>ברוכים הבאים למרכז הלימוד</h2>
+                <p>כאן תמצאו את כל החומר הדרוש להכנה לבחינה בפייתון</p>
+                <div class="stats">
+                    <div class="stat-item">
+                        <span class="stat-number">6</span>
+                        <span class="stat-label">שיעורים</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">שאלות תרגול</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">3</span>
+                        <span class="stat-label">בחינות אימון</span>
+                    </div>
+                </div>
+                <button class="cta-button" onclick="startLearning()">התחל ללמוד</button>
+            </div>
+        </section>
+
+        <!-- Lessons Section -->
+        <section id="lessons" class="content-section">
+            <h2>סיכומי שיעורים</h2>
+            <div class="lessons-grid">
+                <div class="lesson-card" data-lesson="1">
+                    <div class="lesson-header">
+                        <h3>שיעור 1</h3>
+                        <span class="lesson-status">✓</span>
+                    </div>
+                    <p>יסודות פייתון - משתנים וטיפוסי נתונים</p>
+                    <ul>
+                        <li>הכרת שפת פייתון</li>
+                        <li>משתנים ומתן ערכים</li>
+                        <li>טיפוסי נתונים בסיסיים</li>
+                        <li>פעולות חשבון</li>
+                    </ul>
+                    <button class="study-btn" onclick="expandLesson(1)">לימוד מפורט</button>
+                </div>
+
+                <div class="lesson-card" data-lesson="2">
+                    <div class="lesson-header">
+                        <h3>שיעור 2</h3>
+                        <span class="lesson-status">✓</span>
+                    </div>
+                    <p>קלט ופלט - תנאים ולולאות</p>
+                    <ul>
+                        <li>פונקציות input() ו-print()</li>
+                        <li>משפטי תנאי (if, elif, else)</li>
+                        <li>לולאות for ו-while</li>
+                        <li>אופרטורים לוגיים</li>
+                    </ul>
+                    <button class="study-btn" onclick="expandLesson(2)">לימוד מפורט</button>
+                </div>
+
+                <div class="lesson-card" data-lesson="3">
+                    <div class="lesson-header">
+                        <h3>שיעור 3</h3>
+                        <span class="lesson-status">✓</span>
+                    </div>
+                    <p>רשימות ופונקציות</p>
+                    <ul>
+                        <li>יצירה ועבודה עם רשימות</li>
+                        <li>מתודות רשימה</li>
+                        <li>הגדרת פונקציות</li>
+                        <li>פרמטרים והחזרת ערכים</li>
+                    </ul>
+                    <button class="study-btn" onclick="expandLesson(3)">לימוד מפורט</button>
+                </div>
+
+                <div class="lesson-card" data-lesson="4">
+                    <div class="lesson-header">
+                        <h3>שיעור 4</h3>
+                        <span class="lesson-status">✓</span>
+                    </div>
+                    <p>מבני נתונים מתקדמים</p>
+                    <ul>
+                        <li>טיופלים (Tuples)</li>
+                        <li>מילונים (Dictionaries)</li>
+                        <li>קבוצות (Sets)</li>
+                        <li>עבודה עם מבני נתונים מורכבים</li>
+                    </ul>
+                    <button class="study-btn" onclick="expandLesson(4)">לימוד מפורט</button>
+                </div>
+
+                <div class="lesson-card" data-lesson="5">
+                    <div class="lesson-header">
+                        <h3>שיעור 5</h3>
+                        <span class="lesson-status">⭐</span>
+                    </div>
+                    <p>סיכום ביניים + עבודת כיתה</p>
+                    <ul>
+                        <li>חזרה על כל הנושאים</li>
+                        <li>תרגילים מתקדמים</li>
+                        <li>עבודת כיתה מעשית</li>
+                        <li>הכנה לבחינה</li>
+                    </ul>
+                    <button class="study-btn" onclick="expandLesson(5)">לימוד מפורט</button>
+                </div>
+
+                <div class="lesson-card" data-lesson="6">
+                    <div class="lesson-header">
+                        <h3>שיעור 6</h3>
+                        <span class="lesson-status">✓</span>
+                    </div>
+                    <p>נושאים מתקדמים</p>
+                    <ul>
+                        <li>קבצים וקריאה/כתיבה</li>
+                        <li>טיפול בשגיאות</li>
+                        <li>מודולים וייבוא</li>
+                        <li>פונקציות מתקדמות</li>
+                    </ul>
+                    <button class="study-btn" onclick="expandLesson(6)">לימוד מפורט</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Strings Section -->
+        <section id="strings" class="content-section">
+            <h2>פונקציות מחרוזות</h2>
+            <div class="strings-container">
+                <div class="strings-summary">
+                    <h3>סיכום פונקציות על מחרוזות</h3>
+                    <div class="function-grid">
+                        <div class="function-card">
+                            <h4>len()</h4>
+                            <p>מחזירה את אורך המחרוזת</p>
+                            <code>len("hello") → 5</code>
+                        </div>
+                        <div class="function-card">
+                            <h4>upper() / lower()</h4>
+                            <p>המרה לאותיות גדולות/קטנות</p>
+                            <code>"Hello".upper() → "HELLO"</code>
+                        </div>
+                        <div class="function-card">
+                            <h4>strip()</h4>
+                            <p>הסרת רווחים מהתחלה והסוף</p>
+                            <code>" hello ".strip() → "hello"</code>
+                        </div>
+                        <div class="function-card">
+                            <h4>split()</h4>
+                            <p>פיצול המחרוזת לרשימה</p>
+                            <code>"a,b,c".split(",") → ["a","b","c"]</code>
+                        </div>
+                        <div class="function-card">
+                            <h4>join()</h4>
+                            <p>חיבור רשימה למחרוזת</p>
+                            <code>",".join(["a","b"]) → "a,b"</code>
+                        </div>
+                        <div class="function-card">
+                            <h4>replace()</h4>
+                            <p>החלפת טקסט במחרוזת</p>
+                            <code>"hello".replace("l","x") → "hexxo"</code>
+                        </div>
+                        <div class="function-card">
+                            <h4>find() / index()</h4>
+                            <p>מציאת מיקום תו או מחרוזת</p>
+                            <code>"hello".find("e") → 1</code>
+                        </div>
+                        <div class="function-card">
+                            <h4>startswith() / endswith()</h4>
+                            <p>בדיקה אם מתחיל/נגמר במחרוזת</p>
+                            <code>"hello".startswith("he") → True</code>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="strings-practice">
+                    <h3>תרגול מחרוזות</h3>
+                    <div class="practice-area">
+                        <div class="code-editor">
+                            <textarea id="string-code" placeholder='# נסה כאן פונקציות מחרוזות
+text = "Hello World"
+print(len(text))
+print(text.upper())
+print(text.split())'></textarea>
+                            <button onclick="runStringCode()">הרץ קוד</button>
+                        </div>
+                        <div class="output-area">
+                            <h4>פלט:</h4>
+                            <pre id="string-output"></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practice Section -->
+        <section id="practice" class="content-section">
+            <h2>תרגול שאלות</h2>
+            <div class="practice-categories">
+                <div class="category-card" onclick="startPractice('basics')">
+                    <h3>יסודות פייתון</h3>
+                    <p>15 שאלות על משתנים, טיפוסים ופעולות</p>
+                    <span class="difficulty easy">קל</span>
+                </div>
+                <div class="category-card" onclick="startPractice('control')">
+                    <h3>תנאים ולולאות</h3>
+                    <p>12 שאלות על if, for, while</p>
+                    <span class="difficulty medium">בינוני</span>
+                </div>
+                <div class="category-card" onclick="startPractice('functions')">
+                    <h3>פונקציות ורשימות</h3>
+                    <p>18 שאלות על הגדרה וקריאה לפונקציות</p>
+                    <span class="difficulty medium">בינוני</span>
+                </div>
+                <div class="category-card" onclick="startPractice('strings')">
+                    <h3>מחרוזות</h3>
+                    <p>20 שאלות על פונקציות מחרוזות</p>
+                    <span class="difficulty hard">קשה</span>
+                </div>
+            </div>
+
+            <div id="practice-area" class="practice-quiz hidden">
+                <div class="quiz-header">
+                    <h3 id="quiz-title"></h3>
+                    <div class="quiz-progress">
+                        <span id="question-counter">שאלה 1 מתוך 10</span>
+                        <div class="progress-bar">
+                            <div id="progress-fill"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="question-container">
+                    <h4 id="question-text"></h4>
+                    <div id="question-code" class="code-block"></div>
+                    <div id="answer-options"></div>
+                </div>
+                <div class="quiz-controls">
+                    <button id="prev-btn" onclick="previousQuestion()">שאלה קודמת</button>
+                    <button id="next-btn" onclick="nextQuestion()">שאלה הבאה</button>
+                    <button id="submit-btn" onclick="submitQuiz()" class="hidden">סיום בחינה</button>
+                </div>
+            </div>
+
+            <div id="quiz-results" class="quiz-results hidden">
+                <h3>תוצאות התרגול</h3>
+                <div class="score-display">
+                    <div class="score-circle">
+                        <span id="score-percentage">0%</span>
+                    </div>
+                    <p id="score-text"></p>
+                </div>
+                <div class="results-breakdown">
+                    <h4>פירוט תשובות:</h4>
+                    <div id="answers-review"></div>
+                </div>
+                <button onclick="retryQuiz()">נסה שוב</button>
+                <button onclick="backToPractice()">חזור לתרגול</button>
+            </div>
+        </section>
+
+        <!-- Test Section -->
+        <section id="test" class="content-section">
+            <h2>בחינות אימון</h2>
+            <p class="test-intro">בחינות אימון הדומות לבחינה האמיתית - זמן מוגבל ושאלות מקיפות</p>
+            
+            <div class="test-grid">
+                <div class="test-card">
+                    <h3>בחינת אימון 1</h3>
+                    <div class="test-details">
+                        <span>⏱️ 45 דקות</span>
+                        <span>📝 20 שאלות</span>
+                        <span>🎯 כל הנושאים</span>
+                    </div>
+                    <p>בחינה כללית הכוללת את כל הנושאים שנלמדו</p>
+                    <button class="test-btn" onclick="startTest(1)">התחל בחינה</button>
+                </div>
+
+                <div class="test-card">
+                    <h3>בחינת אימון 2</h3>
+                    <div class="test-details">
+                        <span>⏱️ 40 דקות</span>
+                        <span>📝 18 שאלות</span>
+                        <span>🎯 מחרוזות ופונקציות</span>
+                    </div>
+                    <p>מתמקדת במחרוזות, פונקציות ורשימות</p>
+                    <button class="test-btn" onclick="startTest(2)">התחל בחינה</button>
+                </div>
+
+                <div class="test-card">
+                    <h3>בחינת אימון 3</h3>
+                    <div class="test-details">
+                        <span>⏱️ 50 דקות</span>
+                        <span>📝 25 שאלות</span>
+                        <span>🎯 רמה מתקדמת</span>
+                    </div>
+                    <p>בחינה מתקדמת לתלמידים חזקים</p>
+                    <button class="test-btn" onclick="startTest(3)">התחל בחינה</button>
+                </div>
+            </div>
+
+            <div id="test-area" class="test-interface hidden">
+                <div class="test-header">
+                    <h3 id="test-title"></h3>
+                    <div class="test-timer">
+                        <span>⏱️ זמן נותר: <span id="timer-display">45:00</span></span>
+                    </div>
+                </div>
+                <div class="test-content">
+                    <div class="test-question">
+                        <h4 id="test-question-text"></h4>
+                        <div id="test-question-code" class="code-block"></div>
+                        <div id="test-answer-options"></div>
+                    </div>
+                </div>
+                <div class="test-controls">
+                    <button id="test-prev-btn" onclick="previousTestQuestion()">שאלה קודמת</button>
+                    <div class="question-nav">
+                        <span id="test-question-counter">שאלה 1 מתוך 20</span>
+                    </div>
+                    <button id="test-next-btn" onclick="nextTestQuestion()">שאלה הבאה</button>
+                    <button id="test-submit-btn" onclick="submitTest()" class="hidden">סיום בחינה</button>
+                </div>
+                <div class="question-grid">
+                    <div id="question-overview"></div>
+                </div>
+            </div>
+
+            <div id="test-results" class="test-results hidden">
+                <h3>תוצאות הבחינה</h3>
+                <div class="final-score">
+                    <div class="score-big">
+                        <span id="final-score-percentage">0%</span>
+                        <span id="final-grade"></span>
+                    </div>
+                    <p id="final-score-text"></p>
+                </div>
+                <div class="test-breakdown">
+                    <h4>פירוט לפי נושאים:</h4>
+                    <div id="topic-breakdown"></div>
+                </div>
+                <div class="test-review">
+                    <h4>סקירת שאלות:</h4>
+                    <div id="test-answers-review"></div>
+                </div>
+                <div class="test-actions">
+                    <button onclick="retryTest()">בחינה מחדש</button>
+                    <button onclick="backToTests()">בחזרה לבחינות</button>
+                    <button onclick="showSection('lessons')">חזור ללמידה</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 מרכז לימוד פייתון - הכנה לבחינה</p>
+            <p>נוצר במיוחד עבור תלמידי הכיתה</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
