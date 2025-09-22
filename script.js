@@ -315,6 +315,14 @@ function startPracticeQuiz(topic, practiceInfo) {
         return;
     }
     
+    // Debug: Check if questions have proper structure
+    console.log('Loaded quiz data:', currentQuizData.length, 'questions');
+    currentQuizData.forEach((q, index) => {
+        if (!q.options || !Array.isArray(q.options) || q.options.length === 0) {
+            console.error('Question', index + 1, 'has invalid options:', q);
+        }
+    });
+    
     currentQuestionIndex = 0;
     userAnswers = [];
     currentQuiz = topic;
@@ -385,6 +393,15 @@ function showQuizQuestion() {
     
     const question = currentQuizData[currentQuestionIndex];
     
+    // Debug: Check if question has options
+    if (!question.options || !Array.isArray(question.options) || question.options.length === 0) {
+        console.error('Question missing options:', question);
+        return;
+    }
+    
+    // Debug: Log question data
+    console.log('Rendering question:', currentQuestionIndex + 1, 'Options:', question.options.length);
+    
     const quizHtml = `
         <div class="quiz-container" dir="rtl" lang="he">
             <div class="quiz-header" dir="rtl">
@@ -396,9 +413,21 @@ function showQuizQuestion() {
             <div class="question" dir="rtl">
                 <h4 dir="rtl">${question.question}</h4>
                 <div class="options" dir="rtl">
-                    ${question.options.map((option, index) => 
-                        `<button class="option-btn" dir="rtl" onclick="selectAnswer(${index})">${option}</button>`
-                    ).join('')}
+                    ${question.options.map((option, index) => {
+                        // Ensure option is not undefined or null
+                        const safeOption = option ? String(option).replace(/'/g, '&#39;').replace(/"/g, '&quot;') : `אפשרות ${index + 1}`;
+                        
+                        // Enhanced code detection - include Python literals and common programming terms
+                        const isCode = /[=(){}\[\];]|print|def |if |for |while |class |import |from |True|False|None|\d+|\.py|__|\w+\(\)|return|else|elif/.test(safeOption) || 
+                                      /^(True|False|None|0|1|2|3|4|5|6|7|8|9|\d+|\d+\.\d+)$/.test(safeOption.trim()) ||
+                                      /^[a-zA-Z_][a-zA-Z0-9_]*$/.test(safeOption.trim()) && safeOption.length < 20;
+                        
+                        const codeClass = isCode ? ' code-content' : '';
+                        const direction = isCode ? 'ltr' : 'rtl';
+                        const fontFamily = isCode ? 'Consolas, Monaco, monospace' : 'inherit';
+                        
+                        return `<button class="option-btn${codeClass}" dir="${direction}" onclick="selectAnswer(${index})" data-option-index="${index}" style="font-family: ${fontFamily}; text-align: ${isCode ? 'left' : 'right'};">${safeOption}</button>`;
+                    }).join('')}
                 </div>
             </div>
         </div>
@@ -429,6 +458,85 @@ function showQuizQuestion() {
     }
     
     $('#quiz-content').html(quizHtml);
+    
+    // Ensure buttons are properly rendered with a small delay
+    setTimeout(() => {
+        const buttons = $('.option-btn');
+        console.log('Rendered option buttons:', buttons.length);
+        
+        // Check if all buttons have text
+        buttons.each(function(index) {
+            const buttonText = $(this).text().trim();
+            if (!buttonText) {
+                console.warn('Empty button found at index:', index);
+                // Try to re-render this button
+                const option = question.options[index];
+                if (option) {
+                    $(this).text(option);
+                    console.log('Fixed button', index, 'with text:', option);
+                }
+            }
+            
+            // Fix RTL issues for specific values
+            const isCodeValue = /^(True|False|None|0|1|2|3|4|5|6|7|8|9|\d+|\d+\.\d+)$/.test(buttonText) ||
+                               /^[a-zA-Z_][a-zA-Z0-9_]*$/.test(buttonText) && buttonText.length < 20 ||
+                               /[=(){}\[\];]/.test(buttonText);
+            
+            if (isCodeValue) {
+                $(this).attr('dir', 'ltr')
+                       .css({
+                           'direction': 'ltr',
+                           'text-align': 'left',
+                           'font-family': 'Consolas, Monaco, monospace',
+                           'unicode-bidi': 'normal'
+                       })
+                       .addClass('code-content');
+                console.log('Fixed RTL for code button:', buttonText);
+            }
+        });
+        
+        if (buttons.length !== question.options.length) {
+            console.warn('Mismatch: Expected', question.options.length, 'buttons, found', buttons.length);
+            
+            // Fallback: Recreate buttons using jQuery
+            const optionsContainer = $('.options');
+            optionsContainer.empty();
+            
+            question.options.forEach((option, index) => {
+                // Enhanced code detection for fallback
+                const isCode = /[=(){}\[\];]|print|def |if |for |while |class |import |from |True|False|None|\d+|\.py|__|\w+\(\)|return|else|elif/.test(option) || 
+                              /^(True|False|None|0|1|2|3|4|5|6|7|8|9|\d+|\d+\.\d+)$/.test(option.trim()) ||
+                              /^[a-zA-Z_][a-zA-Z0-9_]*$/.test(option.trim()) && option.length < 20;
+                
+                const button = $('<button>')
+                    .addClass('option-btn')
+                    .attr('dir', isCode ? 'ltr' : 'rtl')
+                    .attr('data-option-index', index)
+                    .text(option || `אפשרות ${index + 1}`)
+                    .click(() => selectAnswer(index));
+                
+                if (isCode) {
+                    button.addClass('code-content')
+                           .css({
+                               'font-family': 'Consolas, Monaco, monospace',
+                               'text-align': 'left',
+                               'direction': 'ltr',
+                               'unicode-bidi': 'normal'
+                           });
+                } else {
+                    button.css({
+                        'text-align': 'right',
+                        'direction': 'rtl'
+                    });
+                }
+                
+                optionsContainer.append(button);
+            });
+            
+            console.log('Recreated', question.options.length, 'buttons using fallback method');
+        }
+    }, 100);
+    
     $('#quizModal').addClass('show').fadeIn();
     $('body').addClass('modal-open');
 }

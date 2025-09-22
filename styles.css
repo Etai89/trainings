@@ -2814,6 +2814,102 @@ body.menu-open {
     color: #c53030 !important;
 }
 
+/* Fix code display in quiz buttons - LTR for code */
+.option-btn code,
+.option-btn pre,
+.option-btn .code,
+.option-btn [class*="code"] {
+    direction: ltr !important;
+    text-align: left !important;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace !important;
+    unicode-bidi: bidi-override !important;
+    display: inline-block !important;
+    width: 100% !important;
+}
+
+/* Handle code-like content in quiz buttons */
+.option-btn {
+    direction: rtl !important;
+    text-align: right !important;
+    font-family: 'Heebo', 'Noto Sans Hebrew', Arial, sans-serif !important;
+    padding: 15px 20px !important;
+    margin: 10px 0 !important;
+    border: 2px solid #e2e8f0 !important;
+    background: white !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    display: block !important;
+    width: 100% !important;
+    line-height: 1.5 !important;
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    box-sizing: border-box;
+    unicode-bidi: bidi-override;
+}
+
+/* Detect and style code-like content in option buttons */
+.option-btn:has-text("="),
+.option-btn:has-text("("),
+.option-btn:has-text("{"),
+.option-btn:has-text("print"),
+.option-btn:has-text("def "),
+.option-btn:has-text("if "),
+.option-btn:has-text("for "),
+.option-btn:has-text("while "),
+.option-btn[class*="code"] {
+    direction: ltr !important;
+    text-align: left !important;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace !important;
+    unicode-bidi: normal !important;
+}
+
+/* Specific styling for code content buttons */
+.option-btn.code-content {
+    direction: ltr !important;
+    text-align: left !important;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace !important;
+    unicode-bidi: normal !important;
+    background: #f8f9fa !important;
+    border-left: 3px solid #007bff !important;
+    padding-left: 23px !important;
+    font-size: 14px !important;
+    color: #2d3748 !important;
+}
+
+.option-btn.code-content:hover {
+    background: #e9ecef !important;
+    border-color: #0056b3 !important;
+}
+
+/* Force LTR for common programming literals */
+.option-btn[dir="ltr"] {
+    direction: ltr !important;
+    text-align: left !important;
+    unicode-bidi: normal !important;
+    writing-mode: horizontal-tb !important;
+}
+
+/* Override RTL for English/code content in buttons */
+.option-btn:contains("True"),
+.option-btn:contains("False"), 
+.option-btn:contains("None"),
+.option-btn:contains("0"),
+.option-btn:contains("1"),
+.option-btn:contains("2"),
+.option-btn:contains("3"),
+.option-btn:contains("4"),
+.option-btn:contains("5"),
+.option-btn:contains("6"),
+.option-btn:contains("7"),
+.option-btn:contains("8"),
+.option-btn:contains("9") {
+    direction: ltr !important;
+    text-align: left !important;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace !important;
+    unicode-bidi: normal !important;
+}
+
 .quiz-results {
     direction: rtl !important;
     text-align: center !important;
